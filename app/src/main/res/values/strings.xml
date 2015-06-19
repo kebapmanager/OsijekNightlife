@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">OsijekNightlife</string>
+
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="ime_kluba">Ime kluba</string>
+    <string name="naslov">Naslov</string>
+    <string name="vrsta_glazbe">Vrsta glazbe</string>
+    <string name="tekst">Tekst</string>
+    <string name="default_image">default_image</string>
+</resources>
