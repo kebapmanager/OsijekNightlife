@@ -1,6 +1,8 @@
 package com.androidapp.osijeknightlife.app;
 
 import java.util.Locale;
+
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -11,6 +13,8 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import com.androidapp.osijeknightlife.app.jsonDataP.GetData;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener,GetData.Listener {
@@ -72,15 +76,20 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     public void setData(int position)
     {
-        if(position == 0)
+        switch(position)
         {
-            getSupportFragmentManager().findFragmentById(R.id.club_layout);
-            ClubFragment.changeLayoutProperties(DW.data.getEvents().get(0), DW.Slike, position);
-        }
-        else
-        {
-            getSupportFragmentManager().findFragmentById(R.id.list_layout);
-            ListFragment.changeLayoutProperties(DW.data.getEvents().get(0));
+            case 0:
+                getSupportFragmentManager().findFragmentById(R.id.list_layout);
+                ListFragment.changeLayoutProperties(DW.data.getEvents().get(0));
+                break;
+            case 1:
+                getSupportFragmentManager().findFragmentById(R.id.club_layout);
+                ClubFragment.changeLayoutProperties(DW.data.getEvents().get(0), DW.Slike, position);
+                break;
+            case 3:
+                getSupportFragmentManager().findFragmentById(R.id.search_layout);
+                SearchFragment.changeLayoutProperties();
+                break;
         }
     }
     @Override
@@ -124,6 +133,19 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
 
+
+    public void searchButton(View view)
+    {
+        // template of opening new activity when button is pressed
+/*        Intent intent = new Intent(this, DisplayMessageActivity.class);
+
+        // This is how to get text from the input I think
+        EditText editText = (EditText) findViewById(R.id.edit_message);
+        String message = editText.getText().toString();
+        intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);*/
+    }
+
     public class SectionsPagerAdapter extends FragmentPagerAdapter
     {
 
@@ -134,7 +156,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         @Override
         public Fragment getItem(int position)
         {
-            Fragment fragment = ClubFragment.newInstance(position);
+            Fragment fragment = new Fragment();
             switch(position)
             {
                 case 0:
@@ -144,7 +166,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     fragment = ClubFragment.newInstance(position);
                     break;
                 case 2:
-                    fragment = ListFragment.newInstance(position);
+                    fragment = SearchFragment.newInstance(position);
                     break;
             }
             return fragment;
