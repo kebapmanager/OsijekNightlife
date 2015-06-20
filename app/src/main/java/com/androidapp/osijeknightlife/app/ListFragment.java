@@ -20,7 +20,6 @@ import java.util.ArrayList;
 public class ListFragment extends Fragment
 {
     private ListView lv;
-    private static TextView text;
 
     public static ListFragment newInstance(int sectionNumber)
     {
@@ -36,39 +35,59 @@ public class ListFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-//        System.out.println("onCreateView list layout");
         View rootView = inflater.inflate(R.layout.list_layout, container, false);
 
-        ArrayList<ListItem> listContact = GetlistContact();
-//        ListView lv = (ListView)getActivity().findViewById(R.id.listitem_layout);
+        ArrayList<ListItem> eventList = GetEventList();
         ListView lv = (ListView)rootView.findViewById(R.id.list_layout);
-        lv.setAdapter(new ListItemAdapter(getActivity(), listContact));
+        lv.setAdapter(new ListItemAdapter(getActivity(), eventList));
+
         return rootView;
     }
-    private ArrayList<ListItem> GetlistContact(){
-        ArrayList<ListItem> contactlist = new ArrayList<ListItem>();
+    private ArrayList<ListItem> GetEventList(){
+        ArrayList<ListItem> eventList = new ArrayList<ListItem>();
 
-        ListItem contact = new ListItem();
+        ListItem event = new ListItem();
 
-        contact.SetName("Topher");
-        contact.SetPhone("01213113568");
-        contactlist.add(contact);
+        event.setName("Old Bridge Pub");
+        event.setEventName("Cigani lete u nebo");
+        event.setDate("12.6");
+        event.setPeopleComing("102");
+        eventList.add(event);
 
-        contact = new ListItem();
-        contact.SetName("Jean");
-        contact.SetPhone("01213869102");
-        contactlist.add(contact);
+        event = new ListItem();
+        event.setName("Tufna");
+        event.setEventName("DJ Zidov");
+        event.setDate("10.7");
+        event.setPeopleComing("1024");
+        eventList.add(event);
 
-        contact = new ListItem();
-        contact.SetName("Andrew");
-        contact.SetPhone("01213123985");
-        contactlist.add(contact);
+        event = new ListItem();
+        event.setName("Matrix");
+        event.setDate("30.6");
+        event.setEventName("Party - cigan osvetnik");
+        event.setPeopleComing("124");
+        eventList.add(event);
 
-        return contactlist;
+        event = new ListItem();
+        event.setName("Cadillac");
+        event.setDate("13.6");
+        event.setEventName("Zidov uzvraca udarac");
+        event.setPeopleComing("234");
+        eventList.add(event);
+
+        event = new ListItem();
+        event.setName("Bastion");
+        event.setDate("12.7");
+        event.setEventName("Njiva bend");
+        event.setPeopleComing("134");
+        eventList.add(event);
+
+        return eventList;
     }
 
     public static void changeLayoutProperties(Event event)
     {
-        text.setText(event.getText());
+        //Tu cu loadati iz Jsona u svoje objekte , zamjeniti ovo gore ^ sa ovom funkcijom koja
+        // se poziva tek kad je sve skinuto sa servera
     }
 }

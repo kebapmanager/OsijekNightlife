@@ -10,31 +10,65 @@
                 android:clickable="true"
                 android:background="#ff333234">
 
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/image"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:longClickable="false"
+            android:maxWidth="150dp"
+            android:minHeight="100dp"
+            android:nestedScrollingEnabled="false"
+            android:minWidth="100dp"
+            android:maxHeight="150dp"
+            android:background="#ff009688"/>
+
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/tekst"
-            android:id="@+id/txtname"
-            android:longClickable="true"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Name"
+            android:id="@+id/name"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/image"
+            android:layout_toEndOf="@+id/image"
             android:textColor="#ff009688"
-            android:layout_marginTop="5dp"
-            android:layout_alignParentTop="false"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_marginLeft="5dp"/>
 
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
-            android:id="@+id/txtphone"
-            android:layout_below="@+id/txtname"
-            android:layout_toRightOf="@+id/txtname"
-            android:layout_toEndOf="@+id/txtname"
-            android:layout_marginLeft="31dp"
-            android:layout_marginStart="31dp"
-            android:layout_marginTop="82dp"/>
+            android:text="Event name"
+            android:id="@+id/eventName"
+            android:textColor="#ff009688"
+            android:layout_below="@+id/name"
+            android:layout_alignLeft="@+id/name"
+            android:layout_alignStart="@+id/name"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Date"
+            android:id="@+id/date"
+            android:layout_alignBottom="@+id/image"
+            android:layout_toEndOf="@+id/image"
+            android:textColor="#ff009688"
+            android:layout_alignLeft="@+id/eventName"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="People Coming"
+            android:id="@+id/peopleComing"
+            android:layout_alignBottom="@+id/image"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:textColor="#ff009688"
+            android:layout_marginRight="5dp"/>
 
 </RelativeLayout>

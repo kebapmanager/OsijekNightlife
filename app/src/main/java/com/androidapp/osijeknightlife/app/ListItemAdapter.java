@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -14,25 +15,25 @@ import java.util.ArrayList;
  */
 public class ListItemAdapter extends BaseAdapter
 {
-    private static ArrayList<ListItem> listContact;
+    private static ArrayList<ListItem> eventList;
 
     private LayoutInflater mInflater;
 
-    public ListItemAdapter(Context photosFragment, ArrayList<ListItem> results){
-        listContact = results;
+    public ListItemAdapter(Context photosFragment, ArrayList<ListItem> eventList){
+        this.eventList = eventList;
         mInflater = LayoutInflater.from(photosFragment);
     }
 
     @Override
     public int getCount() {
         // TODO Auto-generated method stub
-        return listContact.size();
+        return eventList.size();
     }
 
     @Override
     public Object getItem(int arg0) {
         // TODO Auto-generated method stub
-        return listContact.get(arg0);
+        return eventList.get(arg0);
     }
 
     @Override
@@ -48,8 +49,10 @@ public class ListItemAdapter extends BaseAdapter
         if(convertView == null){
             convertView = mInflater.inflate(R.layout.listitem_layout, null);
             holder = new ViewHolder();
-            holder.txtname = (TextView) convertView.findViewById(R.id.txtname);
-            holder.txtphone = (TextView) convertView.findViewById(R.id.txtphone);
+            holder.name = (TextView) convertView.findViewById(R.id.name);
+            holder.eventName = (TextView) convertView.findViewById(R.id.eventName);
+            holder.date = (TextView) convertView.findViewById(R.id.date);
+            holder.peopleComing = (TextView) convertView.findViewById(R.id.peopleComing);
 
             convertView.setTag(holder);
         } else {
@@ -57,14 +60,21 @@ public class ListItemAdapter extends BaseAdapter
         }
 
 //        holder.txtname.setText(listContact.get(position).GetName());
-//        holder.txtphone.setText(listContact.get(position).GetPhone());
-        holder.txtname.setText("txtname1");
-        holder.txtphone.setText("txtphone2");
+
+        holder.name.setText(eventList.get(position).getName());
+        holder.eventName.setText(eventList.get(position).getEventName());
+        holder.date.setText(eventList.get(position).getDate());
+        holder.peopleComing.setText(eventList.get(position).getPeopleComing());
+        //holder.image.setImageBitmap();
 
         return convertView;
     }
 
     static class ViewHolder{
-        TextView txtname, txtphone;
+        TextView name;
+        TextView eventName;
+        TextView date;
+        TextView peopleComing;
+        ImageView image;
     }
 }
