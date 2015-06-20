@@ -83,7 +83,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void setData(int position)
     {
         getSupportFragmentManager().findFragmentById(R.id.club_layout);
-        ListFragment.changeTextProperties(DW.data.getEvents().get(0), DW.Slike);
+        ListFragment.changeTextProperties(DW.data.getEvents().get(0), DW.Slike, position);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -177,7 +177,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         private static final String ARG_SECTION_NUMBER = "section_number";
         private static TextView club;
         private static TextView title;
-        private static TextView tekst;
+        private static TextView text;
         private static TextView music;
         private static ImageView logo;
 
@@ -198,18 +198,19 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             View rootView = inflater.inflate(R.layout.club_layout, container, false);
             club = (TextView) rootView.findViewById(R.id.club);
             title = (TextView) rootView.findViewById(R.id.title);
-            tekst = (TextView) rootView.findViewById(R.id.text);
+            text = (TextView) rootView.findViewById(R.id.text);
             music = (TextView) rootView.findViewById(R.id.music);
             logo = (ImageView) rootView.findViewById(R.id.logo);
             return rootView;
         }
-        public static void changeTextProperties(Event event, List<List<Bitmap>> Slike )
+        public static void changeTextProperties(Event event, List<List<Bitmap>> Slike, int position)
         {
             club.setText(event.getClub());
             title.setText(event.getTitle());
-            tekst.setText(event.getText());
+            text.setText(event.getText());
             music.setText("Vrsta glazbe: "+event.getMusic());
-            logo.setImageBitmap(Slike.get(0).get(0));
+            System.out.println("Tab position: "+position);
+            logo.setImageBitmap(Slike.get(0).get(position));
         }
     }
 }

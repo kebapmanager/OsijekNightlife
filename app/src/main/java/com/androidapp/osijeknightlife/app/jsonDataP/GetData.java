@@ -33,6 +33,7 @@ public class GetData {
     public boolean done = false;
     public String Status;
     public List<List<Bitmap>> Slike = new ArrayList<List<Bitmap>>();
+
     public Bitmap bitmap,mutable;
     public DataLoader data =  new DataLoader();
     public Gson gson =  new Gson();
@@ -40,7 +41,7 @@ public class GetData {
             .setEndpoint("https://api-content.dropbox.com")
             .build();
     String path;
-    int Si;
+    int Si = -1;
 
     public void Start(String path,final String dan)
     {
@@ -68,6 +69,7 @@ public class GetData {
                 Status = "DONE";
                 done =  true;
 
+                Slike.add(0, new ArrayList<Bitmap>());
                 getImg(0, dan);
             }
 
@@ -82,10 +84,8 @@ public class GetData {
     public void getImg(final int i,final String dan)
     {
         DropBox DB = restAdapter.create(DropBox.class);
-        Si = 0;
-
-        System.out.println("Dan: "+dan+"_"+ (Si+1));
-        DB.Download(path +"13_2"+".jpg", new ResponseCallback()
+        Si++;
+        DB.Download(path +dan+"_"+ (Si+1)+".jpg", new ResponseCallback()
         {
             @Override
             public void success(Response response)
@@ -96,16 +96,13 @@ public class GetData {
                 {
                     bitmap = BitmapFactory.decodeStream(response.getBody().in());
                 }
-                catch (Exception e)
-                {
-                }
+                catch (Exception e) {}
 
                 mutable = bitmap.copy(Bitmap.Config.ARGB_8888, true);
 
-                Slike.add(0, new ArrayList<Bitmap>());
-                Slike.get(0).add(Si, mutable);
+                System.out.println("Dan: "+dan+"_"+ (Si+1));
+                Slike.get(0).add(Si,mutable);
 
-                Si += 1;
                 if (Si < data.getEvents().get(i).getPics().size())
                     getImg(i, dan);
 
@@ -115,7 +112,6 @@ public class GetData {
             @Override
             public void failure(RetrofitError error)
             {
-
                 Status += "\nFailed to recieve Pic : " + dan + (Si + 1) + ".jpg" + "\n";
             }
         });
