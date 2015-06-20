@@ -80,7 +80,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         else
         {
             getSupportFragmentManager().findFragmentById(R.id.list_layout);
-            ListFragment.changeLayoutProperties();
+            ListFragment.changeLayoutProperties(DW.data.getEvents().get(0));
         }
     }
     @Override
