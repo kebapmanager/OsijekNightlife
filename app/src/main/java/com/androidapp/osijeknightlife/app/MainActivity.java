@@ -28,7 +28,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         if(state)
             setData(0);
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -73,7 +72,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 .setText("Search")
                 .setTabListener(this));
     }
-
     public void setData(int position)
     {
         switch(position)
@@ -98,7 +96,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -114,7 +111,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         return super.onOptionsItemSelected(item);
     }
-
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction)
     {
