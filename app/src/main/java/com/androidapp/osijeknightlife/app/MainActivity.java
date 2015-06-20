@@ -50,7 +50,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         // When swiping between different sections, select the corresponding
         // tab. We can also use ActionBar.Tab#select() to do this if we have
         // a reference to the Tab.
-
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         // For each of the sections in the app, add a tab to the action bar.
@@ -82,8 +81,16 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     public void setData(int position)
     {
-        getSupportFragmentManager().findFragmentById(R.id.club_layout);
-        ListFragment.changeTextProperties(DW.data.getEvents().get(0), DW.Slike, position);
+        if(position == 0)
+        {
+            getSupportFragmentManager().findFragmentById(R.id.club_layout);
+            ClubFragment.changeLayoutProperties(DW.data.getEvents().get(0), DW.Slike, position);
+        }
+        else
+        {
+            getSupportFragmentManager().findFragmentById(R.id.list_layout);
+            ListFragment.changeLayoutProperties();
+        }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -116,7 +123,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         {
             System.out.println("DW done");
             setData(tab.getPosition());
-        }
+        }else System.out.println("Not done");
 
         // When the given tab is selected, switch to the corresponding page in the ViewPager.
         mViewPager.setCurrentItem(tab.getPosition());
@@ -140,9 +147,20 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         @Override
         public Fragment getItem(int position)
         {
-            if(position >= 0 && 2 <= position)
-                return ListFragment.newInstance(position);
-            else return ListFragment.newInstance(-1);
+            Fragment fragment = ClubFragment.newInstance(position);
+            switch(position)
+            {
+                case 0:
+                    fragment = ListFragment.newInstance(position);
+                    break;
+                case 1:
+                    fragment = ClubFragment.newInstance(position);
+                    break;
+                case 2:
+                    fragment = ListFragment.newInstance(position);
+                    break;
+            }
+            return fragment;
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
 //            return PlaceholderFragment.newInstance(position + 1);
@@ -169,48 +187,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     return getString(R.string.title_section3).toUpperCase(l);
             }
             return null;
-        }
-    }
-
-    public static class ListFragment extends Fragment
-    {
-        private static final String ARG_SECTION_NUMBER = "section_number";
-        private static TextView club;
-        private static TextView title;
-        private static TextView text;
-        private static TextView music;
-        private static ImageView logo;
-
-        public static ListFragment newInstance(int sectionNumber)
-        {
-            ListFragment fragment = new ListFragment();
-            Bundle args = new Bundle();
-            args.putInt("section_number", sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public ListFragment() {}
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-        {
-            View rootView = inflater.inflate(R.layout.club_layout, container, false);
-            club = (TextView) rootView.findViewById(R.id.club);
-            title = (TextView) rootView.findViewById(R.id.title);
-            text = (TextView) rootView.findViewById(R.id.text);
-            music = (TextView) rootView.findViewById(R.id.music);
-            logo = (ImageView) rootView.findViewById(R.id.logo);
-            return rootView;
-        }
-        public static void changeTextProperties(Event event, List<List<Bitmap>> Slike, int position)
-        {
-            club.setText(event.getClub());
-            title.setText(event.getTitle());
-            text.setText(event.getText());
-            music.setText("Vrsta glazbe: "+event.getMusic());
-            System.out.println("Tab position: "+position);
-            logo.setImageBitmap(Slike.get(0).get(position));
         }
     }
 }

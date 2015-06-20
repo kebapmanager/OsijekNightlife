@@ -2,7 +2,6 @@ package com.androidapp.osijeknightlife.app.jsonDataP;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.annotation.NonNull;
 import com.androidapp.osijeknightlife.app.DropBox;
 import com.google.gson.Gson;
 import retrofit.ResponseCallback;
@@ -10,9 +9,7 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -67,10 +64,10 @@ public class GetData {
                 data = gson.fromJson(json, DataLoader.class);
                 Status = "Data Recieved\n";
                 Status = "DONE";
-                done =  true;
 
                 Slike.add(0, new ArrayList<Bitmap>());
                 getImg(0, dan);
+                done =  true;
             }
 
             @Override
@@ -97,6 +94,18 @@ public class GetData {
                     bitmap = BitmapFactory.decodeStream(response.getBody().in());
                 }
                 catch (Exception e) {}
+
+   /*             String file_path = Environment.getExternalStorageDirectory().getAbsolutePath() +
+                        "/ONLpics";
+                File dir = new File(file_path);
+                if(!dir.exists())
+                    dir.mkdirs();
+                File file = new File(dir, "sketchpad" + pad.t_id + ".png");
+                FileOutputStream fOut = new FileOutputStream(dir);
+
+                bitmap.compress(Bitmap.CompressFormat.PNG, 85, fOut);
+                fOut.flush();
+                fOut.close();*/
 
                 mutable = bitmap.copy(Bitmap.Config.ARGB_8888, true);
 
