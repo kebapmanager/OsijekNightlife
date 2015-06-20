@@ -47,7 +47,7 @@ public class ClubFragment extends Fragment
         logo = (ImageView) rootView.findViewById(R.id.logo);
         return rootView;
     }
-    public static void changeLayoutProperties(Event event, List<List<Bitmap>> Slike, int position)
+    public static void changeLayoutProperties(Event event, List<Bitmap> Slike, int position)
     {
         club.setText(event.getClub());
         title.setText(event.getTitle());
@@ -55,6 +55,6 @@ public class ClubFragment extends Fragment
         music.setText("Vrsta glazbe: "+event.getMusic());
         System.out.println("Tab position: "+position);
         if(position < 2)
-            logo.setImageBitmap(Slike.get(0).get(position));
+            logo.setImageBitmap(Slike.get(position));
     }
 }

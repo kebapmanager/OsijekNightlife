@@ -29,7 +29,7 @@ public class GetData {
     /////////////////////Class
     public boolean done = false;
     public String Status;
-    public List<List<Bitmap>> Slike = new ArrayList<List<Bitmap>>();
+    public List<Bitmap> Slike = new ArrayList<Bitmap>();
 
     public Bitmap bitmap,mutable;
     public DataLoader data =  new DataLoader();
@@ -65,8 +65,7 @@ public class GetData {
                 Status = "Data Recieved\n";
                 Status = "DONE";
 
-                Slike.add(0, new ArrayList<Bitmap>());
-                getImg(0, dan);
+                getImg(dan);
                 done =  true;
             }
 
@@ -78,7 +77,7 @@ public class GetData {
             }
         });
     }
-    public void getImg(final int i,final String dan)
+    public void getImg(final String dan)
     {
         DropBox DB = restAdapter.create(DropBox.class);
         Si++;
@@ -110,10 +109,10 @@ public class GetData {
                 mutable = bitmap.copy(Bitmap.Config.ARGB_8888, true);
 
                 System.out.println("Dan: "+dan+"_"+ (Si+1));
-                Slike.get(0).add(Si,mutable);
+                Slike.add(Si,mutable);
 
-                if (Si < data.getEvents().get(i).getPics().size())
-                    getImg(i, dan);
+                if (Si < data.getEvents().get(0).getPics().size())
+                    getImg(dan);
 
                 if (mListener != null)
                     mListener.dataRecieved(true);
