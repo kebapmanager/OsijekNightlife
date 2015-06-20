@@ -1,4 +1,4 @@
-package com.androidapp.osijeknightlife.app;
+package com.androidapp.osijeknightlife.app.TabFragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import com.androidapp.osijeknightlife.app.ListItem;
+import com.androidapp.osijeknightlife.app.ListItemAdapter;
+import com.androidapp.osijeknightlife.app.R;
 import com.androidapp.osijeknightlife.app.jsonDataP.Event;
 
 import java.util.ArrayList;

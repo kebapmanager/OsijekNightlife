@@ -1,4 +1,4 @@
-package com.androidapp.osijeknightlife.app;
+package com.androidapp.osijeknightlife.app.TabFragments;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.androidapp.osijeknightlife.app.R;
 import com.androidapp.osijeknightlife.app.jsonDataP.Event;
 
 import java.util.List;

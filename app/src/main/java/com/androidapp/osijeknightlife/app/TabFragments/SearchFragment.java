@@ -1,10 +1,11 @@
-package com.androidapp.osijeknightlife.app;
+package com.androidapp.osijeknightlife.app.TabFragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import com.androidapp.osijeknightlife.app.R;
 
 /**
  * Created by Ivan on 20/06/2015.
