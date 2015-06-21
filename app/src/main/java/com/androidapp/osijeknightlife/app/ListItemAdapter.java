@@ -1,6 +1,11 @@
 package com.androidapp.osijeknightlife.app;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -18,6 +24,7 @@ public class ListItemAdapter extends BaseAdapter
     private static ArrayList<ListItem> eventList;
 
     private LayoutInflater mInflater;
+    Activity mainActivity;
 
     public ListItemAdapter(Context photosFragment, ArrayList<ListItem> eventList){
         this.eventList = eventList;
@@ -65,7 +72,7 @@ public class ListItemAdapter extends BaseAdapter
         holder.eventName.setText(eventList.get(position).getEventName());
         holder.date.setText(eventList.get(position).getDate());
         holder.peopleComing.setText(eventList.get(position).getPeopleComing());
-        //holder.image.setImageBitmap();
+        holder.image.setImageBitmap(eventList.get(position).getImage());
 
         return convertView;
     }

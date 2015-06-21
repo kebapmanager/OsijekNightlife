@@ -3,16 +3,16 @@ package com.androidapp.osijeknightlife.app;
 import java.util.Locale;
 
 import android.content.Intent;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.ShareActionProvider;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.support.v7.widget.ShareActionProvider;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +25,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
-    GetData DW = new GetData();
+    GetData DW = new GetData(this);
 
     public void dataRecieved(boolean state)
     {
@@ -82,11 +82,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         {
             case 0:
                 getSupportFragmentManager().findFragmentById(R.id.list_layout);
-                ListFragment.changeLayoutProperties(DW.data.getEvents().get(0));
+                ListFragment.changeLayoutProperties();
                 break;
             case 1:
                 getSupportFragmentManager().findFragmentById(R.id.club_layout);
-                ClubFragment.changeLayoutProperties(DW.data.getEvents().get(0), DW.Slike, position);
+                ClubFragment.changeLayoutProperties(DW.data.getEvents().get(0), DW.pictures);
                 break;
             case 3:
                 getSupportFragmentManager().findFragmentById(R.id.search_layout);

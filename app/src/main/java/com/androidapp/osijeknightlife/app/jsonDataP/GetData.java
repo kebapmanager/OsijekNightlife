@@ -1,5 +1,6 @@
 package com.androidapp.osijeknightlife.app.jsonDataP;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
@@ -31,7 +32,7 @@ public class GetData {
     public boolean info = false;
     public boolean done = false;
     public String Status;
-    public List<Bitmap> Slike = new ArrayList<Bitmap>();
+    public List<Bitmap> pictures = new ArrayList<Bitmap>();
 
     public Bitmap bitmap,mutable;
     public DataLoader data =  new DataLoader();
@@ -42,10 +43,13 @@ public class GetData {
     String path,extrPath;
     int Si;
 
+    Activity mainActivity;
+    public GetData(Activity mainActivity){this.mainActivity = mainActivity;}
     public void Start(String path,final String dan)
     {
         this.path = path;
         DropBox DB = restAdapter.create(DropBox.class);
+        pictures.add(getImageByName("bastion.png",mainActivity));
         DB.Download(path + dan + ".json", new ResponseCallback() {
             @Override
             public void success(Response response)  {
@@ -97,7 +101,7 @@ public class GetData {
 
                 mutable = bitmap.copy(Bitmap.Config.ARGB_8888, true);
                 saveImg(mutable);
-                Slike.add(Si,mutable);
+                pictures.add(Si, mutable);
                 Si++;
                 if (Si < data.getEvents().get(0).getPics().size())
                     moarImg(dan);
@@ -133,7 +137,7 @@ public class GetData {
                 mutable = bitmap.copy(Bitmap.Config.ARGB_8888, true);
                 saveImg(mutable);
 
-                Slike.add(Si,mutable);
+                pictures.add(Si, mutable);
                 Si++;
                 if (Si < data.getEvents().get(0).getPics().size())
                     moarImg(dan);
@@ -163,4 +167,15 @@ public class GetData {
             fOut.close();
         }catch(Exception e){}
     }
+    public Bitmap getImageByName(String nameOfTheDrawable, Activity a){
+        int path = a.getResources().getIdentifier(nameOfTheDrawable,
+                "drawable", "com.androidapp.osijeknightlife.app");
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inScaled = false;
+        Bitmap source = BitmapFactory.decodeResource(a.getResources(), path, options);
+
+        return source;
+    }
+
 }

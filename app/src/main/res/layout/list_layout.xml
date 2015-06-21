@@ -8,5 +8,5 @@
                 android:id="@+id/list_layout"
                 android:focusableInTouchMode="true"
                 android:clickable="true"
-                android:background="#ff716f75">
+                android:background="@drawable/color_background">
 </ListView>

@@ -1,5 +1,6 @@
 package com.androidapp.osijeknightlife.app.TabFragments;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import com.androidapp.osijeknightlife.app.R;
 import com.androidapp.osijeknightlife.app.jsonDataP.Event;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Ivan on 20/06/2015.
@@ -31,19 +33,18 @@ public class ListFragment extends Fragment
     }
 
     public ListFragment() {}
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View rootView = inflater.inflate(R.layout.list_layout, container, false);
 
-        ArrayList<ListItem> eventList = GetEventList();
+        ArrayList<ListItem> eventList = getEventList();
         ListView lv = (ListView)rootView.findViewById(R.id.list_layout);
         lv.setAdapter(new ListItemAdapter(getActivity(), eventList));
 
         return rootView;
     }
-    private ArrayList<ListItem> GetEventList(){
+    private ArrayList<ListItem> getEventList(){
         ArrayList<ListItem> eventList = new ArrayList<ListItem>();
 
         ListItem event = new ListItem();
@@ -85,7 +86,7 @@ public class ListFragment extends Fragment
         return eventList;
     }
 
-    public static void changeLayoutProperties(Event event)
+    public static void changeLayoutProperties()
     {
         //Tu cu loadati iz Jsona u svoje objekte , zamjeniti ovo gore ^ sa ovom funkcijom koja
         // se poziva tek kad je sve skinuto sa servera

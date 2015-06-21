@@ -48,13 +48,12 @@ public class ClubFragment extends Fragment
         logo = (ImageView) rootView.findViewById(R.id.logo);
         return rootView;
     }
-    public static void changeLayoutProperties(Event event, List<Bitmap> Slike, int position)
+    public static void changeLayoutProperties(Event event, List<Bitmap> pictures)
     {
         club.setText(event.getClub());
         title.setText(event.getTitle());
         text.setText(event.getText());
         music.setText("Vrsta glazbe: "+event.getMusic());
-        System.out.println("Tab position: "+position);
-        logo.setImageBitmap(Slike.get(position));
+        logo.setImageBitmap(pictures.get(1));
     }
 }
