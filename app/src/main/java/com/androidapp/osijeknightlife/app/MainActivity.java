@@ -3,18 +3,22 @@ package com.androidapp.osijeknightlife.app;
 import java.util.Locale;
 
 import android.content.Intent;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.os.Bundle;
+import android.support.v7.widget.ShareActionProvider;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
+import com.androidapp.osijeknightlife.app.TabFragments.ClubFragment;
+import com.androidapp.osijeknightlife.app.TabFragments.ListFragment;
+import com.androidapp.osijeknightlife.app.TabFragments.SearchFragment;
 import com.androidapp.osijeknightlife.app.jsonDataP.GetData;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener,GetData.Listener {
@@ -63,7 +67,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         actionBar.addTab(actionBar.newTab()
                 .setText("Hot")
-                .setIcon(R.mipmap.ic_launcher)
+//                .setIcon(R.mipmap.ic_launcher)
                 .setTabListener(this));
         actionBar.addTab(actionBar.newTab()
                 .setText("Events")
@@ -90,12 +94,27 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 break;
         }
     }
+    private ShareActionProvider share;
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.share);
+        share = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
+        MenuItemCompat.getActionProvider(menuItem);
+
         return true;
     }
+
+    // Call to update the share intent
+    private void setShareIntent(Intent shareIntent)
+    {
+        if (share != null) {
+            share.setShareIntent(shareIntent);
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -115,7 +134,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction)
     {
         System.out.println("onTabSelected");
-        if (DW.done)
+        if (DW.info)
         {
             System.out.println("DW done");
             setData(tab.getPosition());

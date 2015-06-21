@@ -15,7 +15,9 @@
               android:layout_alignParentStart="true"
               android:layout_toLeftOf="@+id/button"
               android:layout_toStartOf="@+id/button"
-              android:layout_marginTop="10dp"/>
+              android:layout_marginTop="7dp"
+              android:textColorHint="#ff005d51"
+              android:textColor="#ff007d6f"/>
 
     <Button
             android:layout_width="wrap_content"
@@ -26,6 +28,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:id="@+id/button"/>
+            android:id="@+id/button"
+            android:background="#ff009688"/>
 
 </RelativeLayout>

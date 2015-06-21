@@ -73,7 +73,7 @@ public class GetData {
             @Override
             public void failure(RetrofitError retrofitError)
             {
-                System.out.println("Get data failed");
+                System.out.println("Get data failed" + retrofitError.toString());
                 Status = "Failed to Recieve Data\n";
             }
         });
