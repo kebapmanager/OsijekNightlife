@@ -55,7 +55,6 @@ public class ClubFragment extends Fragment
         text.setText(event.getText());
         music.setText("Vrsta glazbe: "+event.getMusic());
         System.out.println("Tab position: "+position);
-//        if(position == 1)
-//            logo.setImageBitmap(Slike.get(position));
+        logo.setImageBitmap(Slike.get(position));
     }
 }
