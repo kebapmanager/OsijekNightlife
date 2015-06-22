@@ -29,9 +29,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     public void dataRecieved(boolean state)
     {
-        if(state)
-            setData(0);
-        if(!DW.done)DW.done = true;
+        if(state) {
+
+            DW.info = true;
+            DW.done = true;
+        }
     }
     @Override
     protected void onCreate(Bundle savedInstanceState)
