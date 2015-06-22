@@ -1,14 +1,30 @@
 <resources>
     <string name="app_name">OsijekNightlife</string>
 
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <!--Activity bar-->
+    <string name="title_section1">Events</string>
+    <string name="title_section2">Hot</string>
+    <string name="title_section3">Search</string>
     <string name="action_settings">Settings</string>
 
+    <!--Default vrijednosti-->
     <string name="ime_kluba">Ime kluba</string>
     <string name="naslov">Naslov</string>
     <string name="vrsta_glazbe">Vrsta glazbe</string>
     <string name="tekst">Tekst</string>
     <string name="default_image">default_image</string>
+    <string name="image_description">image</string>
+
+    <!--Search Layout-->
+    <string name="button_send">Send</string>
+    <string name="edit_text">Search</string>
+
+    <!--Club, list, listItem, search-->
+    <drawable name="color_background">#ff333234</drawable>
+    <drawable name="color_image">#ff006d5f</drawable>
+    <drawable name="color_text">#ff009688</drawable>
+    <drawable name="color_button">#ff009688</drawable>
+    <drawable name="edit_text">#ff009688</drawable>
+    <drawable name="edit_hint">#ff006d5f</drawable>
+
 </resources>

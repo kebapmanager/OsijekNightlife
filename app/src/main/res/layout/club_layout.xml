@@ -7,8 +7,9 @@
                 tools:context=".MainActivity$AboutFragment"
                 android:id="@+id/club_layout"
                 android:focusableInTouchMode="true"
-                android:clickable="true"
-                android:background="#ff333234">
+                android:clickable="false"
+                android:background="@drawable/color_background"
+                android:focusable="false">
 
     <ImageView
             android:layout_width="wrap_content"
@@ -18,12 +19,12 @@
             android:maxWidth="150dp"
             android:minHeight="107dp"
             android:minWidth="107dp"
-            android:nestedScrollingEnabled="true"
-            android:background="#ff009688"
+            android:background="@drawable/color_image"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:adjustViewBounds="true"/>
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/image_description"/>
 
     <TextView
             android:layout_width="wrap_content"
@@ -33,7 +34,7 @@
             android:id="@+id/club"
             android:layout_gravity="top|right"
             android:linksClickable="true"
-            android:textColor="#ff009688"
+            android:textColor="@drawable/color_text"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/logo"
             android:layout_toEndOf="@+id/logo"
@@ -45,7 +46,8 @@
             android:text="@string/naslov"
             android:id="@+id/title" android:layout_below="@+id/club" android:layout_alignLeft="@+id/club"
             android:layout_marginTop="5dp"
-            android:textColor="#ff009688"/>
+            android:textColor="@drawable/color_text"
+            android:singleLine="true"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,7 +56,7 @@
             android:id="@+id/music"
             android:layout_below="@+id/title" android:layout_alignLeft="@+id/title"
             android:layout_marginTop="5dp"
-            android:textColor="#ff009688"/>
+            android:textColor="@drawable/color_text"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,7 +64,7 @@
             android:text="@string/tekst"
             android:id="@+id/text"
             android:longClickable="true"
-            android:textColor="#ff009688"
+            android:textColor="@drawable/color_text"
             android:layout_marginTop="5dp"
             android:layout_alignParentTop="false"
             android:layout_alignParentLeft="true"
