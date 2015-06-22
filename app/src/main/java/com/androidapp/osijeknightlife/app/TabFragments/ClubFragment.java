@@ -1,4 +1,4 @@
-package com.androidapp.osijeknightlife.app.TabFragments;
+package com.androidapp.osijeknightlife.app;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.androidapp.osijeknightlife.app.R;
 import com.androidapp.osijeknightlife.app.jsonDataP.Event;
 
 import java.util.List;
@@ -54,7 +53,6 @@ public class ClubFragment extends Fragment
         title.setText(event.getTitle());
         text.setText(event.getText());
         music.setText("Vrsta glazbe: "+event.getMusic());
-        System.out.println("Tab position: "+position);
         logo.setImageBitmap(Slike.get(position));
     }
 }
