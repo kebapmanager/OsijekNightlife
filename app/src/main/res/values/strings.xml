@@ -3,7 +3,7 @@
 
     <!--Activity bar-->
     <string name="title_section1">Events</string>
-    <string name="title_section2">Hot</string>
+    <string name="title_section2">Clubs</string>
     <string name="title_section3">Search</string>
     <string name="action_settings">Settings</string>
 

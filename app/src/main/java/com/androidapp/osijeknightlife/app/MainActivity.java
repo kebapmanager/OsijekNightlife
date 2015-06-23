@@ -27,16 +27,22 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     ViewPager mViewPager;
     GetData DW = new GetData(this);
 
+    Fragment events;
+    Fragment clubs;
+
     public void dataRecieved(boolean state)
     {
         if(state)
-            setData(0);
+            switchTab(0);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        events = ListFragment.newInstance(0);
+        clubs = ClubFragment.newInstance(1);
 
         DW.registerListener(this);
         DW.Start("/15/6/","13");
@@ -66,17 +72,17 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         });
 
         actionBar.addTab(actionBar.newTab()
-                .setText("Hot")
+                .setText("Eventovi")
 //                .setIcon(R.mipmap.ic_launcher)
                 .setTabListener(this));
         actionBar.addTab(actionBar.newTab()
-                .setText("Events")
+                .setText("Klubovi")
                 .setTabListener(this));
-        actionBar.addTab(actionBar.newTab()
-                .setText("Search")
-                .setTabListener(this));
+//        actionBar.addTab(actionBar.newTab()
+//                .setText("Search")
+//                .setTabListener(this));
     }
-    public void setData(int position)
+    public void switchTab(int position)
     {
         switch(position)
         {
@@ -88,10 +94,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 getSupportFragmentManager().findFragmentById(R.id.club_layout);
                 ClubFragment.changeLayoutProperties(DW.data.getEvents().get(0), DW.pictures);
                 break;
-            case 3:
-                getSupportFragmentManager().findFragmentById(R.id.search_layout);
-                SearchFragment.changeLayoutProperties();
-                break;
+//            case 3:
+//                getSupportFragmentManager().findFragmentById(R.id.search_layout);
+//                SearchFragment.changeLayoutProperties();
+//                break;
         }
     }
     private ShareActionProvider share;
@@ -137,7 +143,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         if (DW.info)
         {
             System.out.println("DW done");
-            setData(tab.getPosition());
+            switchTab(tab.getPosition());
         }else System.out.println("Not done");
 
         // When the given tab is selected, switch to the corresponding page in the ViewPager.
@@ -171,17 +177,20 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         @Override
         public Fragment getItem(int position)
         {
-            Fragment fragment = new Fragment();
+            Fragment fragment;
             switch(position)
             {
                 case 0:
-                    fragment = ListFragment.newInstance(position);
+                    fragment = events;
                     break;
                 case 1:
-                    fragment = ClubFragment.newInstance(position);
+                    fragment = clubs;
                     break;
-                case 2:
-                    fragment = SearchFragment.newInstance(position);
+//                case 2:
+//                    fragment = SearchFragment.newInstance(position);
+//                    break;
+                default:
+                    fragment = new Fragment();
                     break;
             }
             return fragment;
