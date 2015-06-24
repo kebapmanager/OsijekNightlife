@@ -1,4 +1,4 @@
-package com.androidapp.osijeknightlife.app;
+package com.androidapp.osijeknightlife.app.Adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.androidapp.osijeknightlife.app.ListItem;
+import com.androidapp.osijeknightlife.app.R;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -72,6 +74,7 @@ public class ListItemAdapter extends BaseAdapter
         holder.eventName.setText(eventList.get(position).getEventName());
         holder.date.setText(eventList.get(position).getDate());
         holder.peopleComing.setText(eventList.get(position).getPeopleComing());
+
 //        holder.image.setImageBitmap(eventList.get(position).getImage());
 
         return convertView;

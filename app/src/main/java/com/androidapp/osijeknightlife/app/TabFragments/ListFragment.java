@@ -7,12 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import com.androidapp.osijeknightlife.app.ListItem;
-import com.androidapp.osijeknightlife.app.ListItemAdapter;
+import com.androidapp.osijeknightlife.app.Adapters.ListItemAdapter;
 import com.androidapp.osijeknightlife.app.R;
-import com.androidapp.osijeknightlife.app.jsonDataP.Event;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Ivan on 20/06/2015.

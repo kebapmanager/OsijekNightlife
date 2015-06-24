@@ -3,6 +3,7 @@ package com.androidapp.osijeknightlife.app;
 import java.util.Locale;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.ShareActionProvider;
@@ -17,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import com.androidapp.osijeknightlife.app.TabFragments.ClubFragment;
+import com.androidapp.osijeknightlife.app.TabFragments.GridFragment;
 import com.androidapp.osijeknightlife.app.TabFragments.ListFragment;
 import com.androidapp.osijeknightlife.app.TabFragments.SearchFragment;
 import com.androidapp.osijeknightlife.app.jsonDataP.GetData;
@@ -42,7 +44,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         setContentView(R.layout.activity_main);
 
         events = ListFragment.newInstance(0);
-        clubs = ClubFragment.newInstance(1);
+        clubs = GridFragment.newInstance(1);
 
         DW.registerListener(this);
         DW.Start("/15/6/","13");
@@ -91,8 +93,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 ListFragment.changeLayoutProperties();
                 break;
             case 1:
-                getSupportFragmentManager().findFragmentById(R.id.club_layout);
-                ClubFragment.changeLayoutProperties(DW.data.getEvents().get(0), DW.pictures);
+                GridFragment.changeLayoutProperties();
+                getSupportFragmentManager().findFragmentById(R.id.grid_layout);
+//                ClubFragment.changeLayoutProperties(DW.data.getEvents().get(0), DW.pictures);
                 break;
 //            case 3:
 //                getSupportFragmentManager().findFragmentById(R.id.search_layout);
@@ -112,7 +115,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         return true;
     }
-
     // Call to update the share intent
     private void setShareIntent(Intent shareIntent)
     {
@@ -203,7 +205,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         public int getCount()
         {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override
@@ -216,8 +218,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     return getString(R.string.title_section1).toUpperCase(l);
                 case 1:
                     return getString(R.string.title_section2).toUpperCase(l);
-                case 2:
-                    return getString(R.string.title_section3).toUpperCase(l);
+//                case 2:
+//                    return getString(R.string.title_section3).toUpperCase(l);
             }
             return null;
         }
