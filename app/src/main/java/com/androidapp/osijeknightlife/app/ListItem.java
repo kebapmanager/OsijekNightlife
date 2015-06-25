@@ -13,7 +13,6 @@ public class ListItem
     String peopleComing;
     String imageName;
     Bitmap image;
-    public ListItem(){}
 
     public void setName(String name){this.name = name;}
     public void setEventName(String eventName){this.eventName = eventName;}

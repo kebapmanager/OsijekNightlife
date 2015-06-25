@@ -3,7 +3,6 @@ package com.androidapp.osijeknightlife.app;
 import java.util.Locale;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.ShareActionProvider;
@@ -17,10 +16,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import com.androidapp.osijeknightlife.app.TabFragments.ClubFragment;
 import com.androidapp.osijeknightlife.app.TabFragments.GridFragment;
 import com.androidapp.osijeknightlife.app.TabFragments.ListFragment;
-import com.androidapp.osijeknightlife.app.TabFragments.SearchFragment;
 import com.androidapp.osijeknightlife.app.jsonDataP.GetData;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener,GetData.Listener {

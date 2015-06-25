@@ -68,13 +68,10 @@ public class ListItemAdapter extends BaseAdapter
             holder = (ViewHolder) convertView.getTag();
         }
 
-//        holder.txtname.setText(listContact.get(position).GetName());
-
         holder.name.setText(eventList.get(position).getName());
         holder.eventName.setText(eventList.get(position).getEventName());
         holder.date.setText(eventList.get(position).getDate());
         holder.peopleComing.setText(eventList.get(position).getPeopleComing());
-
 //        holder.image.setImageBitmap(eventList.get(position).getImage());
 
         return convertView;
