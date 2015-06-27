@@ -23,7 +23,8 @@
             android:nestedScrollingEnabled="false"
             android:minWidth="100dp"
             android:maxHeight="150dp"
-            android:background="@drawable/color_image"/>
+            android:background="@drawable/color_image" android:layout_alignParentEnd="false"
+            android:cropToPadding="false" android:adjustViewBounds="false"/>
 
     <TextView
             android:layout_width="wrap_content"

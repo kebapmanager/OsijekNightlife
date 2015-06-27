@@ -1,5 +1,6 @@
 package com.androidapp.osijeknightlife.app;
 
+import java.util.Calendar;
 import java.util.Locale;
 
 import android.content.Intent;
@@ -19,6 +20,7 @@ import android.view.View;
 import com.androidapp.osijeknightlife.app.TabFragments.GridFragment;
 import com.androidapp.osijeknightlife.app.TabFragments.ListFragment;
 import com.androidapp.osijeknightlife.app.jsonDataP.GetData;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener,GetData.Listener {
 
@@ -32,19 +34,25 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void dataRecieved(boolean state)
     {
         if(state)
-            switchTab(0);
+        {
+
+        }
     }
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Calendar c = Calendar.getInstance();
+        String Datum = c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.DAY_OF_MONTH);
 
         events = ListFragment.newInstance(0);
         clubs = GridFragment.newInstance(1);
 
         DW.registerListener(this);
-        DW.Start("/15/6/","13");
+        DW.Start(Datum);
 
         // Set up the action bar.
         // Create the adapter that will return a fragment for each of the three
