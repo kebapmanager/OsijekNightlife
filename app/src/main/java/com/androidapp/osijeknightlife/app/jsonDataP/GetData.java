@@ -22,7 +22,6 @@ public class GetData {
     public interface Listener{
         public void dataRecieved(boolean state);
     }
-
     private Listener mListener = null;
     public void registerListener (Listener listener) {
         mListener = listener;
@@ -45,12 +44,14 @@ public class GetData {
 
     Activity mainActivity;
     public GetData(Activity mainActivity){this.mainActivity = mainActivity;}
-    public void Start(String path,final String dan)
+
+
+    public void Start(String Path)
     {
-        this.path = path;
+        this.path = Path;
         DropBox DB = restAdapter.create(DropBox.class);
         pictures.add(getImageByName("bastion.png",mainActivity));
-        DB.Download(path + dan + ".json", new ResponseCallback() {
+        DB.Download(path+"/Event.json", new ResponseCallback() {
             @Override
             public void success(Response response)  {
 
@@ -71,7 +72,6 @@ public class GetData {
                 Status = "Data Recieved\n";
                 Status = "DONE";
                 info = true;
-                getImg(dan);
             }
 
             @Override
@@ -86,7 +86,7 @@ public class GetData {
     {
         DropBox DB = restAdapter.create(DropBox.class);
         Si = 0;
-        DB.Download(path +dan+"_"+ (Si+1)+".jpg", new ResponseCallback()
+        DB.Download(path +"/", new ResponseCallback()         //////////////////DODATI
         {
             @Override
             public void success(Response response)

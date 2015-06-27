@@ -55,6 +55,7 @@ gradlew
 .idea/
 BaseGameUtils/
 
+*.properties
 *.exe
 *.gwt
 *.gwt.xml

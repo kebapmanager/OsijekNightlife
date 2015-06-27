@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class ListFragment extends Fragment
 {
-    private ListView lv;
+    private ListView lv;///da
 
     public static ListFragment newInstance(int sectionNumber)
     {
@@ -85,6 +85,7 @@ public class ListFragment extends Fragment
 
     public static void changeLayoutProperties()
     {
+
         //Tu cu loadati iz Jsona u svoje objekte , zamjeniti ovo gore ^ sa ovom funkcijom koja
         // se poziva tek kad je sve skinuto sa servera
     }
