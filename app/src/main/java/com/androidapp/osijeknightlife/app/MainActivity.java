@@ -42,15 +42,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-<<<<<<< HEAD
-=======
         Calendar c = Calendar.getInstance();
         String Datum = c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.DAY_OF_MONTH);
 
-        events = ListFragment.newInstance(0);
-        clubs = GridFragment.newInstance(1);
-
->>>>>>> origin/master
         DW.registerListener(this);
         DW.Start(Datum);
 
