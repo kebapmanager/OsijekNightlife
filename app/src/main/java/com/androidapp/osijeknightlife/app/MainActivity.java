@@ -35,7 +35,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     {
         if(state)
         {
-            DW.info = true;
+            DW.info = true;//da
         }
     }
     @Override
