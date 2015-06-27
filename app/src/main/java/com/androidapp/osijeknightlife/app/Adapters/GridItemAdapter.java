@@ -57,7 +57,6 @@ public class GridItemAdapter extends BaseAdapter
         if(convertView == null){
             convertView = mInflater.inflate(R.layout.griditem_layout, null);
             holder = new ViewHolder();
-            holder.name = (TextView) convertView.findViewById(R.id.name);
             holder.image = (ImageView) convertView.findViewById(R.id.image);
 
             convertView.setTag(holder);
@@ -65,7 +64,6 @@ public class GridItemAdapter extends BaseAdapter
             holder = (ViewHolder) convertView.getTag();
         }
 
-//        holder.name.setText(clubList.get(position).getName());
         holder.image.setImageResource(clubList.get(position).getImageId());
 
         return convertView;
@@ -73,9 +71,6 @@ public class GridItemAdapter extends BaseAdapter
 
     static class ViewHolder{
         TextView name;
-//        TextView eventName;
-//        TextView date;
-//        TextView peopleComing;
         ImageView image;
     }
 }
