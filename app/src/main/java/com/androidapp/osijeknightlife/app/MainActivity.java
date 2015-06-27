@@ -20,7 +20,6 @@ import android.view.View;
 import com.androidapp.osijeknightlife.app.TabFragments.GridFragment;
 import com.androidapp.osijeknightlife.app.TabFragments.ListFragment;
 import com.androidapp.osijeknightlife.app.jsonDataP.GetData;
-import com.squareup.picasso.Picasso;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener,GetData.Listener {
 
