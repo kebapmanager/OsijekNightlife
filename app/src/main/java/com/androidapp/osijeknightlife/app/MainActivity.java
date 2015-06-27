@@ -26,9 +26,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     ViewPager mViewPager;
     GetData DW = new GetData(this);
 
-    Fragment events;
-    Fragment clubs;
-
     public void dataRecieved(boolean state)
     {
         if(state)
@@ -39,9 +36,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        events = ListFragment.newInstance(0);
-        clubs = GridFragment.newInstance(1);
 
         DW.registerListener(this);
         DW.Start("/15/6/","13");
@@ -180,10 +174,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             switch(position)
             {
                 case 0:
-                    fragment = events;
+                    fragment = ListFragment.newInstance(position);
+
                     break;
                 case 1:
-                    fragment = clubs;
+                    fragment = GridFragment.newInstance(position);
                     break;
 //                case 2:
 //                    fragment = SearchFragment.newInstance(position);
