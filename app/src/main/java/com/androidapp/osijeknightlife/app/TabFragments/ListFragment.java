@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class ListFragment extends Fragment
 {
-    private ListView lv;
+    private ListView lv;///da
 
     public static ListFragment newInstance(int sectionNumber)
     {
