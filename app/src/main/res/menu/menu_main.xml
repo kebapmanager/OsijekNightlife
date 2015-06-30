@@ -11,4 +11,8 @@
           app:showAsAction="ifRoom"
           android:title="Share"
           android:actionProviderClass="android.widget.ShareActionProvider" />
+    <item android:id="@+id/spinner"
+          android:title="ComboBox"
+          app:showAsAction="ifRoom"
+          app:actionViewClass="android.widget.Spinner" />
 </menu>

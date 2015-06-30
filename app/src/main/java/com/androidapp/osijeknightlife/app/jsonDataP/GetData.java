@@ -72,6 +72,8 @@ public class GetData {
                 Status = "Data Recieved\n";
                 Status = "DONE";
                 info = true;
+                mListener.dataRecieved(true);
+                System.out.println("retrofit Sucess");
             }
 
             @Override
@@ -79,6 +81,9 @@ public class GetData {
             {
                 System.out.println("Get data failed" + retrofitError.toString());
                 Status = "Failed to Recieve Data\n";
+                data = null;
+                mListener.dataRecieved(false);
+
             }
         });
     }

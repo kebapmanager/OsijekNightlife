@@ -1,9 +1,13 @@
 package com.androidapp.osijeknightlife.app;
 
+import java.lang.reflect.Array;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.ShareActionProvider;
@@ -17,6 +21,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import com.androidapp.osijeknightlife.app.TabFragments.GridFragment;
 import com.androidapp.osijeknightlife.app.TabFragments.ListFragment;
 import com.androidapp.osijeknightlife.app.jsonDataP.GetData;
@@ -26,12 +33,32 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
     GetData DW = new GetData(this);
+    int TryCounter = 0;
+    Fragment event,grid;
+    Calendar c = Calendar.getInstance();
+    String Datum;
+    int addMonth = 1;
+
+    String[] tjedan = {"Ponedjeljak","Utorak","Srijeda","Cetvrtak","Petak","Subota","Nedjelja"};
 
     public void dataRecieved(boolean state)
     {
         if(state)
         {
             DW.info = true;//da
+            event = ListFragment.newInstance(0,DW.data.getEvents());
+            mSectionsPagerAdapter.notifyDataSetChanged();
+            mViewPager.setAdapter(mSectionsPagerAdapter);
+            DW.registerListener(this);
+
+        }else {
+
+            TryCounter++;
+            DW.registerListener(this);
+            Calendar c = Calendar.getInstance();
+            String Datum = c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.DAY_OF_MONTH);
+            if(TryCounter < 30)
+                DW.Start(Datum);
         }
     }
     @Override
@@ -41,12 +68,13 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Calendar c = Calendar.getInstance();
-        String Datum = c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.DAY_OF_MONTH);
+        Datum = c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.DAY_OF_MONTH);
 
         DW.registerListener(this);
         DW.Start(Datum);
 
+        event = ListFragment.newInstance(0, DW.data.getEvents());
+        grid = GridFragment.newInstance(1);
         // Set up the action bar.
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -62,6 +90,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         // the TabListener interface, as the callback (listener) for when
         // this tab is selected.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter.registerDataSetObserver(new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+            }
+        });
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -82,6 +116,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 //                .setText("Search")
 //                .setTabListener(this));
     }
+    public void onCreateHelper()
+    {
+
+    }
     public void switchTab(int position)
     {
         switch(position)
@@ -101,15 +139,55 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 //                break;
         }
     }
+    public String[] getDates()
+    {
+        int j = 1;
+        String[] list = new String[5];
+        c = Calendar.getInstance();
+        for(int i = 0;i<5;i++) {
+
+            String day = Integer.toString(c.get(Calendar.DAY_OF_MONTH));
+            if(day.equals("1"))
+                j+=1;
+            int month = c.get(Calendar.MONTH)+j;
+
+            c.roll(Calendar.DAY_OF_MONTH,true);
+            list[i] = tjedan[c.get(Calendar.DAY_OF_WEEK)]+"("+day+"."+month+".)";
+        }
+
+
+        return list;
+    }
     private ShareActionProvider share;
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        String[] list = getDates();
+        MenuItem menuItem = menu.findItem(R.id.spinner);
+        Spinner spinner = (Spinner) MenuItemCompat.getActionView(menuItem);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item,getDates());
+        adapter.setDropDownViewResource(R.layout.spinner_dropdow_item);
+        spinner.setAdapter(adapter); // set the adapter to provide layout of rows and content
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                c = Calendar.getInstance();
+                for(int i = 0;i<position;i++){
+                    c.roll(Calendar.DAY_OF_MONTH, true);
+                    if(Integer.toString(c.get(Calendar.DAY_OF_MONTH)).equals("1"))
+                        c.roll(Calendar.MONTH,true);
+                }
+                Datum = c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.DAY_OF_MONTH);
 
-        MenuItem menuItem = menu.findItem(R.id.share);
-        share = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
-        MenuItemCompat.getActionProvider(menuItem);
+                DW.Start(Datum);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         return true;
     }
@@ -133,19 +211,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction)
     {
-        System.out.println("onTabSelected");
-        if (DW.info)
-        {
-            System.out.println("DW done");
-            switchTab(tab.getPosition());
-        }else System.out.println("Not done");
-
         // When the given tab is selected, switch to the corresponding page in the ViewPager.
         mViewPager.setCurrentItem(tab.getPosition());
     }
@@ -153,19 +223,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
-
-
-    public void searchButton(View view)
-    {
-        // template of opening new activity when button is pressed
-/*        Intent intent = new Intent(this, DisplayMessageActivity.class);
-
-        // This is how to get text from the input I think
-        EditText editText = (EditText) findViewById(R.id.edit_message);
-        String message = editText.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, message);
-        startActivity(intent);*/
-    }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter
     {
@@ -181,11 +238,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             switch(position)
             {
                 case 0:
-                    fragment = ListFragment.newInstance(position);
-
+                    fragment = event;
                     break;
                 case 1:
-                    fragment = GridFragment.newInstance(position);
+                    fragment = grid;
                     break;
 //                case 2:
 //                    fragment = SearchFragment.newInstance(position);
