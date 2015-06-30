@@ -147,12 +147,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         for(int i = 0;i<5;i++) {
 
             String day = Integer.toString(c.get(Calendar.DAY_OF_MONTH));
-            if(day.equals("1"))
+            if(day.equals("1")&&i!=0)
                 j+=1;
             int month = c.get(Calendar.MONTH)+j;
 
             c.roll(Calendar.DAY_OF_MONTH,true);
-            list[i] = tjedan[c.get(Calendar.DAY_OF_WEEK)]+"("+day+"."+month+".)";
+            list[i] = day+"."+month+".";
         }
 
 
@@ -163,7 +163,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        String[] list = getDates();
         MenuItem menuItem = menu.findItem(R.id.spinner);
         Spinner spinner = (Spinner) MenuItemCompat.getActionView(menuItem);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item,getDates());
@@ -175,7 +174,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 c = Calendar.getInstance();
                 for(int i = 0;i<position;i++){
                     c.roll(Calendar.DAY_OF_MONTH, true);
-                    if(Integer.toString(c.get(Calendar.DAY_OF_MONTH)).equals("1"))
+                    if(Integer.toString(c.get(Calendar.DAY_OF_MONTH)).equals("1") && i!=0)
                         c.roll(Calendar.MONTH,true);
                 }
                 Datum = c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.DAY_OF_MONTH);
