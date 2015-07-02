@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import com.androidapp.osijeknightlife.app.ListItem;
 import com.androidapp.osijeknightlife.app.Adapters.ListItemAdapter;
@@ -18,9 +19,9 @@ import java.util.List;
  * Created by Ivan on 20/06/2015.
  */
 
-public class ListFragment extends Fragment
+public class ListFragment extends android.support.v4.app.ListFragment
 {
-    private ListView lv;///da
+    public static ListView lv;///da
     public static List<Event> events;
 
     public static ListFragment newInstance(int sectionNumber,List<Event> data)
@@ -42,9 +43,8 @@ public class ListFragment extends Fragment
         View rootView = inflater.inflate(R.layout.list_layout, container, false);
 
         ArrayList<ListItem> eventList = getEventList();
-        ListView lv = (ListView)rootView.findViewById(R.id.list_layout);
+        lv = (ListView)rootView.findViewById(R.id.list_layout);
         lv.setAdapter(new ListItemAdapter(getActivity(), eventList));
-
         return rootView;
     }
     private ArrayList<ListItem> getEventList(){
