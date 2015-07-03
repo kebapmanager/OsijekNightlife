@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.androidapp.osijeknightlife.app.ListItem;
 import com.androidapp.osijeknightlife.app.Adapters.ListItemAdapter;
@@ -44,6 +45,7 @@ public class ListFragment extends android.support.v4.app.ListFragment
 
         ArrayList<ListItem> eventList = getEventList();
         lv = (ListView)rootView.findViewById(R.id.list_layout);
+        //ArrayAdapter<ListItem> adatpter = new ArrayAdapter<ListItem>(getActivity(),R.layout.listitem_layout,eventList);
         lv.setAdapter(new ListItemAdapter(getActivity(), eventList));
         return rootView;
     }
@@ -102,11 +104,16 @@ public class ListFragment extends android.support.v4.app.ListFragment
 
         return eventList;
     }
-
-    public static void changeLayoutProperties()
-    {
-
-        //Tu cu loadati iz Jsona u svoje objekte , zamjeniti ovo gore ^ sa ovom funkcijom koja
-        // se poziva tek kad je sve skinuto sa servera
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        mListener.Clicked(true,position);
     }
+    public interface Listener{
+        public void Clicked(boolean state,int position);
+    }
+    private Listener mListener = null;
+    public void registerListener (Listener listener) {
+        mListener = listener;
+    }
+
 }

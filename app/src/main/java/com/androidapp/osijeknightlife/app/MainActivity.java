@@ -32,7 +32,7 @@ import com.androidapp.osijeknightlife.app.TabFragments.ListFragment;
 import com.androidapp.osijeknightlife.app.jsonDataP.Event;
 import com.androidapp.osijeknightlife.app.jsonDataP.GetData;
 
-public class MainActivity extends ActionBarActivity implements ActionBar.TabListener,GetData.Listener {
+public class MainActivity extends ActionBarActivity implements ActionBar.TabListener,GetData.Listener,ListFragment.Listener {
 
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
@@ -48,33 +48,35 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     String[] tjedan = {"Ponedjeljak","Utorak","Srijeda","Cetvrtak","Petak","Subota","Nedjelja"};
 
+    public void Clicked(boolean state,int position)
+    {
+        if(state)
+        {
+            ListItem event = (ListItem)ListFragment.lv.getItemAtPosition(position);
+            for(int i = 0;i<DW.data.getEvents().size();i++)
+                if(DW.data.getEvents().get(i).getTitle().equals(event.getEventName()))
+                    setEventIspis(i);
+
+            setContentView(event_ispis);
+        }
+    }
+
     public void dataRecieved(boolean state)
     {
         if(state)
         {
-
-                    /*ListItem event = (ListItem)ListFragment.lv.getItemAtPosition(position);
-                    for(int i = 0;i<DW.data.getEvents().size();i++)
-                        if(DW.data.getEvents().get(i).getTitle().equals(event.getEventName()))
-                            setEventIspis(i);
-
-                    setContentView(event_ispis);/*/
-
             DW.info = true;
             event = ListFragment.newInstance(0,DW.data.getEvents());
             mSectionsPagerAdapter.notifyDataSetChanged();
             mViewPager.setAdapter(mSectionsPagerAdapter);
             DW.registerListener(this);
+            ListFragment.registerListener(this);
             setContentView(mViewPager);
             loading.setVisibility(View.INVISIBLE);
             mViewPager.setVisibility(View.VISIBLE);
 
-
-
-
-
-
-        }else {
+        }
+        else {
 
             TryCounter++;
             DW.registerListener(this);
