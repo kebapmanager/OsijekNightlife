@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by Ivan on 20/06/2015.
  */
-
+///edit
 public class ListFragment extends android.support.v4.app.ListFragment
 {
     public static ListView lv;///da

@@ -33,7 +33,7 @@ import com.androidapp.osijeknightlife.app.jsonDataP.Event;
 import com.androidapp.osijeknightlife.app.jsonDataP.GetData;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener,GetData.Listener,ListFragment.Listener {
-
+///edit
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
     GetData DW = new GetData(this);
