@@ -48,17 +48,13 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     String[] tjedan = {"Ponedjeljak","Utorak","Srijeda","Cetvrtak","Petak","Subota","Nedjelja"};
 
-    public void Clicked(boolean state,int position)
-    {
-        if(state)
-        {
-            ListItem event = (ListItem)ListFragment.lv.getItemAtPosition(position);
-            for(int i = 0;i<DW.data.getEvents().size();i++)
-                if(DW.data.getEvents().get(i).getTitle().equals(event.getEventName()))
-                    setEventIspis(i);
 
-            setContentView(event_ispis);
-        }
+    public void Clicked(int position)
+    {
+        ListItem event = (ListItem)ListFragment.lv.getItemAtPosition(position);
+        for(int i = 0;i<DW.data.getEvents().size();i++)
+            if(DW.data.getEvents().get(i).getTitle().equals(event.getEventName()))
+                setEventIspis(i);
     }
 
     public void dataRecieved(boolean state)
@@ -70,14 +66,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             mSectionsPagerAdapter.notifyDataSetChanged();
             mViewPager.setAdapter(mSectionsPagerAdapter);
             DW.registerListener(this);
-            ListFragment.registerListener(this);
             setContentView(mViewPager);
-            loading.setVisibility(View.INVISIBLE);
+            //loading.setVisibility(View.INVISIBLE);
             mViewPager.setVisibility(View.VISIBLE);
 
         }
         else {
-
             TryCounter++;
             DW.registerListener(this);
             Calendar c = Calendar.getInstance();
@@ -102,6 +96,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         event_ispis = li.inflate(R.layout.event_layout,null);
 
         event = ListFragment.newInstance(0, DW.data.getEvents());
+        ListFragment.registerListener(this);
         grid = GridFragment.newInstance(1);
         // Set up the action bar.
         // Create the adapter that will return a fragment for each of the three
@@ -125,6 +120,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             }
         });
         mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
@@ -164,19 +160,22 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
     public void setEventIspis(int evNum)
     {
-        TextView[] texts ={ (TextView)findViewById(R.id.event_title),
-                            (TextView)findViewById(R.id.event_club),
-                            (TextView)findViewById(R.id.event_music),
-                            (TextView)findViewById(R.id.event_text)};
+        //event_ispis = li.inflate(R.layout.event_layout,null);
+
+        setContentView(event_ispis);
+        TextView Naslov = (TextView)findViewById(R.id.event_title);
+        TextView Klub = (TextView)findViewById(R.id.event_club);
+        TextView Glazba = (TextView)findViewById(R.id.event_music);
+        TextView Text = (TextView)findViewById(R.id.event_text);
         ImageButton clubButton = (ImageButton)findViewById(R.id.club_img_button);
         Event ev = DW.data.getEvents().get(evNum);
-        texts[0].setText(ev.getTitle());
-        texts[1].setText(ev.getClub());
-        texts[2].setText(ev.getMusic());
-        texts[3].setText(ev.getText());
+        Naslov.setText(ev.getTitle());
+        Klub.setText(ev.getClub());
+        Glazba.setText(ev.getMusic());
+        Text.setText(ev.getText());
         if(ev.getClub().equals("Tufna"))
             clubButton.setImageResource(R.drawable.tufna);
-        event_ispis = li.inflate(R.layout.event_layout,null);
+
 
     }
     private ShareActionProvider share;
@@ -226,7 +225,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     @Override
     public void onBackPressed() {
         setContentView(mViewPager);
-
+        ListFragment.registerListener(this);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item)

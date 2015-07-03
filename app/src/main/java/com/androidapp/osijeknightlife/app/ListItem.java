@@ -1,6 +1,7 @@
 package com.androidapp.osijeknightlife.app;
 
 import android.graphics.Bitmap;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
  * Created by Ivan on 20/06/2015.
@@ -47,5 +48,9 @@ public class ListItem
     public Bitmap getImage()
     {
         return image;
+    }
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }

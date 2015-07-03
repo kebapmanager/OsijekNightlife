@@ -6,9 +6,10 @@
                 android:layout_height="match_parent"
                 tools:context=".MainActivity$AboutFragment"
                 android:id="@+id/listitem_layout"
-                android:focusableInTouchMode="true"
+                android:focusableInTouchMode="false"
                 android:clickable="false"
-                android:background="@drawable/color_background">
+                android:background="@drawable/color_background"
+                android:descendantFocusability="blocksDescendants">
 
     <ImageView
             android:layout_width="wrap_content"
@@ -20,7 +21,6 @@
             android:longClickable="false"
             android:maxWidth="150dp"
             android:minHeight="100dp"
-            android:nestedScrollingEnabled="false"
             android:minWidth="100dp"
             android:maxHeight="150dp"
             android:layout_marginLeft="5dp"
@@ -58,7 +58,6 @@
             android:text="Date"
             android:id="@+id/date"
             android:layout_alignBottom="@+id/image"
-            android:layout_toEndOf="@+id/image"
             android:textColor="@drawable/color_text"
             android:layout_alignLeft="@+id/eventName"/>
 

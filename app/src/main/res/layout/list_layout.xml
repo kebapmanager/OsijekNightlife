@@ -2,11 +2,11 @@
 <ListView xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
                 tools:context=".MainActivity$AboutFragment"
                 android:id="@+id/list_layout"
-                android:focusableInTouchMode="true"
-                android:clickable="false"
-                android:background="@drawable/color_background">
+                android:focusableInTouchMode="false"
+                android:clickable="true"
+                android:background="@drawable/color_background" android:focusable="false">
 </ListView>

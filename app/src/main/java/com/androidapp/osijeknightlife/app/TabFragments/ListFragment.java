@@ -33,6 +33,7 @@ public class ListFragment extends android.support.v4.app.ListFragment
         ListFragment fragment = new ListFragment();
         Bundle args = new Bundle();
         args.putInt("section_number", sectionNumber);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -45,8 +46,12 @@ public class ListFragment extends android.support.v4.app.ListFragment
 
         ArrayList<ListItem> eventList = getEventList();
         lv = (ListView)rootView.findViewById(R.id.list_layout);
-        //ArrayAdapter<ListItem> adatpter = new ArrayAdapter<ListItem>(getActivity(),R.layout.listitem_layout,eventList);
-        lv.setAdapter(new ListItemAdapter(getActivity(), eventList));
+        this.setListAdapter(new ListItemAdapter(getActivity(),eventList));
+
+
+
+
+        //lv.setAdapter(new ListItemAdapter(getActivity(), eventList));
         return rootView;
     }
     private ArrayList<ListItem> getEventList(){
@@ -79,6 +84,7 @@ public class ListFragment extends android.support.v4.app.ListFragment
             event.setName("Cadillac");
             event.setDate("13.6");
             event.setEventName("Zidov uzvraca udarac");
+
             event.setPeopleComing("234");
             eventList.add(event);
 
@@ -106,13 +112,14 @@ public class ListFragment extends android.support.v4.app.ListFragment
     }
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        mListener.Clicked(true,position);
+        mListener.Clicked(position);
     }
+
     public interface Listener{
-        public void Clicked(boolean state,int position);
+        public void Clicked(int position);
     }
-    private Listener mListener = null;
-    public void registerListener (Listener listener) {
+    private static Listener mListener = null;
+    public static void registerListener (Listener listener) {
         mListener = listener;
     }
 
