@@ -22,7 +22,7 @@ import java.util.List;
 ///edit
 public class ListFragment extends android.support.v4.app.ListFragment
 {
-    public static ListView lv;///da
+    public ListView lv;///da
     public static List<Event> events;
 
     public static ListFragment newInstance(int sectionNumber,List<Event> data)
@@ -47,7 +47,6 @@ public class ListFragment extends android.support.v4.app.ListFragment
         ArrayList<ListItem> eventList = getEventList();
         lv = (ListView)rootView.findViewById(R.id.list_layout);
         this.setListAdapter(new ListItemAdapter(getActivity(),eventList));
-
 
 
 
@@ -112,11 +111,11 @@ public class ListFragment extends android.support.v4.app.ListFragment
     }
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        mListener.Clicked(position);
+        mListener.Clicked(position,id);
     }
 
     public interface Listener{
-        public void Clicked(int position);
+        public void Clicked(int position,long id);
     }
     private static Listener mListener = null;
     public static void registerListener (Listener listener) {

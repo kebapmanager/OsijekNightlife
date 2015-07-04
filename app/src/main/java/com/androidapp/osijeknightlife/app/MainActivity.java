@@ -49,12 +49,13 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     String[] tjedan = {"Ponedjeljak","Utorak","Srijeda","Cetvrtak","Petak","Subota","Nedjelja"};
 
 
-    public void Clicked(int position)
+    public void Clicked(int position,long id)
     {
-        ListItem event = (ListItem)ListFragment.lv.getItemAtPosition(position);
+
+        /*ListItem event = (ListItem)ListFragment.lv.getAdapter().getItem(position);
         for(int i = 0;i<DW.data.getEvents().size();i++)
-            if(DW.data.getEvents().get(i).getTitle().equals(event.getEventName()))
-                setEventIspis(i);
+            if(DW.data.getEvents().get(i).getTitle().equals(event.getEventName()))*/
+                setEventIspis((int)id);
     }
 
     public void dataRecieved(boolean state)
@@ -161,14 +162,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void setEventIspis(int evNum)
     {
         //event_ispis = li.inflate(R.layout.event_layout,null);
-
+        int num = evNum;
         setContentView(event_ispis);
         TextView Naslov = (TextView)findViewById(R.id.event_title);
         TextView Klub = (TextView)findViewById(R.id.event_club);
         TextView Glazba = (TextView)findViewById(R.id.event_music);
         TextView Text = (TextView)findViewById(R.id.event_text);
         ImageButton clubButton = (ImageButton)findViewById(R.id.club_img_button);
-        Event ev = DW.data.getEvents().get(evNum);
+        Event ev = DW.data.getEvents().get(num);
         Naslov.setText(ev.getTitle());
         Klub.setText(ev.getClub());
         Glazba.setText(ev.getMusic());
@@ -224,8 +225,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
     @Override
     public void onBackPressed() {
-        setContentView(mViewPager);
+
+        mSectionsPagerAdapter.notifyDataSetChanged();
+        mViewPager.setAdapter(mSectionsPagerAdapter);
         ListFragment.registerListener(this);
+        setContentView(mViewPager);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -266,10 +270,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             switch(position)
             {
                 case 0:
-                    fragment = event;
+                    fragment = ListFragment.newInstance(0,DW.data.getEvents());
                     break;
                 case 1:
-                    fragment = grid;
+                    fragment = GridFragment.newInstance(1);
                     break;
 //                case 2:
 //                    fragment = SearchFragment.newInstance(position);
