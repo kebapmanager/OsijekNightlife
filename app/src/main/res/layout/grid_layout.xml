@@ -5,9 +5,12 @@
                 android:layout_height="match_parent"
                 tools:context=".MainActivity$AboutFragment"
                 android:background="@drawable/color_background"
-                android:id="@+id/grid_layout"
+                android:id="@android:id/list"
                 android:numColumns="auto_fit"
                 android:columnWidth="100dp"
                 android:gravity="center"
-                android:stretchMode="columnWidth">
+                android:stretchMode="columnWidth"
+                android:focusable="false"
+                android:clickable="false"
+                android:focusableInTouchMode="false">
 </GridView>

@@ -5,7 +5,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ListView;
 import com.androidapp.osijeknightlife.app.Adapters.GridItemAdapter;
 import com.androidapp.osijeknightlife.app.GridItem;
 import com.androidapp.osijeknightlife.app.R;
@@ -16,7 +18,7 @@ import java.util.ArrayList;
  * Created by Ivan on 20/06/2015.
  */
 
-public class GridFragment extends Fragment
+public class GridFragment extends com.androidapp.osijeknightlife.app.GridFragment
 {
     private GridView lv;
 
@@ -36,8 +38,10 @@ public class GridFragment extends Fragment
         View rootView = inflater.inflate(R.layout.grid_layout, container, false);
 
         ArrayList<GridItem> clubList = getClubList();
-        GridView lv = (GridView)rootView.findViewById(R.id.grid_layout);
-        lv.setAdapter(new GridItemAdapter(getActivity(), clubList));
+        lv = (GridView)rootView.findViewById(android.R.id.list);
+
+        this.setGridAdapter(new GridItemAdapter(getActivity(), clubList));
+        //lv.setAdapter(new GridItemAdapter(getActivity(), clubList));
 
         return rootView;
     }
@@ -72,10 +76,15 @@ public class GridFragment extends Fragment
 
         return clubList;
     }
-
-    public static void changeLayoutProperties()
-    {
-        //Tu cu loadati iz Jsona u svoje objekte , zamjeniti ovo gore ^ sa ovom funkcijom koja
-        // se poziva tek kad je sve skinuto sa servera
+    @Override
+    public void onGridItemClick(GridView g, View v, int position, long id) {
+        mListener.GridClicked((int)id);
+    }
+    public interface Listener{
+        public void GridClicked(int id);
+    }
+    private static Listener mListener = null;
+    public static void registerListener (Listener listener) {
+        mListener = listener;
     }
 }

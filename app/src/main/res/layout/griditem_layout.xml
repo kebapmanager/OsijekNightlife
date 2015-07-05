@@ -6,18 +6,20 @@
                 android:layout_height="wrap_content"
                 tools:context=".MainActivity$AboutFragment"
                 android:id="@+id/griditem_layout"
-                android:focusableInTouchMode="true"
-                android:clickable="true"
-                android:background="#ff333234">
+                android:background="#ff333234"
+                android:focusable="false"
+                android:clickable="false"
+                android:focusableInTouchMode="false">
     <ImageView  android:orientation="vertical"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 tools:context=".MainActivity$AboutFragment"
                 android:id="@+id/image"
-                android:focusableInTouchMode="true"
-                android:clickable="true"
                 android:background="@drawable/color_image"
                 android:scaleType="centerInside"
                 android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"/>
+                android:layout_marginTop="5dp"
+                android:focusable="false"
+                android:clickable="false"
+                android:focusableInTouchMode="false"/>
 </RelativeLayout>

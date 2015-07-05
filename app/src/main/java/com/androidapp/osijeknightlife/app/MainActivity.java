@@ -32,7 +32,7 @@ import com.androidapp.osijeknightlife.app.TabFragments.ListFragment;
 import com.androidapp.osijeknightlife.app.jsonDataP.Event;
 import com.androidapp.osijeknightlife.app.jsonDataP.GetData;
 
-public class MainActivity extends ActionBarActivity implements ActionBar.TabListener,GetData.Listener,ListFragment.Listener {
+public class MainActivity extends ActionBarActivity implements ActionBar.TabListener,GetData.Listener,ListFragment.Listener,GridFragment.Listener {
 ///edit
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
@@ -43,19 +43,18 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     String Datum;
     int addMonth = 1,pamtilo = 0;
     FooThread fooThread;
-    View loading,event_ispis;
+    View loading,event_ispis,club_ispis;
     LayoutInflater li;
 
     String[] tjedan = {"Ponedjeljak","Utorak","Srijeda","Cetvrtak","Petak","Subota","Nedjelja"};
 
-
+    public void GridClicked(int id)
+    {
+        setKlubIspis(id);
+    }
     public void Clicked(int position,long id)
     {
-
-        /*ListItem event = (ListItem)ListFragment.lv.getAdapter().getItem(position);
-        for(int i = 0;i<DW.data.getEvents().size();i++)
-            if(DW.data.getEvents().get(i).getTitle().equals(event.getEventName()))*/
-                setEventIspis((int)id);
+        setEventIspis((int)id);
     }
 
     public void dataRecieved(boolean state)
@@ -95,10 +94,13 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         LayoutInflater li=(LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         loading = li.inflate(R.layout.loading_main,null);
         event_ispis = li.inflate(R.layout.event_layout,null);
+        club_ispis = li.inflate(R.layout.club_layout,null);
+
 
         event = ListFragment.newInstance(0, DW.data.getEvents());
         ListFragment.registerListener(this);
         grid = GridFragment.newInstance(1);
+        GridFragment.registerListener(this);
         // Set up the action bar.
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -161,7 +163,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
     public void setEventIspis(int evNum)
     {
-        //event_ispis = li.inflate(R.layout.event_layout,null);
         int num = evNum;
         setContentView(event_ispis);
         TextView Naslov = (TextView)findViewById(R.id.event_title);
@@ -178,6 +179,15 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             clubButton.setImageResource(R.drawable.tufna);
 
 
+    }
+    public void setKlubIspis(int id)
+    {
+        setContentView(club_ispis);
+        TextView Naslov = (TextView)findViewById(R.id.club);
+        TextView Text = (TextView)findViewById(R.id.text);
+        ImageView img = (ImageView)findViewById(R.id.logo);
+        Naslov.setText("Ime Kluba jel");
+        Text.setText("Tekst kluba\nkoko os\ntako je");
     }
     private ShareActionProvider share;
     @Override
@@ -228,6 +238,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         mSectionsPagerAdapter.notifyDataSetChanged();
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setCurrentItem(getSupportActionBar().getSelectedTab().getPosition());
         ListFragment.registerListener(this);
         setContentView(mViewPager);
     }
