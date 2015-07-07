@@ -6,10 +6,6 @@
           android:title="@string/action_settings"
           android:orderInCategory="100"
           app:showAsAction="never"/>
-    <item android:id="@+id/share"
-          app:showAsAction="ifRoom"
-          android:title="Share"
-          android:actionProviderClass="android.widget.ShareActionProvider" />
     <item android:id="@+id/spinner"
           android:title="ComboBox"
           app:showAsAction="ifRoom"

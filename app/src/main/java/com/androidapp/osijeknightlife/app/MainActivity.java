@@ -50,10 +50,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     public void GridClicked(int id)
     {
+        getSupportActionBar().hide();
         setKlubIspis(id);
     }
     public void Clicked(int position,long id)
     {
+        getSupportActionBar().hide();
         setEventIspis((int)id);
     }
 
@@ -236,6 +238,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     @Override
     public void onBackPressed() {
 
+        getSupportActionBar().show();
         mSectionsPagerAdapter.notifyDataSetChanged();
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setCurrentItem(getSupportActionBar().getSelectedTab().getPosition());
