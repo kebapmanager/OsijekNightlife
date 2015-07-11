@@ -58,30 +58,57 @@ public class ListItemAdapter extends BaseAdapter
         if(convertView == null){
             convertView = mInflater.inflate(R.layout.listitem_layout, null);
             holder = new ViewHolder();
-            holder.name = (TextView) convertView.findViewById(R.id.name);
-            holder.eventName = (TextView) convertView.findViewById(R.id.eventName);
-            holder.date = (TextView) convertView.findViewById(R.id.date);
-            holder.peopleComing = (TextView) convertView.findViewById(R.id.peopleComing);
+
+            holder.eventName = (TextView) convertView.findViewById(R.id.naslov_listitem);
+            holder.date = (TextView) convertView.findViewById(R.id.datum_listitem);
+            holder.ev_image = (ImageView) convertView.findViewById(R.id.event_img_listitem);
+            holder.image = (ImageView) convertView.findViewById(R.id.club_img_listitem);
+
+
+            //holder.name = (TextView) convertView.findViewById(R.id.name);
+            //holder.peopleComing = (TextView) convertView.findViewById(R.id.peopleComing);
 
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.name.setText(eventList.get(position).getName());
+        //holder.name.setText(eventList.get(position).getName());
         holder.eventName.setText(eventList.get(position).getEventName());
         holder.date.setText(eventList.get(position).getDate());
-        holder.peopleComing.setText(eventList.get(position).getPeopleComing());
-//        holder.image.setImageBitmap(eventList.get(position).getImage());
+        if(eventList.get(position).getev_image() != null)holder.ev_image.setImageBitmap(eventList.get(position).getev_image());
+
+        switch (eventList.get(position).getName())
+        {
+            case "Bastion":
+                holder.image.setImageResource(R.drawable.bastion);
+                break;
+            case "Tufna":
+                holder.image.setImageResource(R.drawable.tufna);
+                break;
+            case "Old Bridge Pub":
+                holder.image.setImageResource(R.drawable.obp);
+                break;
+            case "Matrix":
+                holder.image.setImageResource(R.drawable.matrix);
+                break;
+        }
+
+        //holder.peopleComing.setText(eventList.get(position).getPeopleComing());
+
+        //holder.image.setImageBitmap(eventList.get(position).getImage());
+        //holder.ev_image.setImageBitmap(eventList.get(position).getImage());
+
 
         return convertView;
     }
 
     static class ViewHolder{
-        TextView name;
+        //TextView name;
         TextView eventName;
         TextView date;
-        TextView peopleComing;
+        //TextView peopleComing;
         ImageView image;
+        ImageView ev_image;
     }
 }

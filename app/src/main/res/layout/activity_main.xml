@@ -5,4 +5,5 @@
                                    android:layout_height="match_parent"
                                    tools:context=".MainActivity" android:background="#ff2d3744"
                                    android:focusable="false"
-                                   android:clickable="false"/>
+                                   android:clickable="false"
+                                   android:paddingTop="172dp"/>

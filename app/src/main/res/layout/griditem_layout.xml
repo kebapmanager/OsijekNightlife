@@ -6,7 +6,7 @@
                 android:layout_height="wrap_content"
                 tools:context=".MainActivity$AboutFragment"
                 android:id="@+id/griditem_layout"
-                android:background="#ff333234"
+                android:background="@drawable/ljubicasto"
                 android:focusable="false"
                 android:clickable="false"
                 android:focusableInTouchMode="false">
@@ -14,7 +14,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 tools:context=".MainActivity$AboutFragment"
-                android:id="@+id/image"
+                android:id="@+id/club_img_listitem"
                 android:background="@drawable/color_image"
                 android:scaleType="centerInside"
                 android:layout_marginLeft="5dp"

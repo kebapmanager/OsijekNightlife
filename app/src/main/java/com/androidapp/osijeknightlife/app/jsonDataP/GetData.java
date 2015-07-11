@@ -41,6 +41,7 @@ public class GetData {
             .build();
     String path,extrPath;
     int Si;
+    public Bitmap[][] Slike = new Bitmap[20][5];
 
     Activity mainActivity;
     public GetData(Activity mainActivity){this.mainActivity = mainActivity;}
@@ -72,8 +73,15 @@ public class GetData {
                 Status = "Data Recieved\n";
                 Status = "DONE";
                 info = true;
-                mListener.dataRecieved(true);
+                //mListener.dataRecieved(true);
                 System.out.println("retrofit Sucess");
+                for(int i = 0;i<data.getEvents().size();i++)
+                    if(data.getEvents().get(i).getPics().size() != 0)
+                    {
+                        getImg(i,true);
+                        break;
+                    }
+                else if(data.getEvents().get(i).getPics().size() == 0)mListener.dataRecieved(true);
             }
 
             @Override
@@ -87,11 +95,11 @@ public class GetData {
             }
         });
     }
-    public void getImg(final String dan)
+    public void getImg(final int event, final boolean Flag)
     {
         DropBox DB = restAdapter.create(DropBox.class);
         Si = 0;
-        DB.Download(path +"/", new ResponseCallback()         //////////////////DODATI
+        DB.Download(path +"/"+data.getEvents().get(event).getPics().get(Si), new ResponseCallback()         //////////////////DODATI
         {
             @Override
             public void success(Response response)
@@ -105,28 +113,40 @@ public class GetData {
                 catch (Exception e) {}
 
                 mutable = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-                saveImg(mutable);
-                pictures.add(Si, mutable);
+                //saveImg(mutable);
+                Slike[event][Si] = mutable;
                 Si++;
-                if (Si < data.getEvents().get(0).getPics().size())
-                    moarImg(dan);
-                else if (mListener != null && Si == data.getEvents().get(0).getPics().size()) {
-                    mListener.dataRecieved(true);
-                    done = true;
+
+                if(Flag)
+                {
+                    if(event+1 == data.getEvents().size())
+                    {
+                        mListener.dataRecieved(true);
+                    }
+                    else if(event+1 < data.getEvents().size())
+                        getImg(event+1,true);
+                }
+                else {
+                    if (Si < data.getEvents().get(event).getPics().size())
+                        moarImg(event);
+                    else if (mListener != null && Si == data.getEvents().get(event).getPics().size()) {
+                        mListener.dataRecieved(true);
+                        done = true;
+                    }
                 }
             }
             @Override
             public void failure(RetrofitError error)
             {
-                Status += "\nFailed to recieve Pic : " + dan + (Si + 1) + ".jpg" + "\n";
+                Status += "\nFailed to recieve Pic : " + data.getEvents().get(event).getPics().get(Si)+".jpg" + "\n";
             }
         });
     }
-    private void moarImg(final String dan)
+    private void moarImg(final int event)
     {
         DropBox DB = restAdapter.create(DropBox.class);
 
-        DB.Download(path +dan+"_"+ (Si+1)+".jpg", new ResponseCallback()
+        DB.Download(path +"/"+data.getEvents().get(event).getPics().get(Si), new ResponseCallback()
         {
             @Override
             public void success(Response response)
@@ -140,20 +160,20 @@ public class GetData {
                 catch (Exception e) {}
 
                 mutable = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-                saveImg(mutable);
+                //saveImg(mutable);
 
-                pictures.add(Si, mutable);
+                Slike[event][Si] = mutable;
                 Si++;
-                if (Si < data.getEvents().get(0).getPics().size())
-                    moarImg(dan);
-                else if (mListener != null && Si == data.getEvents().get(0).getPics().size()){
+                if (Si < data.getEvents().get(event).getPics().size())
+                    moarImg(event);
+                else if (mListener != null && Si == data.getEvents().get(event).getPics().size()){
                      mListener.dataRecieved(true);
                 }
             }
             @Override
             public void failure(RetrofitError error)
             {
-                Status += "\nFailed to recieve Pic : " + dan + (Si + 1) + ".jpg" + "\n";
+                Status += "\nFailed to recieve Pic : " + data.getEvents().get(event).getPics().get(Si)+".jpg" + "\n";
             }
         });
     }

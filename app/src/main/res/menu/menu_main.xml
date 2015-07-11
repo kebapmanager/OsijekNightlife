@@ -9,5 +9,5 @@
     <item android:id="@+id/spinner"
           android:title="ComboBox"
           app:showAsAction="ifRoom"
-          app:actionViewClass="android.widget.Spinner" />
+          app:actionViewClass="android.widget.Spinner"/>
 </menu>

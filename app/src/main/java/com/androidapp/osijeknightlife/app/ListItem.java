@@ -14,6 +14,7 @@ public class ListItem
     String peopleComing;
     String imageName;
     Bitmap image;
+    Bitmap ev_image;
 
     public void setName(String name){this.name = name;}
     public void setEventName(String eventName){this.eventName = eventName;}
@@ -23,6 +24,10 @@ public class ListItem
     public void setImage(Bitmap image)
     {
         this.image = image;
+    }
+    public void setev_image(Bitmap ev_image)
+    {
+        this.ev_image = ev_image;
     }
 
     public String getName()
@@ -49,6 +54,7 @@ public class ListItem
     {
         return image;
     }
+    public Bitmap getev_image(){return ev_image;}
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);

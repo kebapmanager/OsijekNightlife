@@ -7,82 +7,80 @@
                 tools:context=".MainActivity$AboutFragment"
                 android:id="@+id/listitem_layout"
                 android:focusableInTouchMode="false"
-                android:background="@drawable/color_background"
+                android:background="@drawable/ljubicasto"
                 android:descendantFocusability="blocksDescendants"
                 android:focusable="false"
                 android:clickable="false">
 
-    <FrameLayout
+    <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" android:layout_marginTop="10dp" android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp" android:background="@drawable/color_background">
-        <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/image"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:longClickable="false"
-                android:maxWidth="150dp"
-                android:minHeight="100dp"
-                android:minWidth="100dp"
-                android:maxHeight="150dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:background="#3f51b5"
-                android:focusable="false"
-                android:clickable="false"/>
+            android:layout_height="wrap_content" android:layout_below="@+id/relativeLayout"
+            android:layout_alignLeft="@+id/relativeLayout" android:background="@drawable/ljubicasto">
+        <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="100dp" android:layout_marginTop="32dp" android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp" android:background="@drawable/pink"
+                android:layout_alignParentTop="true" android:id="@+id/relativeLayout">
+            <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:id="@+id/club_img_listitem"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:longClickable="false"
+                    android:maxWidth="100dp"
+                    android:minHeight="100dp"
+                    android:minWidth="100dp"
+                    android:maxHeight="100dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="#3f51b5"
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:scaleType="centerCrop"/>
+            <FrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/club_img_listitem" android:layout_toEndOf="@+id/club_img_listitem"
+                    android:layout_marginLeft="5dp" android:paddingTop="6dp">
+                <ImageView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:id="@+id/event_img_listitem" android:layout_gravity="center" android:clickable="false"
+                        android:layout_margin="5dp" android:background="#3f51b5"
+                        android:scaleType="centerCrop"/>
+            </FrameLayout>
+        </RelativeLayout>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Event name"
-                android:id="@+id/eventName"
-                android:textColor="@drawable/color_text"
-                android:layout_below="@+id/name"
-                android:layout_alignLeft="@+id/name"
-                android:layout_alignStart="@+id/name"
-                android:focusable="false"
-                android:clickable="false" android:layout_gravity="center_horizontal|top"/>
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Small Text"
+                android:id="@+id/dan_listitem" android:layout_gravity="left|top"
+                android:textColor="@drawable/pink"
+                android:layout_alignParentTop="true" android:layout_alignLeft="@+id/relativeLayout"
+                android:layout_alignStart="@+id/relativeLayout"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="People Coming"
-                android:id="@+id/peopleComing"
-                android:layout_alignBottom="@+id/image"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:textColor="@drawable/color_text"
-                android:layout_marginRight="5dp"
-                android:focusable="false"
-                android:clickable="false" android:layout_gravity="right|bottom"/>
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:text="Medium Text"
+                android:id="@+id/naslov_listitem" android:layout_gravity="center_horizontal|top"
+                android:textColor="@drawable/tekst_bijela" android:background="@drawable/pink"
+                android:layout_marginLeft="40dp"
+                android:layout_marginStart="40dp" android:layout_below="@+id/dan_listitem"
+                android:layout_toRightOf="@+id/dan_listitem" android:layout_toEndOf="@+id/dan_listitem"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Name"
-                android:id="@+id/name"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/image"
-                android:layout_toEndOf="@+id/image"
-                android:textColor="@drawable/color_text"
-                android:layout_marginLeft="5dp"
-                android:focusable="false"
-                android:clickable="false" android:layout_gravity="center"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Date"
-                android:id="@+id/date"
-                android:layout_alignBottom="@+id/image"
-                android:textColor="@drawable/color_text"
-                android:layout_alignLeft="@+id/eventName"
-                android:focusable="false"
-                android:clickable="false" android:layout_gravity="right|top"/>
-    </FrameLayout>
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Small Text"
+                android:id="@+id/datum_listitem" android:layout_gravity="right|top"
+                android:textColor="@drawable/pink"
+                android:layout_alignParentTop="true" android:layout_alignRight="@+id/relativeLayout"
+                android:layout_alignEnd="@+id/relativeLayout"/>
+    </RelativeLayout>
 
 </RelativeLayout>

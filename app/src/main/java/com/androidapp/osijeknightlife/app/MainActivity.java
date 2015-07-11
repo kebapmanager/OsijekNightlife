@@ -9,8 +9,11 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.database.DataSetObserver;
+import android.gesture.GestureUtils;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.view.GestureDetectorCompat;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.ShareActionProvider;
@@ -21,10 +24,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.*;
 import android.widget.*;
 import com.androidapp.osijeknightlife.app.Adapters.ListItemAdapter;
 import com.androidapp.osijeknightlife.app.TabFragments.GridFragment;
@@ -32,7 +34,8 @@ import com.androidapp.osijeknightlife.app.TabFragments.ListFragment;
 import com.androidapp.osijeknightlife.app.jsonDataP.Event;
 import com.androidapp.osijeknightlife.app.jsonDataP.GetData;
 
-public class MainActivity extends ActionBarActivity implements ActionBar.TabListener,GetData.Listener,ListFragment.Listener,GridFragment.Listener {
+public class MainActivity extends ActionBarActivity
+        implements ActionBar.TabListener,GetData.Listener,ListFragment.Listener,GridFragment.Listener {
 ///edit
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
@@ -58,13 +61,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         getSupportActionBar().hide();
         setEventIspis((int)id);
     }
-
     public void dataRecieved(boolean state)
     {
         if(state)
         {
             DW.info = true;
-            event = ListFragment.newInstance(0,DW.data.getEvents());
+            event = ListFragment.newInstance(0,DW.data.getEvents(),DW.Slike);
             mSectionsPagerAdapter.notifyDataSetChanged();
             mViewPager.setAdapter(mSectionsPagerAdapter);
             DW.registerListener(this);
@@ -78,7 +80,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             DW.registerListener(this);
             Calendar c = Calendar.getInstance();
             String Datum = c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.DAY_OF_MONTH);
-            if(TryCounter < 30)
+            if(TryCounter < 10)
                 DW.Start(Datum);
         }
     }
@@ -98,8 +100,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         event_ispis = li.inflate(R.layout.event_layout,null);
         club_ispis = li.inflate(R.layout.club_layout,null);
 
-
-        event = ListFragment.newInstance(0, DW.data.getEvents());
+        event = ListFragment.newInstance(0, DW.data.getEvents(),DW.Slike);
         ListFragment.registerListener(this);
         grid = GridFragment.newInstance(1);
         GridFragment.registerListener(this);
@@ -140,9 +141,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         actionBar.addTab(actionBar.newTab()
                 .setText("Klubovi")
                 .setTabListener(this));
-//        actionBar.addTab(actionBar.newTab()
-//                .setText("Search")
-//                .setTabListener(this));
+        //actionBar.setDisplayShowTitleEnabled(false);
+        //actionBar.setDisplayShowHomeEnabled(false);
     }
     public String[] getDates()
     {
@@ -284,7 +284,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             switch(position)
             {
                 case 0:
-                    fragment = ListFragment.newInstance(0,DW.data.getEvents());
+                    fragment = ListFragment.newInstance(0,DW.data.getEvents(),DW.Slike);
                     break;
                 case 1:
                     fragment = GridFragment.newInstance(1);

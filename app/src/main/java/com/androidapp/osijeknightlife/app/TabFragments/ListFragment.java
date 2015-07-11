@@ -1,10 +1,11 @@
 package com.androidapp.osijeknightlife.app.TabFragments;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.util.Log;
+import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -24,9 +25,11 @@ public class ListFragment extends android.support.v4.app.ListFragment
 {
     public ListView lv;///da
     public static List<Event> events;
+    public static Bitmap [][]bitmaps;
 
-    public static ListFragment newInstance(int sectionNumber,List<Event> data)
+    public static ListFragment newInstance(int sectionNumber,List<Event> data,Bitmap [][]bmp)
     {
+        bitmaps = bmp;
         if(data.size() != 0)
             events = data;
         else events = null;
@@ -103,6 +106,7 @@ public class ListFragment extends android.support.v4.app.ListFragment
                 event.setEventName(events.get(i).getTitle());
                 event.setDate("Danas");
                 event.setPeopleComing("Nepoznato");
+                event.setev_image(bitmaps[i][0]);
                 eventList.add(event);
             }
         }
@@ -121,5 +125,4 @@ public class ListFragment extends android.support.v4.app.ListFragment
     public static void registerListener (Listener listener) {
         mListener = listener;
     }
-
 }

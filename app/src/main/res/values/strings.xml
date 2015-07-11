@@ -6,6 +6,7 @@
     <string name="title_section2">Clubs</string>
     <string name="title_section3">Search</string>
     <string name="action_settings">Settings</string>
+    <dimen name="abc_action_bar_default_height_material">125dp</dimen>
 
     <!--Default vrijednosti-->
     <string name="ime_kluba">Ime kluba</string>
@@ -26,5 +27,8 @@
     <drawable name="color_button">#ff009688</drawable>
     <drawable name="edit_text">#ff009688</drawable>
     <drawable name="edit_hint">#ff006d5f</drawable>
+    <drawable name="pink">#ffa43e87</drawable>
+    <drawable name="ljubicasto">#ff710136</drawable>
+    <drawable name="tekst_bijela">#fffef6ff</drawable>
 
 </resources>
