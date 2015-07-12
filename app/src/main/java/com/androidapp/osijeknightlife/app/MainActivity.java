@@ -4,6 +4,7 @@ import java.lang.reflect.Array;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -33,9 +34,10 @@ import com.androidapp.osijeknightlife.app.TabFragments.GridFragment;
 import com.androidapp.osijeknightlife.app.TabFragments.ListFragment;
 import com.androidapp.osijeknightlife.app.jsonDataP.Event;
 import com.androidapp.osijeknightlife.app.jsonDataP.GetData;
+import retrofit.RetrofitError;
 
 public class MainActivity extends ActionBarActivity
-        implements ActionBar.TabListener,GetData.Listener,ListFragment.Listener,GridFragment.Listener {
+        implements ActionBar.TabListener,GetData.Listener,ListFragment.Listener,GridFragment.Listener,View.OnClickListener {
 ///edit
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
@@ -48,13 +50,17 @@ public class MainActivity extends ActionBarActivity
     FooThread fooThread;
     View loading,event_ispis,club_ispis;
     LayoutInflater li;
+    Map<Integer,String> Klubovi = new HashMap<Integer,String>();
+    String[] KlubList = {"Old Bridge Pub","Tufna","Matrix","Caddilac","Bastion"};
+    Button error_button;
+    ImageButton ClubButton;
 
     String[] tjedan = {"Ponedjeljak","Utorak","Srijeda","Cetvrtak","Petak","Subota","Nedjelja"};
 
     public void GridClicked(int id)
     {
         getSupportActionBar().hide();
-        setKlubIspis(id);
+        setKlubIspis(Klubovi.get(id));
     }
     public void Clicked(int position,long id)
     {
@@ -80,8 +86,31 @@ public class MainActivity extends ActionBarActivity
             DW.registerListener(this);
             Calendar c = Calendar.getInstance();
             String Datum = c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.DAY_OF_MONTH);
-            if(TryCounter < 10)
-                DW.Start(Datum);
+            DW.Start(Datum);
+        }
+    }
+    public void errorReport(RetrofitError.Kind kind)
+    {
+        DW.registerListener(this);
+        TextView report = (TextView)findViewById(R.id.errorReport);
+        error_button = (Button)findViewById(R.id.button_error);
+        error_button.setOnClickListener(this);
+        switch(kind)
+        {
+            case NETWORK:
+                report.setText("Network error\n check internet connection \n app will try again when it detects connection");
+                dataRecieved(false);
+                break;
+            case CONVERSION:
+                report.setText("Coversion error\nPlease update your app\nIf updated contact support");
+                break;
+            case HTTP:
+                report.setText("Error with HTTP interaction:\n"+DW.Status);
+                dataRecieved(false);
+                break;
+            case UNEXPECTED:
+                report.setText("Unexpected error:" + DW.Status);
+                break;
         }
     }
     @Override
@@ -99,6 +128,12 @@ public class MainActivity extends ActionBarActivity
         loading = li.inflate(R.layout.loading_main,null);
         event_ispis = li.inflate(R.layout.event_layout,null);
         club_ispis = li.inflate(R.layout.club_layout,null);
+
+        error_button = (Button) findViewById(R.id.button_error);
+        //error_button.setOnClickListener(this);
+        ClubButton = (ImageButton) findViewById(R.id.club_img_button);
+        //ClubButton.setOnClickListener(this);
+
 
         event = ListFragment.newInstance(0, DW.data.getEvents(),DW.Slike);
         ListFragment.registerListener(this);
@@ -142,7 +177,26 @@ public class MainActivity extends ActionBarActivity
                 .setText("Klubovi")
                 .setTabListener(this));
         //actionBar.setDisplayShowTitleEnabled(false);
-        //actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.mushroom_forest));
+        actionBar.setStackedBackgroundDrawable(getResources().getDrawable(R.drawable.pink));
+        for(int i = 0;i<KlubList.length;i++)
+            Klubovi.put(i,KlubList[i]);
+    }
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case  R.id.button_error: {
+                dataRecieved(false);
+                break;
+            }
+
+            case R.id.club_img_button: {
+                TextView club =(TextView)findViewById(R.id.event_club);
+                setKlubIspis((String)club.getText());
+                break;
+            }
+        }
     }
     public String[] getDates()
     {
@@ -167,28 +221,33 @@ public class MainActivity extends ActionBarActivity
     {
         int num = evNum;
         setContentView(event_ispis);
+        ClubButton = (ImageButton)findViewById(R.id.club_img_button);
+        ClubButton.setOnClickListener(this);
         TextView Naslov = (TextView)findViewById(R.id.event_title);
         TextView Klub = (TextView)findViewById(R.id.event_club);
         TextView Glazba = (TextView)findViewById(R.id.event_music);
         TextView Text = (TextView)findViewById(R.id.event_text);
-        ImageButton clubButton = (ImageButton)findViewById(R.id.club_img_button);
-        Event ev = DW.data.getEvents().get(num);
+        ImageView img = (ImageView)findViewById(R.id.img_event_ispis);
+        final Event ev = DW.data.getEvents().get(num);
         Naslov.setText(ev.getTitle());
         Klub.setText(ev.getClub());
         Glazba.setText(ev.getMusic());
         Text.setText(ev.getText());
+        img.setImageBitmap(DW.Slike[num][0]);
         if(ev.getClub().equals("Tufna"))
-            clubButton.setImageResource(R.drawable.tufna);
-
+            ClubButton.setImageResource(R.drawable.tufna);
 
     }
-    public void setKlubIspis(int id)
+    public void setKlubIspis(String id)
     {
         setContentView(club_ispis);
         TextView Naslov = (TextView)findViewById(R.id.club);
         TextView Text = (TextView)findViewById(R.id.text);
         ImageView img = (ImageView)findViewById(R.id.logo);
-        Naslov.setText("Ime Kluba jel");
+
+
+        Naslov.setText(id);
+
         Text.setText("Tekst kluba\nkoko os\ntako je");
     }
     private ShareActionProvider share;

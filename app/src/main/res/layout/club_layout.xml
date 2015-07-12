@@ -8,7 +8,7 @@
                 android:id="@+id/club_layout"
                 android:focusableInTouchMode="true"
                 android:clickable="false"
-                android:background="#ffc5cae9"
+                android:background="@drawable/ljubicasto"
                 android:focusable="false">
 
     <ImageView

@@ -106,7 +106,8 @@ public class ListFragment extends android.support.v4.app.ListFragment
                 event.setEventName(events.get(i).getTitle());
                 event.setDate("Danas");
                 event.setPeopleComing("Nepoznato");
-                event.setev_image(bitmaps[i][0]);
+                if(bitmaps[i][0] != null)
+                    event.setev_image(bitmaps[i][0]);
                 eventList.add(event);
             }
         }

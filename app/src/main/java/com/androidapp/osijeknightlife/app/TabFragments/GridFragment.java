@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class GridFragment extends com.androidapp.osijeknightlife.app.GridFragment
 {
     private GridView lv;
-
+    private String[] KlubList = {"Old Bridge Pub","Tufna","Matrix","Caddilac","Bastion"};
     public static GridFragment newInstance(int sectionNumber)
     {
         GridFragment fragment = new GridFragment();

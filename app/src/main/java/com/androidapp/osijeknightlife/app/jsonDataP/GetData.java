@@ -21,6 +21,7 @@ public class GetData {
 
     public interface Listener{
         public void dataRecieved(boolean state);
+        public void errorReport(RetrofitError.Kind kind);
     }
     private Listener mListener = null;
     public void registerListener (Listener listener) {
@@ -81,16 +82,17 @@ public class GetData {
                         getImg(i,true);
                         break;
                     }
-                else if(data.getEvents().get(i).getPics().size() == 0)mListener.dataRecieved(true);
+               //else if(data.getEvents().get(i).getPics().size() == 0)mListener.dataRecieved(true);
             }
 
             @Override
             public void failure(RetrofitError retrofitError)
             {
+                Status = new String();
                 System.out.println("Get data failed" + retrofitError.toString());
-                Status = "Failed to Recieve Data\n";
+                Status = "Failed to Recieve Data\n"+retrofitError.toString();
                 data = null;
-                mListener.dataRecieved(false);
+                mListener.errorReport(retrofitError.getKind());
 
             }
         });
