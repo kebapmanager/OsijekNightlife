@@ -61,6 +61,7 @@ public class ListItemAdapter extends BaseAdapter
 
             holder.eventName = (TextView) convertView.findViewById(R.id.naslov_listitem);
             holder.date = (TextView) convertView.findViewById(R.id.datum_listitem);
+            holder.day = (TextView) convertView.findViewById(R.id.dan_listitem);
             holder.ev_image = (ImageView) convertView.findViewById(R.id.event_img_listitem);
             holder.image = (ImageView) convertView.findViewById(R.id.club_img_listitem);
 
@@ -74,8 +75,10 @@ public class ListItemAdapter extends BaseAdapter
         }
 
         //holder.name.setText(eventList.get(position).getName());
+        holder.date.setText(eventList.get(position).getDate());
         holder.eventName.setText(eventList.get(position).getEventName());
         holder.date.setText(eventList.get(position).getDate());
+        holder.day.setText(eventList.get(position).getDate());
         if(eventList.get(position).getev_image() != null)holder.ev_image.setImageBitmap(eventList.get(position).getev_image());
 
         switch (eventList.get(position).getName())
@@ -107,6 +110,7 @@ public class ListItemAdapter extends BaseAdapter
         //TextView name;
         TextView eventName;
         TextView date;
+        TextView day;
         //TextView peopleComing;
         ImageView image;
         ImageView ev_image;

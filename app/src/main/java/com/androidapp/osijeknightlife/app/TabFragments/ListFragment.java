@@ -25,11 +25,11 @@ public class ListFragment extends android.support.v4.app.ListFragment
 {
     public ListView lv;///da
     public static List<Event> events;
-    public static Bitmap [][]bitmaps;
+    public static List<Bitmap> bitmaps;
 
-    public static ListFragment newInstance(int sectionNumber,List<Event> data,Bitmap [][]bmp)
+    public static ListFragment newInstance(int sectionNumber,List<Event> data,List<Bitmap> slike)
     {
-        bitmaps = bmp;
+        bitmaps = slike;
         if(data.size() != 0)
             events = data;
         else events = null;
@@ -104,10 +104,10 @@ public class ListFragment extends android.support.v4.app.ListFragment
                 event = new ListItem();
                 event.setName(events.get(i).getClub());
                 event.setEventName(events.get(i).getTitle());
-                event.setDate("Danas");
+                event.setDate(events.get(i).getDate());
                 event.setPeopleComing("Nepoznato");
-                if(bitmaps[i][0] != null)
-                    event.setev_image(bitmaps[i][0]);
+                if(bitmaps.get(i) != null)
+                    event.setev_image(bitmaps.get(i));
                 eventList.add(event);
             }
         }

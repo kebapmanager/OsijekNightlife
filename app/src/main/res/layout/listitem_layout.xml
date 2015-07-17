@@ -7,7 +7,7 @@
                 tools:context=".MainActivity$AboutFragment"
                 android:id="@+id/listitem_layout"
                 android:focusableInTouchMode="false"
-                android:background="@drawable/ljubicasto"
+                android:background="#fffef6ff"
                 android:descendantFocusability="blocksDescendants"
                 android:focusable="false"
                 android:clickable="false">
@@ -15,11 +15,11 @@
     <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" android:layout_below="@+id/relativeLayout"
-            android:layout_alignLeft="@+id/relativeLayout" android:background="@drawable/ljubicasto">
+            android:layout_alignLeft="@+id/relativeLayout" android:background="#fffef6ff">
         <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="100dp" android:layout_marginTop="32dp" android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp" android:background="@drawable/pink"
+                android:layout_marginRight="5dp" android:background="@drawable/blue_backgorund_light"
                 android:layout_alignParentTop="true" android:id="@+id/relativeLayout">
             <ImageView
                     android:layout_width="100dp"
@@ -68,7 +68,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:text="Medium Text"
                 android:id="@+id/naslov_listitem" android:layout_gravity="center_horizontal|top"
-                android:textColor="@drawable/tekst_bijela" android:background="@drawable/pink"
+                android:textColor="@drawable/tekst_bijela" android:background="@drawable/blue_backgorund_light"
                 android:layout_marginLeft="40dp"
                 android:layout_marginStart="40dp" android:layout_below="@+id/dan_listitem"
                 android:layout_toRightOf="@+id/dan_listitem" android:layout_toEndOf="@+id/dan_listitem"/>

@@ -1,16 +1,14 @@
 package com.androidapp.osijeknightlife.app;
 
 import java.lang.reflect.Array;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.gesture.GestureUtils;
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.GestureDetectorCompat;
@@ -42,7 +40,7 @@ public class MainActivity extends ActionBarActivity
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
     GetData DW = new GetData(this);
-    int TryCounter = 0;
+    int TryCounter = 0,dan;
     Fragment event,grid;
     Calendar c = Calendar.getInstance();
     String Datum;
@@ -54,6 +52,8 @@ public class MainActivity extends ActionBarActivity
     String[] KlubList = {"Old Bridge Pub","Tufna","Matrix","Caddilac","Bastion"};
     Button error_button;
     ImageButton ClubButton;
+    List<Event> ListaEventa = new ArrayList<>();
+    List<Bitmap> SlikeEventa = new ArrayList<>(20);
 
     String[] tjedan = {"Ponedjeljak","Utorak","Srijeda","Cetvrtak","Petak","Subota","Nedjelja"};
 
@@ -71,27 +71,61 @@ public class MainActivity extends ActionBarActivity
     {
         if(state)
         {
-            DW.info = true;
-            event = ListFragment.newInstance(0,DW.data.getEvents(),DW.Slike);
-            mSectionsPagerAdapter.notifyDataSetChanged();
-            mViewPager.setAdapter(mSectionsPagerAdapter);
-            DW.registerListener(this);
-            setContentView(mViewPager);
-            //loading.setVisibility(View.INVISIBLE);
-            mViewPager.setVisibility(View.VISIBLE);
+            if(ListaEventa.size() < 20) {
+                if (DW.data.getEvents().size() + ListaEventa.size() < 20)
+                    for (int i = 0; i < DW.data.getEvents().size(); i++) {
+                        ListaEventa.add(DW.data.getEvents().get(i));
+                        SlikeEventa.add(DW.Slike[i][0]);
+                        setPager();
+                    }
+                else
+                    for (int i = 0; i < 20-ListaEventa.size(); i++) {
+                        ListaEventa.add(DW.data.getEvents().get(i));
+                        SlikeEventa.add(DW.Slike[i][0]);
+                        setPager();
+                    }
+                if(ListaEventa.size() >= 20)
+                {
+                    setPager();
+                }
+                else
+                {
+                    DW.registerListener(this);
+                    c.roll(Calendar.DAY_OF_MONTH,true);
+                    if(Integer.toString(c.get(Calendar.DAY_OF_MONTH)).equals("1"))
+                        c.roll(Calendar.MONTH,true);
+                    Datum = c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.DAY_OF_MONTH);
+                    Calendar c2 = Calendar.getInstance();
+                    if( c.get(Calendar.DAY_OF_MONTH)-c2.get(Calendar.DAY_OF_MONTH) < 5)
+                        DW.Start(Datum,c.get(Calendar.DAY_OF_MONTH));
+                }
+            }
+            else
+            {
+                setPager();
+            }
 
         }
         else {
             TryCounter++;
             DW.registerListener(this);
             Calendar c = Calendar.getInstance();
-            String Datum = c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.DAY_OF_MONTH);
-            DW.Start(Datum);
+            //String Datum = c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.DAY_OF_MONTH);
+            DW.Start(Datum,c.get(Calendar.DAY_OF_MONTH));
         }
+    }
+    public void setPager()
+    {
+        DW.info = true;
+        event = ListFragment.newInstance(0, ListaEventa, SlikeEventa);
+        mSectionsPagerAdapter.notifyDataSetChanged();
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+        setContentView(mViewPager);
+        //loading.setVisibility(View.INVISIBLE);
+        mViewPager.setVisibility(View.VISIBLE);
     }
     public void errorReport(RetrofitError.Kind kind)
     {
-        DW.registerListener(this);
         TextView report = (TextView)findViewById(R.id.errorReport);
         error_button = (Button)findViewById(R.id.button_error);
         error_button.setOnClickListener(this);
@@ -122,7 +156,7 @@ public class MainActivity extends ActionBarActivity
 
         Datum = c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.DAY_OF_MONTH);
         DW.registerListener(this);
-        DW.Start(Datum);
+        DW.Start(Datum,c.get(Calendar.DAY_OF_MONTH));
 
         LayoutInflater li=(LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         loading = li.inflate(R.layout.loading_main,null);
@@ -135,7 +169,7 @@ public class MainActivity extends ActionBarActivity
         //ClubButton.setOnClickListener(this);
 
 
-        event = ListFragment.newInstance(0, DW.data.getEvents(),DW.Slike);
+        event = ListFragment.newInstance(0, ListaEventa,SlikeEventa);
         ListFragment.registerListener(this);
         grid = GridFragment.newInstance(1);
         GridFragment.registerListener(this);
@@ -171,15 +205,20 @@ public class MainActivity extends ActionBarActivity
         });
         actionBar.addTab(actionBar.newTab()
                 .setText("Eventovi")
-//                .setIcon(R.mipmap.ic_launcher)
+                .setIcon(R.drawable.eventi_icon)
                 .setTabListener(this));
         actionBar.addTab(actionBar.newTab()
                 .setText("Klubovi")
+                .setIcon(R.drawable.klubovi_icon)
                 .setTabListener(this));
-        //actionBar.setDisplayShowTitleEnabled(false);
+
+
+
+
+        actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowHomeEnabled(false);
-        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.mushroom_forest));
-        actionBar.setStackedBackgroundDrawable(getResources().getDrawable(R.drawable.pink));
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_background01));
+        actionBar.setStackedBackgroundDrawable(getResources().getDrawable(R.drawable.blue_backgorund));
         for(int i = 0;i<KlubList.length;i++)
             Klubovi.put(i,KlubList[i]);
     }
@@ -213,8 +252,6 @@ public class MainActivity extends ActionBarActivity
             c.roll(Calendar.DAY_OF_MONTH,true);
             list[i] = day+"."+month+".";
         }
-
-
         return list;
     }
     public void setEventIspis(int evNum)
@@ -229,6 +266,7 @@ public class MainActivity extends ActionBarActivity
         TextView Text = (TextView)findViewById(R.id.event_text);
         ImageView img = (ImageView)findViewById(R.id.img_event_ispis);
         final Event ev = DW.data.getEvents().get(num);
+
         Naslov.setText(ev.getTitle());
         Klub.setText(ev.getClub());
         Glazba.setText(ev.getMusic());
@@ -236,7 +274,6 @@ public class MainActivity extends ActionBarActivity
         img.setImageBitmap(DW.Slike[num][0]);
         if(ev.getClub().equals("Tufna"))
             ClubButton.setImageResource(R.drawable.tufna);
-
     }
     public void setKlubIspis(String id)
     {
@@ -276,7 +313,7 @@ public class MainActivity extends ActionBarActivity
                 }
                 Datum = c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.DAY_OF_MONTH);
 
-                DW.Start(Datum);
+                DW.Start(Datum,c.get(Calendar.DAY_OF_MONTH));
             }
 
             @Override
@@ -343,7 +380,7 @@ public class MainActivity extends ActionBarActivity
             switch(position)
             {
                 case 0:
-                    fragment = ListFragment.newInstance(0,DW.data.getEvents(),DW.Slike);
+                    fragment = ListFragment.newInstance(0,ListaEventa,SlikeEventa);
                     break;
                 case 1:
                     fragment = GridFragment.newInstance(1);

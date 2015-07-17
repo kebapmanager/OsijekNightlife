@@ -6,112 +6,173 @@ package com.androidapp.osijeknightlife.app.jsonDataP;
 
 import com.google.gson.annotations.Expose;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Event {
 
     @Expose
-    private String club;
+    private String Day;
     @Expose
-    private String title;
+    private String Date;
     @Expose
-    private String text;
+    private String Club;
     @Expose
-    private String music;
+    private String Title;
     @Expose
-    private String extra;
+    private String Text;
+    @Expose
+    private String Music;
+    @Expose
+    private List<String> Glazba = new ArrayList<String>();
+    @Expose
+    private String Extra;
     @Expose
     private List<String> pics = new ArrayList<String>();
 
     /**
      *
      * @return
-     * The club
+     * The Day
+     */
+    public String getDay() {
+        return Day;
+    }
+
+    /**
+     *
+     * @param Dan
+     * The Day
+     */
+    public void setDay(String Dan) {
+        this.Day = Dan;
+    }
+
+    /**
+     *
+     * @return
+     * The Date
+     */
+    public String getDate() {
+        return Date;
+    }
+
+    /**
+     *
+     * @param Datum
+     * The Date
+     */
+    public void setDate(String Datum) {
+        this.Date = Datum;
+    }
+
+    /**
+     *
+     * @return
+     * The Club
      */
     public String getClub() {
-        return club;
+        return Club;
     }
 
     /**
      *
-     * @param club
-     * The club
+     * @param Klub
+     * The Club
      */
-    public void setClub(String club) {
-        this.club = club;
+    public void setClub(String Klub) {
+        this.Club = Klub;
     }
 
     /**
      *
      * @return
-     * The title
+     * The Title
      */
     public String getTitle() {
-        return title;
+        return Title;
     }
 
     /**
      *
-     * @param title
-     * The title
+     * @param Naslov
+     * The Title
      */
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTitle(String Naslov) {
+        this.Title = Naslov;
     }
 
     /**
      *
      * @return
-     * The tekst
+     * The Text
      */
     public String getText() {
-        return text;
+        return Text;
     }
 
     /**
      *
-     * @param text
-     * The tekst
+     * @param Tekst
+     * The Text
      */
-    public void setText(String text) {
-        this.text = text;
+    public void setText(String Tekst) {
+        this.Text = Tekst;
     }
 
     /**
      *
      * @return
-     * The VrstaGlazbe
+     * The Music
      */
     public String getMusic() {
-        return music;
+        return Music;
     }
 
     /**
      *
-     * @param music
-     * The VrstaGlazbe
+     * @param VrstaGlazbe
+     * The Music
      */
-    public void setMusic(String music) {
-        this.music = music;
+    public void setMusic(String VrstaGlazbe) {
+        this.Music = VrstaGlazbe;
     }
 
     /**
      *
      * @return
-     * The dodatno
+     * The Glazba
+     */
+    public List<String> getGlazba() {
+        return Glazba;
+    }
+
+    /**
+     *
+     * @param Glazba
+     * The Glazba
+     */
+    public void setGlazba(List<String> Glazba) {
+        this.Glazba = Glazba;
+    }
+
+    /**
+     *
+     * @return
+     * The Extra
      */
     public String getExtra() {
-        return extra;
+        return Extra;
     }
 
     /**
      *
      * @param extra
-     * The dodatno
+     * The Extra
      */
     public void setExtra(String extra) {
-        this.extra = extra;
+        this.Extra = extra;
     }
 
     /**

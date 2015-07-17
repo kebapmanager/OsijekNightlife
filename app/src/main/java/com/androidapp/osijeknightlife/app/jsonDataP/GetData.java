@@ -31,6 +31,7 @@ public class GetData {
     /////////////////////Class
     public boolean info = false;
     public boolean done = false;
+    int CheckDate;
     public String Status;
     public List<Bitmap> pictures = new ArrayList<Bitmap>();
 
@@ -48,18 +49,19 @@ public class GetData {
     public GetData(Activity mainActivity){this.mainActivity = mainActivity;}
 
 
-    public void Start(String Path)
+    public void Start(String Path,final int dan)
     {
+        CheckDate = dan;
+        data = new DataLoader();
         this.path = Path;
         DropBox DB = restAdapter.create(DropBox.class);
         pictures.add(getImageByName("bastion.png",mainActivity));
         DB.Download(path+"/Event.json", new ResponseCallback() {
             @Override
             public void success(Response response)  {
-
+            if(CheckDate == dan) {
                 String json = new String();
-                try
-                {
+                try {
                     InputStream in = response.getBody().in();
                     BufferedReader r = new BufferedReader(new InputStreamReader(in));
                     StringBuilder total = new StringBuilder();
@@ -68,7 +70,8 @@ public class GetData {
                         total.append(json);
                     }
                     json = total.toString();
-                }catch(Exception e){}
+                } catch (Exception e) {
+                }
 
                 data = gson.fromJson(json, DataLoader.class);
                 Status = "Data Recieved\n";
@@ -76,13 +79,13 @@ public class GetData {
                 info = true;
                 //mListener.dataRecieved(true);
                 System.out.println("retrofit Sucess");
-                for(int i = 0;i<data.getEvents().size();i++)
-                    if(data.getEvents().get(i).getPics().size() != 0)
-                    {
-                        getImg(i,true);
+                for (int i = 0; i < data.getEvents().size(); i++)
+                    if (data.getEvents().get(i).getPics().size() != 0) {
+                        getImg(i, true);
                         break;
                     }
-               //else if(data.getEvents().get(i).getPics().size() == 0)mListener.dataRecieved(true);
+                //else if(data.getEvents().get(i).getPics().size() == 0)mListener.dataRecieved(true);
+            }
             }
 
             @Override

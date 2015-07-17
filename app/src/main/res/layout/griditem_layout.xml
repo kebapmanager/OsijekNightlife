@@ -6,7 +6,7 @@
                 android:layout_height="wrap_content"
                 tools:context=".MainActivity$AboutFragment"
                 android:id="@+id/griditem_layout"
-                android:background="@drawable/ljubicasto"
+                android:background="@drawable/blue_backgorund_light"
                 android:focusable="false"
                 android:clickable="false"
                 android:focusableInTouchMode="false">

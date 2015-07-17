@@ -30,5 +30,8 @@
     <drawable name="pink">#ffa43e87</drawable>
     <drawable name="ljubicasto">#ff710136</drawable>
     <drawable name="tekst_bijela">#fffef6ff</drawable>
+    <drawable name="blue_backgorund">#ff03A9F4</drawable>
+    <drawable name="blue_backgorund_light">#ffB3E5FC</drawable>
+    <drawable name="blue_backgorund_dark">#ff01579B</drawable>
 
 </resources>
