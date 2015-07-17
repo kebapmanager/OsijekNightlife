@@ -1,4 +1,4 @@
-package com.androidapp.osijeknightlife.app;
+package com.androidapp.osijeknightlife.app.TabFragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import com.androidapp.osijeknightlife.app.R;
+import com.androidapp.osijeknightlife.app.TabFragments.ScreenSlidePageFragment;
 
 /**
  * Created by Toni P on 7/3/2015.

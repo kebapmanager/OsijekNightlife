@@ -1,4 +1,4 @@
-package com.androidapp.osijeknightlife.app;
+package com.androidapp.osijeknightlife.app.PageTransformers;
 
 import android.support.v4.view.ViewPager;
 import android.view.View;

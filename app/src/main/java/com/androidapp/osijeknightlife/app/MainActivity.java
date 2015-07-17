@@ -1,33 +1,26 @@
 package com.androidapp.osijeknightlife.app;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.database.DataSetObserver;
-import android.gesture.GestureUtils;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.view.GestureDetectorCompat;
-import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.ShareActionProvider;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.*;
 import android.widget.*;
-import com.androidapp.osijeknightlife.app.Adapters.ListItemAdapter;
+import com.androidapp.osijeknightlife.app.PageTransformers.*;
+import com.androidapp.osijeknightlife.app.PageTransformers.DepthPageTransformer;
 import com.androidapp.osijeknightlife.app.TabFragments.GridFragment;
 import com.androidapp.osijeknightlife.app.TabFragments.ListFragment;
 import com.androidapp.osijeknightlife.app.jsonDataP.Event;
@@ -195,7 +188,7 @@ public class MainActivity extends ActionBarActivity
             }
         });
         mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+        mViewPager.setPageTransformer(true, new DepthPageTransformer());
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override

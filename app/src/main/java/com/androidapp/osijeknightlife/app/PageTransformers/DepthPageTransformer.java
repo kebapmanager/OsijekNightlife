@@ -1,10 +1,10 @@
-package com.androidapp.osijeknightlife.app;
+package com.androidapp.osijeknightlife.app.PageTransformers;
 
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
 /**
- * Created by Toni P on 7/3/2015.
+ * Created by Toni P on 7/17/2015.
  */
 public class DepthPageTransformer implements ViewPager.PageTransformer {
     private static final float MIN_SCALE = 0.75f;
