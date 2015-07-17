@@ -188,7 +188,7 @@ public class MainActivity extends ActionBarActivity
             }
         });
         mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setPageTransformer(true, new DepthPageTransformer());
+        mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
