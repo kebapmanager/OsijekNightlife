@@ -31,7 +31,7 @@ public class GetData {
     /////////////////////Class
     public boolean info = false;
     public boolean done = false;
-    int CheckDate;
+    public int CheckDate;
     public String Status;
     public List<Bitmap> pictures = new ArrayList<Bitmap>();
 

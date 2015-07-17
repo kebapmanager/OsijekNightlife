@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -6,6 +6,10 @@
         <item name="windowActionBarOverlay">true</item>
         <item name="android:windowContentOverlay">@null</item>
 
+    </style>
+    <style name="AppTheme.ActionBar.TitleText" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <!--<item name="android:textSize">@dimen/bar_text_size</item>-->
+        <item name="android:textColor">@drawable/tekst_bijela</item>
     </style>
 
     <style name="GenericProgressBackground" parent="android:Theme">

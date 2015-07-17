@@ -42,9 +42,9 @@
                     android:scaleType="centerCrop"/>
             <FrameLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" android:layout_centerVertical="true"
+                    android:layout_height="fill_parent"
                     android:layout_toRightOf="@+id/club_img_listitem" android:layout_toEndOf="@+id/club_img_listitem"
-                    android:layout_marginLeft="5dp" android:paddingTop="6dp">
+                    android:layout_marginLeft="5dp" android:paddingTop="6dp" android:layout_alignParentTop="true">
                 <ImageView
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
@@ -69,9 +69,9 @@
                 android:text="Medium Text"
                 android:id="@+id/naslov_listitem" android:layout_gravity="center_horizontal|top"
                 android:textColor="@drawable/tekst_bijela" android:background="@drawable/blue_backgorund_light"
-                android:layout_marginLeft="40dp"
-                android:layout_marginStart="40dp" android:layout_below="@+id/dan_listitem"
-                android:layout_toRightOf="@+id/dan_listitem" android:layout_toEndOf="@+id/dan_listitem"/>
+                android:layout_below="@+id/dan_listitem" android:layout_toRightOf="@+id/dan_listitem"
+                android:layout_toEndOf="@+id/dan_listitem" android:layout_marginLeft="48dp"
+                android:layout_marginStart="48dp"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

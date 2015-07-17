@@ -76,19 +76,15 @@ public class MainActivity extends ActionBarActivity
                     for (int i = 0; i < DW.data.getEvents().size(); i++) {
                         ListaEventa.add(DW.data.getEvents().get(i));
                         SlikeEventa.add(DW.Slike[i][0]);
-                        setPager();
+                        //setPager();
                     }
                 else
                     for (int i = 0; i < 20-ListaEventa.size(); i++) {
                         ListaEventa.add(DW.data.getEvents().get(i));
                         SlikeEventa.add(DW.Slike[i][0]);
-                        setPager();
+                        //setPager();
                     }
-                if(ListaEventa.size() >= 20)
-                {
-                    setPager();
-                }
-                else
+                if(ListaEventa.size() < 20)
                 {
                     DW.registerListener(this);
                     c.roll(Calendar.DAY_OF_MONTH,true);
@@ -98,6 +94,10 @@ public class MainActivity extends ActionBarActivity
                     Calendar c2 = Calendar.getInstance();
                     if( c.get(Calendar.DAY_OF_MONTH)-c2.get(Calendar.DAY_OF_MONTH) < 5)
                         DW.Start(Datum,c.get(Calendar.DAY_OF_MONTH));
+                    else {
+                        DW.CheckDate = 0;
+                        setPager();
+                    }
                 }
             }
             else
@@ -132,7 +132,7 @@ public class MainActivity extends ActionBarActivity
         switch(kind)
         {
             case NETWORK:
-                report.setText("Network error\n check internet connection \n app will try again when it detects connection");
+                report.setText("Network error\n check internet connection \n after you've reconnected restart the app");
                 dataRecieved(false);
                 break;
             case CONVERSION:
@@ -204,7 +204,7 @@ public class MainActivity extends ActionBarActivity
             }
         });
         actionBar.addTab(actionBar.newTab()
-                .setText("Eventovi")
+                .setText("Eventi")
                 .setIcon(R.drawable.eventi_icon)
                 .setTabListener(this));
         actionBar.addTab(actionBar.newTab()
@@ -215,12 +215,16 @@ public class MainActivity extends ActionBarActivity
 
 
 
-        actionBar.setDisplayShowTitleEnabled(false);
+        //actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_background01));
         actionBar.setStackedBackgroundDrawable(getResources().getDrawable(R.drawable.blue_backgorund));
+        actionBar.setHideOnContentScrollEnabled(true);
         for(int i = 0;i<KlubList.length;i++)
             Klubovi.put(i,KlubList[i]);
+
+
+        setContentView(loading);
     }
     @Override
     public void onClick(View v) {
@@ -265,15 +269,31 @@ public class MainActivity extends ActionBarActivity
         TextView Glazba = (TextView)findViewById(R.id.event_music);
         TextView Text = (TextView)findViewById(R.id.event_text);
         ImageView img = (ImageView)findViewById(R.id.img_event_ispis);
-        final Event ev = DW.data.getEvents().get(num);
+        final Event ev = ListaEventa.get(evNum);
 
         Naslov.setText(ev.getTitle());
         Klub.setText(ev.getClub());
         Glazba.setText(ev.getMusic());
         Text.setText(ev.getText());
         img.setImageBitmap(DW.Slike[num][0]);
-        if(ev.getClub().equals("Tufna"))
-            ClubButton.setImageResource(R.drawable.tufna);
+        ClubButton.setImageResource(getClubResId(ev.getClub()));
+    }
+    public int getClubResId(String id)
+    {
+        switch(id)
+        {
+            case"Old Bridge Pub":
+                return R.drawable.obp;
+            case"Bastion":
+                return R.drawable.bastion;
+            case"Tufna":
+                return R.drawable.tufna;
+            case"Matrix":
+                return R.drawable.matrix;
+            case"Cadillac":
+                return R.drawable.cadillac;
+        }
+        return R.mipmap.ic_launcher;
     }
     public void setKlubIspis(String id)
     {
@@ -281,6 +301,9 @@ public class MainActivity extends ActionBarActivity
         TextView Naslov = (TextView)findViewById(R.id.club);
         TextView Text = (TextView)findViewById(R.id.text);
         ImageView img = (ImageView)findViewById(R.id.logo);
+        img.setImageResource(getClubResId(id));
+
+
 
 
         Naslov.setText(id);
@@ -292,12 +315,12 @@ public class MainActivity extends ActionBarActivity
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        MenuItem menuItem = menu.findItem(R.id.spinner);
-        Spinner spinner = (Spinner) MenuItemCompat.getActionView(menuItem);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item,getDates());
-        adapter.setDropDownViewResource(R.layout.spinner_dropdow_item);
-        spinner.setAdapter(adapter); // set the adapter to provide layout of rows and content
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        //MenuItem menuItem = menu.findItem(R.id.spinner);
+        //Spinner spinner = (Spinner) MenuItemCompat.getActionView(menuItem);
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item,getDates());
+        //adapter.setDropDownViewResource(R.layout.spinner_dropdow_item);
+        //spinner.setAdapter(adapter); // set the adapter to provide layout of rows and content
+        /*spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -320,7 +343,7 @@ public class MainActivity extends ActionBarActivity
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
+        });*/
 
         return true;
     }

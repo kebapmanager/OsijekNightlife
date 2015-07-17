@@ -8,6 +8,7 @@
     <string name="action_settings">Settings</string>
     <dimen name="abc_action_bar_default_height_material">125dp</dimen>
 
+
     <!--Default vrijednosti-->
     <string name="ime_kluba">Ime kluba</string>
     <string name="naslov">Naslov</string>
