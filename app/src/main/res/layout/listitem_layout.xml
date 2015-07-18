@@ -60,7 +60,8 @@
                 android:text="Small Text"
                 android:id="@+id/dan_listitem" android:layout_gravity="left|top"
                 android:textColor="@drawable/pink"
-                android:layout_alignParentTop="true" android:layout_alignLeft="@+id/relativeLayout"
+                android:layout_alignParentTop="true"
+                android:layout_alignLeft="@+id/relativeLayout"
                 android:layout_alignStart="@+id/relativeLayout"/>
         <TextView
                 android:layout_width="wrap_content"
@@ -69,9 +70,11 @@
                 android:text="Medium Text"
                 android:id="@+id/naslov_listitem" android:layout_gravity="center_horizontal|top"
                 android:textColor="@drawable/tekst_bijela" android:background="@drawable/blue_backgorund_light"
-                android:layout_below="@+id/dan_listitem" android:layout_toRightOf="@+id/dan_listitem"
-                android:layout_toEndOf="@+id/dan_listitem" android:layout_marginLeft="48dp"
-                android:layout_marginStart="48dp"/>
+                android:layout_marginLeft="48dp"
+                android:layout_marginStart="48dp"
+                android:layout_below="@+id/dan_listitem"
+                android:layout_toRightOf="@+id/dan_listitem"
+                android:layout_toEndOf="@+id/dan_listitem"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -79,7 +82,8 @@
                 android:text="Small Text"
                 android:id="@+id/datum_listitem" android:layout_gravity="right|top"
                 android:textColor="@drawable/pink"
-                android:layout_alignParentTop="true" android:layout_alignRight="@+id/relativeLayout"
+                android:layout_alignParentTop="true"
+                android:layout_alignRight="@+id/relativeLayout"
                 android:layout_alignEnd="@+id/relativeLayout"/>
     </RelativeLayout>
 

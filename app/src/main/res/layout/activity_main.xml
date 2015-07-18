@@ -3,7 +3,7 @@
                                    android:id="@+id/pager"
                                    android:layout_width="match_parent"
                                    android:layout_height="match_parent"
-                                   tools:context=".MainActivity" android:background="#ff636f8e"
+                                   tools:context=".MainActivity" android:background="@drawable/blue_backgorund_dark"
                                    android:focusable="false"
                                    android:clickable="false"
                                    android:paddingTop="172dp"/>

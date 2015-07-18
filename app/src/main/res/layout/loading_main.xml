@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent"
-                android:layout_height="fill_parent" android:background="@drawable/color_background"
+                android:layout_height="fill_parent" android:background="@drawable/blue_backgorund_light"
                 android:paddingTop="172dp">
 <ProgressBar
         android:id="@+id/loading"
