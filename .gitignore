@@ -64,3 +64,4 @@ BaseGameUtils/
 *.iml
 *.so
 *.tps
+local.properties
