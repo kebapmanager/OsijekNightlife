@@ -7,7 +7,7 @@
         <item name="android:windowContentOverlay">@null</item>
 
         <item name="actionBarTabTextStyle">@style/Widget.MyTabText</item>
-        <item name="android:actionBarTabBarStyle">@style/MyActionBarTabBar</item>
+        <item name="android:actionBarTabStyle">@drawable/light_gray_background</item>
 
     </style>
     <style name="AppTheme.ActionBar.TitleText" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
@@ -15,13 +15,12 @@
         <item name="android:textColor">@drawable/white</item>
         <item name="android:cacheColorHint">@drawable/white</item>
     </style>
-
+    <style name="AppTheme.ActionBar.TabIndicator" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <!--<item name="android:textSize">@dimen/bar_text_size</item>-->
+        <item name="android:actionBarTabBarStyle">@drawable/light_gray_background</item>
+    </style>
     <style name="Widget.MyTabText" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:textSize">12sp</item>
-        <item name="android:gravity">left</item>
-    </style>
-
-    <style name="MyActionBarTabBar" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:gravity">left</item>
     </style>
 

@@ -196,6 +196,7 @@ public class MainActivity extends ActionBarActivity
                 .setTabListener(this));
 
         //actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setTitle(" ");
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_background03));
         actionBar.setStackedBackgroundDrawable(getResources().getDrawable(R.drawable.dark_gray_backgorund));
