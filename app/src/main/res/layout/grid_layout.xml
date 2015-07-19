@@ -4,7 +4,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:context=".MainActivity$AboutFragment"
+<<<<<<< HEAD
                 android:background="@drawable/grid_layout_background"
+=======
+                android:background="@drawable/blue_backgorund_light"
+>>>>>>> origin/master
                 android:id="@android:id/list"
                 android:numColumns="auto_fit"
                 android:columnWidth="100dp"
