@@ -41,7 +41,6 @@ public class MainActivity extends ActionBarActivity
     LayoutInflater li;
     Map<Integer,String> Klubovi = new HashMap<Integer,String>();
     String[] KlubList = {"Old Bridge Pub","Tufna","Matrix","Caddilac","Bastion"};
-    Button error_button;
     ImageButton ClubButton;
     List<Event> ListaEventa = new ArrayList<>();
     List<Bitmap> SlikeEventa = new ArrayList<>(20);
@@ -115,8 +114,6 @@ public class MainActivity extends ActionBarActivity
     public void errorReport(RetrofitError.Kind kind)
     {
         TextView report = (TextView)findViewById(R.id.errorReport);
-        error_button = (Button)findViewById(R.id.button_error);
-        error_button.setOnClickListener(this);
         switch(kind)
         {
             case NETWORK:
@@ -151,8 +148,7 @@ public class MainActivity extends ActionBarActivity
         event_ispis = li.inflate(R.layout.event_layout,null);
         club_ispis = li.inflate(R.layout.club_layout,null);
 
-        error_button = (Button) findViewById(R.id.button_error);
-        //error_button.setOnClickListener(this);
+
         ClubButton = (ImageButton) findViewById(R.id.club_img_button);
         //ClubButton.setOnClickListener(this);
 
@@ -217,11 +213,6 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case  R.id.button_error: {
-                dataRecieved(false);
-                break;
-            }
-
             case R.id.club_img_button: {
                 TextView club =(TextView)findViewById(R.id.event_club);
                 setKlubIspis((String)club.getText());
