@@ -26,7 +26,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Small Text"
                 android:id="@+id/dan_listitem" android:layout_gravity="left|top"
-                android:textColor="@drawable/pink"
+                android:textColor="@drawable/white"
                 android:layout_alignParentTop="true"
                 />
 
@@ -36,7 +36,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Small Text"
                 android:id="@+id/datum_listitem" android:layout_gravity="right|top"
-                android:textColor="@drawable/pink"
+                android:textColor="@drawable/white"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"/>
@@ -75,7 +75,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:text="Medium Text"
                 android:id="@+id/naslov_listitem" android:layout_gravity="left|top"
-                android:textColor="@drawable/tekst_bijela" android:background="@drawable/blue_backgorund"
+                android:textColor="@drawable/white" android:background="@drawable/dark_gray_backgorund"
                 android:layout_below="@+id/dan_listitem"
                 android:layout_toRightOf="@+id/club_img_listitem"
                 android:layout_toEndOf="@+id/club_img_listitem"

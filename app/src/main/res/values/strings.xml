@@ -23,24 +23,14 @@
 
     <!--Club, list, listItem, search-->
     <drawable name="color_background">#ff333234</drawable>
-
-    <drawable name="color_text">#ff009688</drawable>
-    <drawable name="color_button">#ff009688</drawable>
-    <drawable name="edit_text">#ff009688</drawable>
-    <drawable name="edit_hint">#ff006d5f</drawable>
-    <drawable name="pink">#fffffbf9</drawable>
-    <drawable name="ljubicasto">#ff710136</drawable>
-    <drawable name="tekst_bijela">#fffbfbff</drawable>
-    <drawable name="blue_backgorund">#ff555350</drawable>
-    <drawable name="blue_backgorund_dark">#ff716f75</drawable>
+    <drawable name="white">#fffffbf9</drawable>
+    <drawable name="dark_gray_backgorund">#ff555350</drawable>
+    <drawable name="light_gray_background">#ff716f75</drawable>
 
     <drawable name="color_image">#ff333234</drawable>
     <drawable name="list_layout_background">#ff716f75</drawable>
     <drawable name="list_item_background">#ff555350</drawable>
     <drawable name="grid_layout_background">#ff716f75</drawable>
     <drawable name="grid_item_background">#ff555350</drawable>
-
-
-
 
 </resources>

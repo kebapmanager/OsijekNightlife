@@ -20,7 +20,6 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 import com.androidapp.osijeknightlife.app.PageTransformers.*;
-import com.androidapp.osijeknightlife.app.PageTransformers.DepthPageTransformer;
 import com.androidapp.osijeknightlife.app.TabFragments.GridFragment;
 import com.androidapp.osijeknightlife.app.TabFragments.ListFragment;
 import com.androidapp.osijeknightlife.app.jsonDataP.Event;
@@ -199,7 +198,7 @@ public class MainActivity extends ActionBarActivity
         //actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_background03));
-        actionBar.setStackedBackgroundDrawable(getResources().getDrawable(R.drawable.blue_backgorund));
+        actionBar.setStackedBackgroundDrawable(getResources().getDrawable(R.drawable.dark_gray_backgorund));
         actionBar.setHideOnContentScrollEnabled(true);
         for(int i = 0;i<KlubList.length;i++)
             Klubovi.put(i,KlubList[i]);
