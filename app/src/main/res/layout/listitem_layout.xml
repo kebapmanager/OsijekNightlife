@@ -7,7 +7,7 @@
                 tools:context=".MainActivity$AboutFragment"
                 android:id="@+id/listitem_layout"
                 android:focusableInTouchMode="false"
-                android:background="#fffef6ff"
+                android:background="@drawable/blue_backgorund_light"
                 android:descendantFocusability="blocksDescendants"
                 android:focusable="false"
                 android:clickable="false">
@@ -15,11 +15,11 @@
     <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" android:layout_below="@+id/relativeLayout"
-            android:layout_alignLeft="@+id/relativeLayout" android:background="#fffef6ff">
+            android:layout_alignLeft="@+id/relativeLayout" android:background="@drawable/blue_backgorund_light">
         <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="100dp" android:layout_marginTop="32dp" android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp" android:background="@drawable/blue_backgorund_light"
+                android:layout_marginRight="5dp" android:background="@drawable/blue_backgorund"
                 android:layout_alignParentTop="true" android:id="@+id/relativeLayout">
             <ImageView
                     android:layout_width="100dp"
@@ -46,7 +46,7 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
                     android:text="Medium Text"
                     android:id="@+id/naslov_listitem" android:layout_gravity="left|top"
-                    android:textColor="@drawable/tekst_bijela" android:background="@drawable/blue_backgorund_light"
+                    android:textColor="@drawable/tekst_bijela" android:background="@drawable/blue_backgorund"
                     android:layout_alignTop="@+id/club_img_listitem" android:layout_toRightOf="@+id/club_img_listitem"
                     android:layout_toEndOf="@+id/club_img_listitem" android:layout_marginLeft="5dp"/>
             <ImageView
