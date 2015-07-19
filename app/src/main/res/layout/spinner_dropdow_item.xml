@@ -5,4 +5,4 @@
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:ellipsize="marquee"
-                 android:textColor="@drawable/color_text" android:background="@drawable/color_background"/>
+                 android:textColor="@drawable/tekst_bijela" android:background="@drawable/color_background"/>

@@ -13,6 +13,7 @@
     <style name="AppTheme.ActionBar.TitleText" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <!--<item name="android:textSize">@dimen/bar_text_size</item>-->
         <item name="android:textColor">@drawable/tekst_bijela</item>
+        <item name="android:cacheColorHint">@drawable/pink</item>item/
     </style>
 
     <style name="Widget.MyTabText" parent="Theme.AppCompat.Light.DarkActionBar">

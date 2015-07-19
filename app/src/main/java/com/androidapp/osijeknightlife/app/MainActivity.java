@@ -196,12 +196,9 @@ public class MainActivity extends ActionBarActivity
                 .setIcon(R.drawable.klubovi_icon)
                 .setTabListener(this));
 
-
-
-
         //actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowHomeEnabled(false);
-        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_background01));
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_background03));
         actionBar.setStackedBackgroundDrawable(getResources().getDrawable(R.drawable.blue_backgorund));
         actionBar.setHideOnContentScrollEnabled(true);
         for(int i = 0;i<KlubList.length;i++)

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent"
-                android:layout_height="fill_parent" android:background="@drawable/blue_backgorund_light"
+                android:layout_height="fill_parent" android:background="@drawable/list_layout_background"
                 android:paddingTop="172dp">
 <ProgressBar
         android:id="@+id/loading"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_gravity="center" android:background="@drawable/blue_backgorund_light"
+        android:layout_gravity="center" android:background="@drawable/list_layout_background"
         android:layout_alignParentTop="true" android:layout_centerHorizontal="true" android:layout_marginTop="90dp"/>
     <TextView
             android:layout_width="wrap_content"
