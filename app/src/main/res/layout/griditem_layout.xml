@@ -6,14 +6,11 @@
                 android:layout_height="wrap_content"
                 tools:context=".MainActivity$AboutFragment"
                 android:id="@+id/griditem_layout"
-<<<<<<< HEAD
                 android:background="@drawable/grid_item_background"
-=======
-                android:background="@drawable/blue_backgorund_light"
->>>>>>> origin/master
                 android:focusable="false"
                 android:clickable="false"
-                android:focusableInTouchMode="false">
+                android:focusableInTouchMode="false"
+        >
     <ImageView  android:orientation="vertical"
                 android:layout_width="100dp"
                 android:layout_height="100dp"

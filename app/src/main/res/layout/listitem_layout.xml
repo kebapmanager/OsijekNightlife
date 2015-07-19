@@ -66,7 +66,8 @@
                 android:scaleType="centerCrop" android:paddingTop="0dp" android:nestedScrollingEnabled="false"
                 android:layout_alignBottom="@+id/club_img_listitem"
                 android:layout_toRightOf="@+id/club_img_listitem"
-                android:layout_toEndOf="@+id/club_img_listitem"/>
+                android:layout_toEndOf="@+id/club_img_listitem"
+                android:layout_marginLeft="5dp"/>
 
         <TextView
                 android:layout_width="wrap_content"
@@ -77,7 +78,8 @@
                 android:textColor="@drawable/tekst_bijela" android:background="@drawable/blue_backgorund"
                 android:layout_below="@+id/dan_listitem"
                 android:layout_toRightOf="@+id/club_img_listitem"
-                android:layout_toEndOf="@+id/club_img_listitem"/>
+                android:layout_toEndOf="@+id/club_img_listitem"
+                android:layout_marginLeft="5dp"/>
 
     </RelativeLayout>
 
