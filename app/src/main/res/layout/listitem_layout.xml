@@ -40,18 +40,24 @@
                     android:focusable="false"
                     android:clickable="false"
                     android:scaleType="centerCrop"/>
-            <FrameLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_toRightOf="@+id/club_img_listitem" android:layout_toEndOf="@+id/club_img_listitem"
-                    android:layout_marginLeft="5dp" android:paddingTop="6dp" android:layout_alignParentTop="true">
-                <ImageView
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:id="@+id/event_img_listitem" android:layout_gravity="center" android:clickable="false"
-                        android:layout_margin="5dp" android:background="#3f51b5"
-                        android:scaleType="centerCrop"/>
-            </FrameLayout>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:text="Medium Text"
+                    android:id="@+id/naslov_listitem" android:layout_gravity="left|top"
+                    android:textColor="@drawable/tekst_bijela" android:background="@drawable/blue_backgorund_light"
+                    android:layout_alignTop="@+id/club_img_listitem" android:layout_toRightOf="@+id/club_img_listitem"
+                    android:layout_toEndOf="@+id/club_img_listitem" android:layout_marginLeft="5dp"/>
+            <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:id="@+id/event_img_listitem" android:layout_gravity="left|bottom" android:clickable="false"
+                    android:background="#ff9b84b5"
+                    android:scaleType="centerCrop" android:paddingTop="0dp" android:nestedScrollingEnabled="false"
+                    android:layout_alignBottom="@+id/club_img_listitem"
+                    android:layout_toEndOf="@+id/naslov_listitem" android:layout_alignLeft="@+id/naslov_listitem"
+                    android:layout_alignStart="@+id/naslov_listitem" android:layout_marginRight="5dp"/>
         </RelativeLayout>
         <TextView
                 android:layout_width="wrap_content"
@@ -60,21 +66,8 @@
                 android:text="Small Text"
                 android:id="@+id/dan_listitem" android:layout_gravity="left|top"
                 android:textColor="@drawable/pink"
-                android:layout_alignParentTop="true"
-                android:layout_alignLeft="@+id/relativeLayout"
+                android:layout_alignParentTop="true" android:layout_alignLeft="@+id/relativeLayout"
                 android:layout_alignStart="@+id/relativeLayout"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:text="Medium Text"
-                android:id="@+id/naslov_listitem" android:layout_gravity="center_horizontal|top"
-                android:textColor="@drawable/tekst_bijela" android:background="@drawable/blue_backgorund_light"
-                android:layout_marginLeft="48dp"
-                android:layout_marginStart="48dp"
-                android:layout_below="@+id/dan_listitem"
-                android:layout_toRightOf="@+id/dan_listitem"
-                android:layout_toEndOf="@+id/dan_listitem"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -82,8 +75,7 @@
                 android:text="Small Text"
                 android:id="@+id/datum_listitem" android:layout_gravity="right|top"
                 android:textColor="@drawable/pink"
-                android:layout_alignParentTop="true"
-                android:layout_alignRight="@+id/relativeLayout"
+                android:layout_alignParentTop="true" android:layout_alignRight="@+id/relativeLayout"
                 android:layout_alignEnd="@+id/relativeLayout"/>
     </RelativeLayout>
 

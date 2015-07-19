@@ -6,10 +6,22 @@
         <item name="windowActionBarOverlay">true</item>
         <item name="android:windowContentOverlay">@null</item>
 
+        <item name="actionBarTabTextStyle">@style/Widget.MyTabText</item>
+        <item name="android:actionBarTabBarStyle">@style/MyActionBarTabBar</item>
+
     </style>
     <style name="AppTheme.ActionBar.TitleText" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <!--<item name="android:textSize">@dimen/bar_text_size</item>-->
         <item name="android:textColor">@drawable/tekst_bijela</item>
+    </style>
+
+    <style name="Widget.MyTabText" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:textSize">12sp</item>
+        <item name="android:gravity">left</item>
+    </style>
+
+    <style name="MyActionBarTabBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:gravity">left</item>
     </style>
 
     <style name="GenericProgressBackground" parent="android:Theme">

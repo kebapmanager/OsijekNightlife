@@ -6,7 +6,7 @@
                 android:layout_height="wrap_content"
                 tools:context=".MainActivity$AboutFragment"
                 android:id="@+id/griditem_layout"
-                android:background="@drawable/blue_backgorund_light"
+                android:background="@drawable/tekst_bijela"
                 android:focusable="false"
                 android:clickable="false"
                 android:focusableInTouchMode="false">
@@ -16,10 +16,9 @@
                 tools:context=".MainActivity$AboutFragment"
                 android:id="@+id/club_img_listitem"
                 android:background="@drawable/color_image"
-                android:scaleType="centerInside"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
                 android:focusable="false"
                 android:clickable="false"
-                android:focusableInTouchMode="false"/>
+                android:focusableInTouchMode="false"
+                android:layout_marginBottom="5dp" android:layout_marginRight="5dp" android:layout_margin="5dp"
+                android:scaleType="centerCrop"/>
 </RelativeLayout>

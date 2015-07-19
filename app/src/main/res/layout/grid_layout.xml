@@ -12,5 +12,6 @@
                 android:stretchMode="columnWidth"
                 android:focusable="false"
                 android:clickable="false"
-                android:focusableInTouchMode="false">
+                android:focusableInTouchMode="false" android:padding="5dp" android:nestedScrollingEnabled="false"
+        >
 </GridView>

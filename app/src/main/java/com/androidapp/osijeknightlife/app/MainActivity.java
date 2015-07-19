@@ -37,8 +37,6 @@ public class MainActivity extends ActionBarActivity
     Fragment event,grid;
     Calendar c = Calendar.getInstance();
     String Datum;
-    int addMonth = 1,pamtilo = 0;
-    FooThread fooThread;
     View loading,event_ispis,club_ispis;
     LayoutInflater li;
     Map<Integer,String> Klubovi = new HashMap<Integer,String>();
@@ -47,9 +45,6 @@ public class MainActivity extends ActionBarActivity
     ImageButton ClubButton;
     List<Event> ListaEventa = new ArrayList<>();
     List<Bitmap> SlikeEventa = new ArrayList<>(20);
-
-    String[] tjedan = {"Ponedjeljak","Utorak","Srijeda","Cetvrtak","Petak","Subota","Nedjelja"};
-
     public void GridClicked(int id)
     {
         getSupportActionBar().hide();
@@ -268,7 +263,7 @@ public class MainActivity extends ActionBarActivity
         Klub.setText(ev.getClub());
         Glazba.setText(ev.getMusic());
         Text.setText(ev.getText());
-        img.setImageBitmap(DW.Slike[num][0]);
+        img.setImageBitmap(SlikeEventa.get(num));
         ClubButton.setImageResource(getClubResId(ev.getClub()));
     }
     public int getClubResId(String id)
@@ -276,15 +271,15 @@ public class MainActivity extends ActionBarActivity
         switch(id)
         {
             case"Old Bridge Pub":
-                return R.drawable.obp;
+                return R.mipmap.obp;
             case"Bastion":
-                return R.drawable.bastion;
+                return R.mipmap.bastion;
             case"Tufna":
-                return R.drawable.tufna;
+                return R.mipmap.tufna;
             case"Matrix":
-                return R.drawable.matrix;
+                return R.mipmap.matrix;
             case"Cadillac":
-                return R.drawable.cadillac;
+                return R.mipmap.cadillac;
         }
         return R.mipmap.ic_launcher;
     }
@@ -308,36 +303,6 @@ public class MainActivity extends ActionBarActivity
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        //MenuItem menuItem = menu.findItem(R.id.spinner);
-        //Spinner spinner = (Spinner) MenuItemCompat.getActionView(menuItem);
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item,getDates());
-        //adapter.setDropDownViewResource(R.layout.spinner_dropdow_item);
-        //spinner.setAdapter(adapter); // set the adapter to provide layout of rows and content
-        /*spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                setContentView(loading);
-                //mViewPager.setVisibility(View.INVISIBLE);
-                loading.setVisibility(View.VISIBLE);
-
-                c = Calendar.getInstance();
-                for(int i = 0;i<position;i++){
-                    c.roll(Calendar.DAY_OF_MONTH, true);
-                    if(Integer.toString(c.get(Calendar.DAY_OF_MONTH)).equals("1") && i!=0)
-                        c.roll(Calendar.MONTH,true);
-                }
-                Datum = c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.DAY_OF_MONTH);
-
-                DW.Start(Datum,c.get(Calendar.DAY_OF_MONTH));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });*/
-
         return true;
     }
     // Call to update the share intent
