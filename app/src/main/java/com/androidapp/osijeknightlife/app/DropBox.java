@@ -10,7 +10,7 @@ import retrofit.http.Path;
  */
 public interface DropBox {
     public static final String BASE_URL = "https://www.dropbox.com";
-    public static final String Token = "TORk4MtPVCMAAAAAAAAHbfNVdvGaD4COYsGsapQsoYKw1NQTSkSFgW0UbOiqf48L";
+    public static final String Token = "TORk4MtPVCMAAAAAAAANCF3qHuGZjLsED0bouYaoAE1xnJn7hckFadcJLVwT-WRI";
 
     @Headers({
             "Authorization: Bearer "+Token

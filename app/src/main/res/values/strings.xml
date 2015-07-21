@@ -7,7 +7,7 @@
     <string name="title_section3">Search</string>
     <string name="action_settings">Settings</string>
     <dimen name="abc_action_bar_default_height_material">125dp</dimen>
-    <drawable name="abc_tab_indicator_material">#ff716f75</drawable>
+    <drawable name="abc_tab_indicator_mtrl_alpha">#fffffbf9</drawable>
 
 
     <!--Default vrijednosti-->

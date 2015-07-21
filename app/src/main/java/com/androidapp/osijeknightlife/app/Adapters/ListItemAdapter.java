@@ -95,6 +95,9 @@ public class ListItemAdapter extends BaseAdapter
             case "Matrix":
                 holder.image.setImageResource(R.mipmap.matrix);
                 break;
+            case "Cadillac":
+                holder.image.setImageResource(R.mipmap.cadillac);
+                break;
         }
 
         //holder.peopleComing.setText(eventList.get(position).getPeopleComing());
