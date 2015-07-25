@@ -2,42 +2,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent" android:background="#fffef6ff">
+              android:layout_height="match_parent" android:background="#fffef6ff" android:weightSum="1">
 
     <ImageView
             android:layout_width="fill_parent"
             android:layout_height="80dp"
             android:id="@+id/img_event_ispis"
-            android:src="@drawable/color_image" android:layout_margin="5dp"
+            android:src="@drawable/color_image" android:layout_margin="0dp"
             android:scaleType="centerCrop"/>
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
-            android:id="@+id/event_title" android:layout_gravity="center_horizontal"/>
     <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp">
-        <ImageButton
-                android:layout_width="100dp"
-                android:layout_height="fill_parent"
-                android:id="@+id/club_img_button" android:layout_gravity="right|center_vertical"
-                android:cropToPadding="true" android:maxHeight="100dp" android:maxWidth="100dp"
-                android:scaleType="centerCrop"/>
+            android:layout_height="80dp" android:layout_weight="0.09">
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Medium Text"
-                android:id="@+id/event_club" android:layout_gravity="left|top"/>
+                android:id="@+id/event_music" android:layout_gravity="center_horizontal|bottom"
+                android:gravity="center_vertical"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Medium Text"
-                android:id="@+id/event_music" android:layout_gravity="left|center_vertical"/>
+                android:id="@+id/event_club" android:layout_gravity="center" android:gravity="center_vertical"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Large Text"
+                android:id="@+id/event_title" android:layout_gravity="center_horizontal|top"/>
     </FrameLayout>
+    <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/club_img_button" android:layout_gravity="right"
+            android:cropToPadding="true" android:maxHeight="100dp" android:maxWidth="100dp"
+            android:scaleType="centerCrop"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

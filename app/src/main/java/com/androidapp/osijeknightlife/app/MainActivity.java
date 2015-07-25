@@ -24,11 +24,21 @@ import com.androidapp.osijeknightlife.app.TabFragments.GridFragment;
 import com.androidapp.osijeknightlife.app.TabFragments.ListFragment;
 import com.androidapp.osijeknightlife.app.jsonDataP.Event;
 import com.androidapp.osijeknightlife.app.jsonDataP.GetData;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import com.google.android.gms.maps.MapFragment;
 import retrofit.RetrofitError;
 
 public class MainActivity extends ActionBarActivity
-        implements ActionBar.TabListener,GetData.Listener,ListFragment.Listener,GridFragment.Listener,View.OnClickListener {
+        implements ActionBar.TabListener,GetData.Listener,ListFragment.Listener,GridFragment.Listener,View.OnClickListener,OnMapReadyCallback {
 ///edit
+    TextView report;
+    SupportMapFragment mapFragment;
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
     GetData DW = new GetData(this);
@@ -72,18 +82,7 @@ public class MainActivity extends ActionBarActivity
                     }
                 if(ListaEventa.size() < 20)
                 {
-                    DW.registerListener(this);
-                    c.roll(Calendar.DAY_OF_MONTH,true);
-                    if(Integer.toString(c.get(Calendar.DAY_OF_MONTH)).equals("1"))
-                        c.roll(Calendar.MONTH,true);
-                    Datum = c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.DAY_OF_MONTH);
-                    Calendar c2 = Calendar.getInstance();
-                    if( c.get(Calendar.DAY_OF_MONTH)-c2.get(Calendar.DAY_OF_MONTH) < 5)
-                        DW.Start(Datum,c.get(Calendar.DAY_OF_MONTH));
-                    else {
-                        DW.CheckDate = 0;
-                        setPager();
-                    }
+                    getNextDay();
                 }
             }
             else
@@ -91,13 +90,6 @@ public class MainActivity extends ActionBarActivity
                 setPager();
             }
 
-        }
-        else {
-            TryCounter++;
-            DW.registerListener(this);
-            Calendar c = Calendar.getInstance();
-            //String Datum = c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.DAY_OF_MONTH);
-            DW.Start(Datum,c.get(Calendar.DAY_OF_MONTH));
         }
     }
     public void setPager()
@@ -109,27 +101,49 @@ public class MainActivity extends ActionBarActivity
         setContentView(mViewPager);
         //loading.setVisibility(View.INVISIBLE);
         mViewPager.setVisibility(View.VISIBLE);
+        DW.CheckDate = 0;
+
     }
-    public void errorReport(RetrofitError.Kind kind)
+    public void getNextDay()
     {
-        TextView report = (TextView)findViewById(R.id.errorReport);
-        switch(kind)
+        DW.registerListener(this);
+        c.roll(Calendar.DAY_OF_MONTH,true);
+        if(Integer.toString(c.get(Calendar.DAY_OF_MONTH)).equals("1"))
+            c.roll(Calendar.MONTH,true);
+        Datum = c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.DAY_OF_MONTH);
+        Calendar c2 = Calendar.getInstance();
+        if( c.get(Calendar.DAY_OF_MONTH)-c2.get(Calendar.DAY_OF_MONTH) < 5)
+            DW.Start(Datum,c.get(Calendar.DAY_OF_MONTH));
+        else {
+            DW.CheckDate = 0;
+            setPager();
+        }
+    }
+    public void errorReport(RetrofitError error)
+    {
+
+        switch(error.getKind())
         {
             case NETWORK:
                 report.setText("Network error\n check internet connection \n after you've reconnected restart the app");
-                dataRecieved(false);
+                getNextDay();
+                //dataRecieved(false);
                 break;
             case CONVERSION:
                 report.setText("Coversion error\nPlease update your app\nIf updated contact support");
                 break;
             case HTTP:
                 report.setText("Error with HTTP interaction:\n"+DW.Status);
+                if(error.toString().equals("retrofit.RetrofitError: 404 Not Found"))
+                    setPager();
                 dataRecieved(false);
                 break;
             case UNEXPECTED:
                 report.setText("Unexpected error:" + DW.Status);
+                //getNextDay();
                 break;
         }
+        //setPager();
     }
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -149,27 +163,24 @@ public class MainActivity extends ActionBarActivity
 
 
         ClubButton = (ImageButton) findViewById(R.id.club_img_button);
+
+        //report.setText(" ");
+
         //ClubButton.setOnClickListener(this);
 
+        //mapFragment = GMapsFragment.newInstance(2);
+        //mapFragment.getMapAsync(this);
+
+        //keytool -list -v -keystore ToniP\.android\debug.keystore" -alias androiddebugkey -storepass android -keypass android
 
         event = ListFragment.newInstance(0, ListaEventa,SlikeEventa);
         ListFragment.registerListener(this);
         grid = GridFragment.newInstance(1);
         GridFragment.registerListener(this);
-        // Set up the action bar.
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        // Set up the ViewPager with the sections adapter.
-        // When swiping between different sections, select the corresponding
-        // tab. We can also use ActionBar.Tab#select() to do this if we have
-        // a reference to the Tab.
+
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        // For each of the sections in the app, add a tab to the action bar.
-        // Create a tab with text corresponding to the page title defined by
-        // the adapter. Also specify this Activity object, which implements
-        // the TabListener interface, as the callback (listener) for when
-        // this tab is selected.
+
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mSectionsPagerAdapter.registerDataSetObserver(new DataSetObserver() {
             @Override
@@ -194,7 +205,10 @@ public class MainActivity extends ActionBarActivity
                 .setText("Klubovi")
                 .setIcon(R.drawable.klubovi_icon)
                 .setTabListener(this));
-
+        //actionBar.addTab(actionBar.newTab()
+                //.setCustomView(R.layout.tab_layout)
+                //.setText("Mapa")
+                //.setTabListener(this));
         //actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setTitle(" ");
         actionBar.setDisplayShowHomeEnabled(false);
@@ -206,6 +220,23 @@ public class MainActivity extends ActionBarActivity
 
 
         setContentView(loading);
+        report = (TextView) findViewById(R.id.errorReport);
+        report.setText(" ");
+    }
+    @Override
+    public void onResume() {
+        super.onResume();  // Always call the superclass method first
+        report.setText(" ");
+        Datum = c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+(c.get(Calendar.DAY_OF_MONTH));
+        DW.registerListener(this);
+        DW.Start(Datum,c.get(Calendar.DAY_OF_MONTH));
+    }
+    @Override
+    public void onMapReady(GoogleMap map) {
+        // Add a marker in Sydney, Australia, and move the camera.
+        LatLng sydney = new LatLng(-34, 151);
+        map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        //map.moveCamera(CameraUpdateFactory.newLatLng(sydney), 10);
     }
     @Override
     public void onClick(View v) {
@@ -245,14 +276,26 @@ public class MainActivity extends ActionBarActivity
         TextView Glazba = (TextView)findViewById(R.id.event_music);
         TextView Text = (TextView)findViewById(R.id.event_text);
         ImageView img = (ImageView)findViewById(R.id.img_event_ispis);
-        final Event ev = ListaEventa.get(evNum);
 
-        Naslov.setText(ev.getTitle());
-        Klub.setText(ev.getClub());
-        Glazba.setText(ev.getMusic());
-        Text.setText(ev.getText());
-        img.setImageBitmap(SlikeEventa.get(num));
-        ClubButton.setImageResource(getClubResId(ev.getClub()));
+        if(ListaEventa.size() != 0)
+        {
+            final Event ev = ListaEventa.get(evNum);
+            Naslov.setText(ev.getTitle());
+            Klub.setText(ev.getClub());
+            Glazba.setText(ev.getMusic());
+            Text.setText(ev.getText());
+            img.setImageBitmap(SlikeEventa.get(num));
+            ClubButton.setImageResource(getClubResId(ev.getClub()));
+        }
+        else
+        {
+            Naslov.setText("Naslov");
+            Klub.setText("Klub");
+            Glazba.setText("Glazba");
+            Text.setText("Tekest\ndogadjaja\n i tak to\n\nda");
+            img.setImageResource(R.drawable.main_background01);
+            ClubButton.setImageResource(getClubResId("Tufna"));
+        }
     }
     public int getClubResId(String id)
     {
@@ -354,9 +397,9 @@ public class MainActivity extends ActionBarActivity
                 case 1:
                     fragment = GridFragment.newInstance(1);
                     break;
-//                case 2:
-//                    fragment = SearchFragment.newInstance(position);
-//                    break;
+                case 2:
+                    fragment = new Fragment();//mapFragment;
+                    break;
                 default:
                     fragment = new Fragment();
                     break;

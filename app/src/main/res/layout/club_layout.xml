@@ -45,8 +45,6 @@
             android:text="@string/tekst"
             android:id="@+id/text"
             android:longClickable="true"
-            android:layout_below="@+id/logo"
-            android:layout_alignLeft="@+id/logo"
-            android:layout_alignStart="@+id/logo"/>
+            android:layout_below="@+id/club" android:layout_toRightOf="@+id/logo" android:layout_toEndOf="@+id/logo"/>
 
 </RelativeLayout>

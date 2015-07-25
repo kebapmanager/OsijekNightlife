@@ -21,7 +21,7 @@ public class GetData {
 
     public interface Listener{
         public void dataRecieved(boolean state);
-        public void errorReport(RetrofitError.Kind kind);
+        public void errorReport(RetrofitError error);
     }
     private Listener mListener = null;
     public void registerListener (Listener listener) {
@@ -41,20 +41,25 @@ public class GetData {
     private RestAdapter restAdapter = new RestAdapter.Builder()
             .setEndpoint("https://api-content.dropbox.com")
             .build();
+    private RestAdapter metarestAdapter = new RestAdapter.Builder()
+            .setEndpoint("https://api.dropbox.com")
+            .build();
     String path,extrPath;
     int Si;
     public Bitmap[][] Slike = new Bitmap[20][5];
-
+    public String MetaData;
     Activity mainActivity;
     public GetData(Activity mainActivity){this.mainActivity = mainActivity;}
 
 
     public void Start(String Path,final int dan)
     {
+
+        this.path = "1/files/auto/"+Path;
         CheckDate = dan;
         data = new DataLoader();
-        this.path = Path;
-        DropBox DB = restAdapter.create(DropBox.class);
+
+        final DropBox DB = restAdapter.create(DropBox.class);
         pictures.add(getImageByName("bastion.png",mainActivity));
         DB.Download(path+"/Event.json", new ResponseCallback() {
             @Override
@@ -85,7 +90,11 @@ public class GetData {
                         break;
                     }
                 //else if(data.getEvents().get(i).getPics().size() == 0)mListener.dataRecieved(true);
-            }
+
+                //Finish request
+
+
+                }
             }
 
             @Override
@@ -95,7 +104,7 @@ public class GetData {
                 System.out.println("Get data failed" + retrofitError.toString());
                 Status = "Failed to Recieve Data\n"+retrofitError.toString();
                 data = null;
-                mListener.errorReport(retrofitError.getKind());
+                mListener.errorReport(retrofitError);
 
             }
         });
@@ -132,9 +141,7 @@ public class GetData {
                         getImg(event+1,true);
                 }
                 else {
-                    if (Si < data.getEvents().get(event).getPics().size())
-                        moarImg(event);
-                    else if (mListener != null && Si == data.getEvents().get(event).getPics().size()) {
+                    if (mListener != null && Si == data.getEvents().get(event).getPics().size()) {
                         mListener.dataRecieved(true);
                         done = true;
                     }
@@ -143,59 +150,9 @@ public class GetData {
             @Override
             public void failure(RetrofitError error)
             {
-                Status += "\nFailed to recieve Pic : " + data.getEvents().get(event).getPics().get(Si)+".jpg" + "\n";
+                Status += "\nFailed to recieve Pic : " + data.getEvents().get(event).getPics().get(Si) + "\n";
             }
         });
-    }
-    private void moarImg(final int event)
-    {
-        DropBox DB = restAdapter.create(DropBox.class);
-
-        DB.Download(path +"/"+data.getEvents().get(event).getPics().get(Si), new ResponseCallback()
-        {
-            @Override
-            public void success(Response response)
-            {
-                BitmapFactory.Options opt = new BitmapFactory.Options();
-                opt.inMutable = false;
-                try
-                {
-                    bitmap = BitmapFactory.decodeStream(response.getBody().in());
-                }
-                catch (Exception e) {}
-
-                mutable = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-                //saveImg(mutable);
-
-                Slike[event][Si] = mutable;
-                Si++;
-                if (Si < data.getEvents().get(event).getPics().size())
-                    moarImg(event);
-                else if (mListener != null && Si == data.getEvents().get(event).getPics().size()){
-                     mListener.dataRecieved(true);
-                }
-            }
-            @Override
-            public void failure(RetrofitError error)
-            {
-                Status += "\nFailed to recieve Pic : " + data.getEvents().get(event).getPics().get(Si)+".jpg" + "\n";
-            }
-        });
-    }
-    private void saveImg(Bitmap bmp)
-    {
-        try {
-            String path = Environment.getExternalStorageDirectory().toString();
-            extrPath = path;
-            OutputStream fOut = null;
-            File file = new File(path, "Img_" + Si + ".jpg"); // the File to save to
-            fOut = new FileOutputStream(file);
-
-
-            bmp.compress(Bitmap.CompressFormat.JPEG, 85, fOut); // saving the Bitmap to a file compressed as a JPEG with 85% compression rate
-            fOut.flush();
-            fOut.close();
-        }catch(Exception e){}
     }
     public Bitmap getImageByName(String nameOfTheDrawable, Activity a){
         int path = a.getResources().getIdentifier(nameOfTheDrawable,
