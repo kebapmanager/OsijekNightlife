@@ -19,6 +19,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
+import com.androidapp.osijeknightlife.app.Adapters.ListItemAdapter;
 import com.androidapp.osijeknightlife.app.PageTransformers.*;
 import com.androidapp.osijeknightlife.app.TabFragments.GridFragment;
 import com.androidapp.osijeknightlife.app.TabFragments.ListFragment;
@@ -212,8 +213,8 @@ public class MainActivity extends ActionBarActivity
         //actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setTitle(" ");
         actionBar.setDisplayShowHomeEnabled(false);
-        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_background03));
-        actionBar.setStackedBackgroundDrawable(getResources().getDrawable(R.drawable.dark_gray_backgorund));
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_background01));
+        actionBar.setStackedBackgroundDrawable(getResources().getDrawable(R.drawable.blue_background));
         actionBar.setHideOnContentScrollEnabled(true);
         for(int i = 0;i<KlubList.length;i++)
             Klubovi.put(i,KlubList[i]);
@@ -222,6 +223,7 @@ public class MainActivity extends ActionBarActivity
         setContentView(loading);
         report = (TextView) findViewById(R.id.errorReport);
         report.setText(" ");
+
     }
     @Override
     public void onResume() {
@@ -265,33 +267,113 @@ public class MainActivity extends ActionBarActivity
         }
         return list;
     }
+    public ArrayList<ListItem> getClubEvents(String Club)
+    {
+        ArrayList<ListItem> eventList = new ArrayList<>();
+
+        List<Bitmap> pics = new ArrayList<Bitmap>();
+        List<Event> events = new ArrayList<Event>();
+        for(int i = 0;i < ListaEventa.size();i++)
+            if(ListaEventa.get(i).getClub().equals(Club)){
+                events.add(ListaEventa.get(i));
+                pics.add(SlikeEventa.get(i));
+            }
+
+
+
+        ListItem event = new ListItem();
+
+        if(Club.equals(null)) {
+            event.setName("Old Bridge Pub");
+            event.setEventName("Cigani lete u nebo");
+            event.setDate("12.6");
+            event.setPeopleComing("102");
+            eventList.add(event);
+
+            event = new ListItem();
+            event.setName("Tufna");
+            event.setEventName("DJ Zidov");
+            event.setDate("10.7");
+            event.setPeopleComing("1024");
+            eventList.add(event);
+
+            event = new ListItem();
+            event.setName("Matrix");
+            event.setDate("30.6");
+            event.setEventName("Party - cigan osvetnik");
+            event.setPeopleComing("124");
+            eventList.add(event);
+
+            event = new ListItem();
+            event.setName("Cadillac");
+            event.setDate("13.6");
+            event.setEventName("Zidov uzvraca udarac");
+
+            event.setPeopleComing("234");
+            eventList.add(event);
+
+            event = new ListItem();
+            event.setName("Bastion");
+            event.setDate("12.7");
+            event.setEventName("Njiva bend");
+            event.setPeopleComing("134");
+            eventList.add(event);
+        }
+        else
+        {
+            for(int i = 0;i<events.size();i++)
+            {
+                event = new ListItem();
+                event.setName(events.get(i).getClub());
+                event.setEventName(events.get(i).getTitle());
+                event.setDate(events.get(i).getDate());
+                event.setPeopleComing("Nepoznato");
+                if(pics.get(i) != null)
+                    event.setev_image(pics.get(i));
+                eventList.add(event);
+            }
+        }
+
+
+        return eventList;
+    }
+
     public void setEventIspis(int evNum)
     {
+
+
+
         int num = evNum;
         setContentView(event_ispis);
         ClubButton = (ImageButton)findViewById(R.id.club_img_button);
         ClubButton.setOnClickListener(this);
         TextView Naslov = (TextView)findViewById(R.id.event_title);
         TextView Klub = (TextView)findViewById(R.id.event_club);
-        TextView Glazba = (TextView)findViewById(R.id.event_music);
+        TextView Vrijeme = (TextView)findViewById(R.id.event_music);
         TextView Text = (TextView)findViewById(R.id.event_text);
         ImageView img = (ImageView)findViewById(R.id.img_event_ispis);
+
+
 
         if(ListaEventa.size() != 0)
         {
             final Event ev = ListaEventa.get(evNum);
+
             Naslov.setText(ev.getTitle());
             Klub.setText(ev.getClub());
-            Glazba.setText(ev.getMusic());
+            Vrijeme.setText(ev.getDate()+"|"+ev.getDay()+"|"/*ADD TIME hrs*/);
             Text.setText(ev.getText());
             img.setImageBitmap(SlikeEventa.get(num));
             ClubButton.setImageResource(getClubResId(ev.getClub()));
         }
         else
         {
+            ListView lv = (ListView) findViewById(R.id.listView_club_layout);
+            lv.setAdapter(new ListItemAdapter(this,getClubEvents(null)));
+
             Naslov.setText("Naslov");
             Klub.setText("Klub");
-            Glazba.setText("Glazba");
+            Vrijeme.setText("Glazba");
             Text.setText("Tekest\ndogadjaja\n i tak to\n\nda");
             img.setImageResource(R.drawable.main_background01);
             ClubButton.setImageResource(getClubResId("Tufna"));
@@ -322,7 +404,9 @@ public class MainActivity extends ActionBarActivity
         ImageView img = (ImageView)findViewById(R.id.logo);
         img.setImageResource(getClubResId(id));
 
-
+        //Prepare events
+                ListView lv = (ListView) findViewById(R.id.listView_club_layout);
+                lv.setAdapter(new ListItemAdapter(this,getClubEvents(id)));
 
 
         Naslov.setText(id);

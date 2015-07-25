@@ -27,6 +27,9 @@
     <drawable name="white">#fffffbf9</drawable>
     <drawable name="dark_gray_backgorund">#ff555350</drawable>
     <drawable name="light_gray_background">#ff716f75</drawable>
+    <drawable name="blue_light_background">#ffB3EFFC</drawable>
+    <drawable name="blue_dark_background">#ff01579C</drawable>
+    <drawable name="blue_background">#ff03A9F4</drawable>
 
 
     <drawable name="color_image">#ff333234</drawable>

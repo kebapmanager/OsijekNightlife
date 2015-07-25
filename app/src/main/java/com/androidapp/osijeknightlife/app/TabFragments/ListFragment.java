@@ -45,15 +45,20 @@ public class ListFragment extends android.support.v4.app.ListFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.list_layout, container, false);
+        View rootView;
+        //if(events != null) {
+            rootView = inflater.inflate(R.layout.list_layout, container, false);
 
-        ArrayList<ListItem> eventList = getEventList();
-        lv = (ListView)rootView.findViewById(R.id.list_layout);
-        this.setListAdapter(new ListItemAdapter(getActivity(),eventList));
+            ArrayList<ListItem> eventList = getEventList();
+            lv = (ListView) rootView.findViewById(R.id.list_layout);
+            this.setListAdapter(new ListItemAdapter(getActivity(), eventList));
 
 
+            //lv.setAdapter(new ListItemAdapter(getActivity(), eventList));         }
 
-        //lv.setAdapter(new ListItemAdapter(getActivity(), eventList));
+        //else {
+        //rootView = inflater.inflate(R.layout.loading_main, container, false);}
+
         return rootView;
     }
     private ArrayList<ListItem> getEventList(){

@@ -7,7 +7,7 @@
                 tools:context=".MainActivity$AboutFragment"
                 android:id="@+id/list_layout"
 
-                android:background="@drawable/list_layout_background"
+                android:background="#fffef6ff"
                 android:focusable="false"
                 android:clickable="false"
                 android:focusableInTouchMode="false">
