@@ -17,12 +17,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.*;
 import android.widget.*;
 import com.androidapp.osijeknightlife.app.Adapters.ListItemAdapter;
 import com.androidapp.osijeknightlife.app.PageTransformers.*;
 import com.androidapp.osijeknightlife.app.TabFragments.GridFragment;
 import com.androidapp.osijeknightlife.app.TabFragments.ListFragment;
+import com.androidapp.osijeknightlife.app.Tasks.OnListLoaded_Task;
 import com.androidapp.osijeknightlife.app.jsonDataP.Event;
 import com.androidapp.osijeknightlife.app.jsonDataP.GetData;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -38,19 +40,20 @@ import retrofit.RetrofitError;
 public class MainActivity extends ActionBarActivity
         implements ActionBar.TabListener,GetData.Listener,ListFragment.Listener,GridFragment.Listener,View.OnClickListener,OnMapReadyCallback {
 ///edit
+    ArrayList<Integer> KlubEv_nums = new ArrayList<>();
     TextView report;
-    SupportMapFragment mapFragment;
+    //SupportMapFragment mapFragment;
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
     GetData DW = new GetData(this);
-    int TryCounter = 0,dan;
+    int roll = 0;
     Fragment event,grid;
     Calendar c = Calendar.getInstance();
     String Datum;
     View loading,event_ispis,club_ispis;
     LayoutInflater li;
     Map<Integer,String> Klubovi = new HashMap<Integer,String>();
-    String[] KlubList = {"Old Bridge Pub","Tufna","Matrix","Caddilac","Bastion"};
+    String[] KlubList = {"Old Bridge Pub","Tufna","Matrix","Cadillac","Bastion"};
     ImageButton ClubButton;
     List<Event> ListaEventa = new ArrayList<>();
     List<Bitmap> SlikeEventa = new ArrayList<>(20);
@@ -104,16 +107,18 @@ public class MainActivity extends ActionBarActivity
         mViewPager.setVisibility(View.VISIBLE);
         DW.CheckDate = 0;
 
+
     }
     public void getNextDay()
     {
+        roll += 1;
         DW.registerListener(this);
         c.roll(Calendar.DAY_OF_MONTH,true);
         if(Integer.toString(c.get(Calendar.DAY_OF_MONTH)).equals("1"))
             c.roll(Calendar.MONTH,true);
         Datum = c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.DAY_OF_MONTH);
         Calendar c2 = Calendar.getInstance();
-        if( c.get(Calendar.DAY_OF_MONTH)-c2.get(Calendar.DAY_OF_MONTH) < 5)
+        if( roll < 7)
             DW.Start(Datum,c.get(Calendar.DAY_OF_MONTH));
         else {
             DW.CheckDate = 0;
@@ -134,10 +139,14 @@ public class MainActivity extends ActionBarActivity
                 report.setText("Coversion error\nPlease update your app\nIf updated contact support");
                 break;
             case HTTP:
-                report.setText("Error with HTTP interaction:\n"+DW.Status);
+
                 if(error.toString().equals("retrofit.RetrofitError: 404 Not Found"))
-                    setPager();
-                dataRecieved(false);
+                    getNextDay();
+                else
+                {
+                    report.setText("Error with HTTP interaction:\n"+DW.Status);
+                    dataRecieved(false);
+                }
                 break;
             case UNEXPECTED:
                 report.setText("Unexpected error:" + DW.Status);
@@ -164,8 +173,6 @@ public class MainActivity extends ActionBarActivity
 
 
         ClubButton = (ImageButton) findViewById(R.id.club_img_button);
-
-        //report.setText(" ");
 
         //ClubButton.setOnClickListener(this);
 
@@ -270,13 +277,14 @@ public class MainActivity extends ActionBarActivity
     public ArrayList<ListItem> getClubEvents(String Club)
     {
         ArrayList<ListItem> eventList = new ArrayList<>();
-
+        KlubEv_nums = new ArrayList<>();
         List<Bitmap> pics = new ArrayList<Bitmap>();
         List<Event> events = new ArrayList<Event>();
         for(int i = 0;i < ListaEventa.size();i++)
             if(ListaEventa.get(i).getClub().equals(Club)){
                 events.add(ListaEventa.get(i));
                 pics.add(SlikeEventa.get(i));
+                KlubEv_nums.add(i);
             }
 
 
@@ -337,11 +345,8 @@ public class MainActivity extends ActionBarActivity
 
         return eventList;
     }
-
     public void setEventIspis(int evNum)
     {
-
-
 
         int num = evNum;
         setContentView(event_ispis);
@@ -357,10 +362,12 @@ public class MainActivity extends ActionBarActivity
 
         if(ListaEventa.size() != 0)
         {
+
+
             final Event ev = ListaEventa.get(evNum);
 
             Naslov.setText(ev.getTitle());
-            Klub.setText(ev.getClub());
+                    Klub.setText(ev.getClub());
             Vrijeme.setText(ev.getDate()+"|"+ev.getDay()+"|"/*ADD TIME hrs*/);
             Text.setText(ev.getText());
             img.setImageBitmap(SlikeEventa.get(num));
@@ -407,6 +414,12 @@ public class MainActivity extends ActionBarActivity
         //Prepare events
                 ListView lv = (ListView) findViewById(R.id.listView_club_layout);
                 lv.setAdapter(new ListItemAdapter(this,getClubEvents(id)));
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                setEventIspis(KlubEv_nums.get((int)id));
+            }
+        });
 
 
         Naslov.setText(id);
@@ -447,6 +460,7 @@ public class MainActivity extends ActionBarActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            setPager();
             return true;
         }
         return super.onOptionsItemSelected(item);

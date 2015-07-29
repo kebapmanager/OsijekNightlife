@@ -1,9 +1,9 @@
 package com.androidapp.osijeknightlife.app.jsonDataP;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Environment;
 import com.androidapp.osijeknightlife.app.DropBox;
 import com.google.gson.Gson;
 import retrofit.ResponseCallback;
@@ -12,6 +12,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -51,7 +52,6 @@ public class GetData {
     Activity mainActivity;
     public GetData(Activity mainActivity){this.mainActivity = mainActivity;}
 
-
     public void Start(String Path,final int dan)
     {
 
@@ -68,7 +68,7 @@ public class GetData {
                 String json = new String();
                 try {
                     InputStream in = response.getBody().in();
-                    BufferedReader r = new BufferedReader(new InputStreamReader(in));
+                    BufferedReader r = new BufferedReader(new InputStreamReader(in, "UTF-8"));
                     StringBuilder total = new StringBuilder();
 
                     while ((json = r.readLine()) != null) {
