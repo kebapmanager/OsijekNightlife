@@ -84,19 +84,19 @@ public class ListItemAdapter extends BaseAdapter
         switch (eventList.get(position).getName())
         {
             case "Bastion":
-                holder.image.setImageResource(R.mipmap.bastion);
+                holder.image.setImageResource(R.drawable.bastion);
                 break;
             case "Tufna":
-                holder.image.setImageResource(R.mipmap.tufna);
+                holder.image.setImageResource(R.drawable.tufna);
                 break;
             case "Old Bridge Pub":
-                holder.image.setImageResource(R.mipmap.obp);
+                holder.image.setImageResource(R.drawable.obp);
                 break;
             case "Matrix":
-                holder.image.setImageResource(R.mipmap.matrix);
+                holder.image.setImageResource(R.drawable.matrix);
                 break;
             case "Cadillac":
-                holder.image.setImageResource(R.mipmap.cadillac);
+                holder.image.setImageResource(R.drawable.cadillac);
                 break;
         }
 

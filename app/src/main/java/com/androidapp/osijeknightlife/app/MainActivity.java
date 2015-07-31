@@ -39,7 +39,7 @@ import retrofit.RetrofitError;
 
 public class MainActivity extends ActionBarActivity
         implements ActionBar.TabListener,GetData.Listener,ListFragment.Listener,GridFragment.Listener,View.OnClickListener,OnMapReadyCallback {
-///edit
+    ///edit
     ArrayList<Integer> KlubEv_nums = new ArrayList<>();
     TextView report;
     //SupportMapFragment mapFragment;
@@ -54,7 +54,7 @@ public class MainActivity extends ActionBarActivity
     LayoutInflater li;
     Map<Integer,String> Klubovi = new HashMap<Integer,String>();
     String[] KlubList = {"Old Bridge Pub","Tufna","Matrix","Cadillac","Bastion"};
-    ImageButton ClubButton;
+    ImageButton ClubButton,Settings;
     List<Event> ListaEventa = new ArrayList<>();
     List<Bitmap> SlikeEventa = new ArrayList<>(20);
     public void GridClicked(int id)
@@ -98,15 +98,16 @@ public class MainActivity extends ActionBarActivity
     }
     public void setPager()
     {
-        DW.info = true;
-        event = ListFragment.newInstance(0, ListaEventa, SlikeEventa);
-        mSectionsPagerAdapter.notifyDataSetChanged();
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-        setContentView(mViewPager);
-        //loading.setVisibility(View.INVISIBLE);
-        mViewPager.setVisibility(View.VISIBLE);
-        DW.CheckDate = 0;
-
+        if(!(getWindow().getDecorView().getRootView() == mViewPager.getRootView())) {
+            DW.info = true;
+            event = ListFragment.newInstance(0, ListaEventa, SlikeEventa);
+            mSectionsPagerAdapter.notifyDataSetChanged();
+            mViewPager.setAdapter(mSectionsPagerAdapter);
+            setContentView(mViewPager.getRootView());
+            //loading.setVisibility(View.INVISIBLE);
+            mViewPager.setVisibility(View.VISIBLE);
+            DW.CheckDate = 0;
+        }
 
     }
     public void getNextDay()
@@ -123,6 +124,7 @@ public class MainActivity extends ActionBarActivity
         else {
             DW.CheckDate = 0;
             setPager();
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
     }
     public void errorReport(RetrofitError error)
@@ -173,7 +175,8 @@ public class MainActivity extends ActionBarActivity
 
 
         ClubButton = (ImageButton) findViewById(R.id.club_img_button);
-
+        Settings = (ImageButton) findViewById(R.id.settings_button);
+        Settings.setOnClickListener(this);
         //ClubButton.setOnClickListener(this);
 
         //mapFragment = GMapsFragment.newInstance(2);
@@ -223,13 +226,18 @@ public class MainActivity extends ActionBarActivity
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_background01));
         actionBar.setStackedBackgroundDrawable(getResources().getDrawable(R.drawable.blue_background));
         actionBar.setHideOnContentScrollEnabled(true);
+        actionBar.hide();
         for(int i = 0;i<KlubList.length;i++)
             Klubovi.put(i,KlubList[i]);
 
 
         setContentView(loading);
+
+        ImageView img = (ImageView) findViewById(R.id.loading_img);
+        img.setImageResource(R.drawable.most);
         report = (TextView) findViewById(R.id.errorReport);
         report.setText(" ");
+
 
     }
     @Override
@@ -250,11 +258,13 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.club_img_button: {
+            case R.id.club_img_button:
                 TextView club =(TextView)findViewById(R.id.event_club);
                 setKlubIspis((String)club.getText());
                 break;
-            }
+            case R.id.settings_button:
+                setContentView(R.layout.settings_layout);
+                break;
         }
     }
     public String[] getDates()
@@ -442,13 +452,14 @@ public class MainActivity extends ActionBarActivity
     }
     @Override
     public void onBackPressed() {
-
-        getSupportActionBar().show();
-        mSectionsPagerAdapter.notifyDataSetChanged();
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-        mViewPager.setCurrentItem(getSupportActionBar().getSelectedTab().getPosition());
-        ListFragment.registerListener(this);
-        setContentView(mViewPager);
+        if(!(getWindow().getDecorView().getRootView() == mViewPager.getRootView())) {
+            //getSupportActionBar().show();
+            mSectionsPagerAdapter.notifyDataSetChanged();
+            mViewPager.setAdapter(mSectionsPagerAdapter);
+            mViewPager.setCurrentItem(getSupportActionBar().getSelectedTab().getPosition());
+            ListFragment.registerListener(this);
+            setContentView(mViewPager.getRootView());
+        }
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -529,23 +540,6 @@ public class MainActivity extends ActionBarActivity
 //                    return getString(R.string.title_section3).toUpperCase(l);
             }
             return null;
-        }
-    }
-    private class FooThread extends Thread {
-        Handler mHandler;
-
-        FooThread(Handler h) {
-            mHandler = h;
-        }
-
-        public void run() {
-            //Do all my work here....you might need a loop for this
-
-            Message msg = mHandler.obtainMessage();
-            Bundle b = new Bundle();
-            b.putInt("state", 1);
-            msg.setData(b);
-            mHandler.sendMessage(msg);
         }
     }
 }

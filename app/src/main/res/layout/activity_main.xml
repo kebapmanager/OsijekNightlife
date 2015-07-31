@@ -1,9 +1,32 @@
-<android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-                                   xmlns:tools="http://schemas.android.com/tools"
+
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <android.support.v4.view.ViewPager
                                    android:id="@+id/pager"
                                    android:layout_width="match_parent"
                                    android:layout_height="match_parent"
                                    tools:context=".MainActivity" android:background="@drawable/light_gray_background"
                                    android:focusable="false"
-                                   android:clickable="false"
-                                   android:paddingTop="172dp"/>
+                                   android:clickable="false">
+
+    <android.support.v4.view.PagerTitleStrip
+            android:id="@+id/pager_title_strip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="#ffe56d56"
+            android:textColor="#fff"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"/>
+
+    </android.support.v4.view.ViewPager>
+    <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/settings_button" android:layout_alignParentBottom="true" android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" android:layout_marginBottom="20dp" android:layout_marginRight="10dp"
+            android:background="@drawable/klubovi_icon"/>
+</RelativeLayout>

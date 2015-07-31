@@ -6,7 +6,7 @@
           android:title=" "
           android:icon="@drawable/settings_onl"
           android:orderInCategory="100"
-          app:showAsAction="always"/>
+          app:showAsAction="never"/>
 
 
 </menu>
