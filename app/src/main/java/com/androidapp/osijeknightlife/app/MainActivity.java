@@ -1,11 +1,17 @@
 package com.androidapp.osijeknightlife.app;
 
+
+import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Date;
+
 
 import android.content.Context;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
@@ -35,10 +41,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import com.google.android.gms.maps.MapFragment;
+import com.parse.*;
 import retrofit.RetrofitError;
 
 public class MainActivity extends ActionBarActivity
-        implements ActionBar.TabListener,GetData.Listener,ListFragment.Listener,GridFragment.Listener,View.OnClickListener,OnMapReadyCallback {
+        implements ActionBar.TabListener,ListFragment.Listener,GridFragment.Listener,View.OnClickListener,OnMapReadyCallback {
     ///edit
     ArrayList<Integer> KlubEv_nums = new ArrayList<>();
     TextView report;
@@ -46,61 +53,37 @@ public class MainActivity extends ActionBarActivity
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
     GetData DW = new GetData(this);
-    int roll = 0;
     Fragment event,grid;
     Calendar c = Calendar.getInstance();
     String Datum;
     View loading,event_ispis,club_ispis;
     LayoutInflater li;
     Map<Integer,String> Klubovi = new HashMap<Integer,String>();
-    String[] KlubList = {"Old Bridge Pub","Tufna","Matrix","Cadillac","Bastion"};
     ImageButton ClubButton,Settings;
-    List<Event> ListaEventa = new ArrayList<>();
-    List<Bitmap> SlikeEventa = new ArrayList<>(20);
+
+    List<ParseObject> Events = new ArrayList<>();
+    List<ParseObject> Klubs = new ArrayList<>();
     public void GridClicked(int id)
     {
         getSupportActionBar().hide();
-        setKlubIspis(Klubovi.get(id));
+        ParseQuery query = new ParseQuery("Klub");
+        try{
+            List<ParseObject> parseObjects = query.fromLocalDatastore().find();
+            setKlubIspis((String)parseObjects.get(id).get("Ime"));
+        } catch (Exception e) {
+        }
+
     }
     public void Clicked(int position,long id)
     {
         getSupportActionBar().hide();
         setEventIspis((int)id);
     }
-    public void dataRecieved(boolean state)
-    {
-        if(state)
-        {
-            if(ListaEventa.size() < 20) {
-                if (DW.data.getEvents().size() + ListaEventa.size() < 20)
-                    for (int i = 0; i < DW.data.getEvents().size(); i++) {
-                        ListaEventa.add(DW.data.getEvents().get(i));
-                        SlikeEventa.add(DW.Slike[i][0]);
-                        //setPager();
-                    }
-                else
-                    for (int i = 0; i < 20-ListaEventa.size(); i++) {
-                        ListaEventa.add(DW.data.getEvents().get(i));
-                        SlikeEventa.add(DW.Slike[i][0]);
-                        //setPager();
-                    }
-                if(ListaEventa.size() < 20)
-                {
-                    getNextDay();
-                }
-            }
-            else
-            {
-                setPager();
-            }
-
-        }
-    }
     public void setPager()
     {
         if(!(getWindow().getDecorView().getRootView() == mViewPager.getRootView())) {
             DW.info = true;
-            event = ListFragment.newInstance(0, ListaEventa, SlikeEventa);
+            event = ListFragment.newInstance(0, Events);
             mSectionsPagerAdapter.notifyDataSetChanged();
             mViewPager.setAdapter(mSectionsPagerAdapter);
             setContentView(mViewPager.getRootView());
@@ -110,53 +93,6 @@ public class MainActivity extends ActionBarActivity
         }
 
     }
-    public void getNextDay()
-    {
-        roll += 1;
-        DW.registerListener(this);
-        c.roll(Calendar.DAY_OF_MONTH,true);
-        if(Integer.toString(c.get(Calendar.DAY_OF_MONTH)).equals("1"))
-            c.roll(Calendar.MONTH,true);
-        Datum = c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.DAY_OF_MONTH);
-        Calendar c2 = Calendar.getInstance();
-        if( roll < 7)
-            DW.Start(Datum,c.get(Calendar.DAY_OF_MONTH));
-        else {
-            DW.CheckDate = 0;
-            setPager();
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-        }
-    }
-    public void errorReport(RetrofitError error)
-    {
-
-        switch(error.getKind())
-        {
-            case NETWORK:
-                report.setText("Network error\n check internet connection \n after you've reconnected restart the app");
-                getNextDay();
-                //dataRecieved(false);
-                break;
-            case CONVERSION:
-                report.setText("Coversion error\nPlease update your app\nIf updated contact support");
-                break;
-            case HTTP:
-
-                if(error.toString().equals("retrofit.RetrofitError: 404 Not Found"))
-                    getNextDay();
-                else
-                {
-                    report.setText("Error with HTTP interaction:\n"+DW.Status);
-                    dataRecieved(false);
-                }
-                break;
-            case UNEXPECTED:
-                report.setText("Unexpected error:" + DW.Status);
-                //getNextDay();
-                break;
-        }
-        //setPager();
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -164,9 +100,9 @@ public class MainActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         Datum = c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+(c.get(Calendar.DAY_OF_MONTH));
-        DW.registerListener(this);
-        DW.Start(Datum,c.get(Calendar.DAY_OF_MONTH));
+
 
         LayoutInflater li=(LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         loading = li.inflate(R.layout.loading_main,null);
@@ -184,9 +120,9 @@ public class MainActivity extends ActionBarActivity
 
         //keytool -list -v -keystore ToniP\.android\debug.keystore" -alias androiddebugkey -storepass android -keypass android
 
-        event = ListFragment.newInstance(0, ListaEventa,SlikeEventa);
+        //event = ListFragment.newInstance(0, null);
         ListFragment.registerListener(this);
-        grid = GridFragment.newInstance(1);
+        //grid = GridFragment.newInstance(1);
         GridFragment.registerListener(this);
 
         final ActionBar actionBar = getSupportActionBar();
@@ -227,8 +163,6 @@ public class MainActivity extends ActionBarActivity
         actionBar.setStackedBackgroundDrawable(getResources().getDrawable(R.drawable.blue_background));
         actionBar.setHideOnContentScrollEnabled(true);
         actionBar.hide();
-        for(int i = 0;i<KlubList.length;i++)
-            Klubovi.put(i,KlubList[i]);
 
 
         setContentView(loading);
@@ -238,15 +172,48 @@ public class MainActivity extends ActionBarActivity
         report = (TextView) findViewById(R.id.errorReport);
         report.setText(" ");
 
+        Parse.enableLocalDatastore(this);
+        Parse.initialize(this, "yd8rPOEKL418mHf5Avu1cN13oT3Qdjz197r8BtnR", "mMVBhcFIIUJRMTME0ZBOhR6vTz0mRu7lF63dtH8o");
+        getKlubs();
+        getEvents();
 
+
+
+
+    }
+    public void getEvents()
+    {
+        Date date = new Date();
+        date.getTime();
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
+        query.whereGreaterThanOrEqualTo("Datum", date).findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+
+                Events = list;
+                setPager();
+            }
+        });
+    }
+    public void getKlubs()
+    {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Klub");
+
+            query.findInBackground(new FindCallback<ParseObject>() {
+                @Override
+                public void done(List<ParseObject> Klublist, ParseException e) {
+                    Klubs = Klublist;
+                    for(int i = 0;i<Klublist.size();i++) Klublist.get(i).pinInBackground();
+                }
+            });
     }
     @Override
     public void onResume() {
         super.onResume();  // Always call the superclass method first
-        report.setText(" ");
+        //report.setText(" ");
         Datum = c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+(c.get(Calendar.DAY_OF_MONTH));
-        DW.registerListener(this);
-        DW.Start(Datum,c.get(Calendar.DAY_OF_MONTH));
+        //DW.Start(Datum,c.get(Calendar.DAY_OF_MONTH));
     }
     @Override
     public void onMapReady(GoogleMap map) {
@@ -288,69 +255,39 @@ public class MainActivity extends ActionBarActivity
     {
         ArrayList<ListItem> eventList = new ArrayList<>();
         KlubEv_nums = new ArrayList<>();
-        List<Bitmap> pics = new ArrayList<Bitmap>();
-        List<Event> events = new ArrayList<Event>();
-        for(int i = 0;i < ListaEventa.size();i++)
-            if(ListaEventa.get(i).getClub().equals(Club)){
-                events.add(ListaEventa.get(i));
-                pics.add(SlikeEventa.get(i));
-                KlubEv_nums.add(i);
-            }
 
 
 
         ListItem event = new ListItem();
 
-        if(Club.equals(null)) {
-            event.setName("Old Bridge Pub");
-            event.setEventName("Cigani lete u nebo");
-            event.setDate("12.6");
-            event.setPeopleComing("102");
-            eventList.add(event);
 
-            event = new ListItem();
-            event.setName("Tufna");
-            event.setEventName("DJ Zidov");
-            event.setDate("10.7");
-            event.setPeopleComing("1024");
-            eventList.add(event);
-
-            event = new ListItem();
-            event.setName("Matrix");
-            event.setDate("30.6");
-            event.setEventName("Party - cigan osvetnik");
-            event.setPeopleComing("124");
-            eventList.add(event);
-
-            event = new ListItem();
-            event.setName("Cadillac");
-            event.setDate("13.6");
-            event.setEventName("Zidov uzvraca udarac");
-
-            event.setPeopleComing("234");
-            eventList.add(event);
-
-            event = new ListItem();
-            event.setName("Bastion");
-            event.setDate("12.7");
-            event.setEventName("Njiva bend");
-            event.setPeopleComing("134");
-            eventList.add(event);
-        }
-        else
-        {
-            for(int i = 0;i<events.size();i++)
+            for(int i = 0;i<Events.size();i++)
             {
-                event = new ListItem();
-                event.setName(events.get(i).getClub());
-                event.setEventName(events.get(i).getTitle());
-                event.setDate(events.get(i).getDate());
-                event.setPeopleComing("Nepoznato");
-                if(pics.get(i) != null)
-                    event.setev_image(pics.get(i));
-                eventList.add(event);
+                if(Events.get(i).getParseObject("Klub").get("Ime").equals(Club))
+                {
+                    SimpleDateFormat df = new SimpleDateFormat("dd-MM");
+                    Date d = (Date) Events.get(i).get("Datum");
+
+                    KlubEv_nums.add(i);
+                    event = new ListItem();
+                    event.setName(Club);
+                    event.setEventName((String) Events.get(i).get("Naslov"));
+                    event.setDate(df.format(d));
+                    event.setPeopleComing("Nepoznato");
+                    try {
+                        byte[] bitmapdata = ((ParseFile) Events.get(i).get("Slika")).getData();
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
+                        event.setev_image(bitmap);
+
+                        byte[] bitmapdatas = ((ParseFile) Events.get(i).getParseObject("Klub").get("Slika")).getData();
+                        Bitmap bmp = BitmapFactory.decodeByteArray(bitmapdatas, 0, bitmapdatas.length);
+                        event.setImage(bmp);
+
+                    }catch(Exception e){}
+                    eventList.add(event);
+                }
             }
-        }
+
 
 
         return eventList;
@@ -370,48 +307,31 @@ public class MainActivity extends ActionBarActivity
 
 
 
-        if(ListaEventa.size() != 0)
+        if(Events.size() != 0)
         {
+            final ParseObject ev = Events.get(evNum);
+            Date d = (Date)ev.get("Datum");
+            SimpleDateFormat df = new SimpleDateFormat("dd.M | E | kk:mm");
 
+            Naslov.setText((String)ev.get("Naslov"));
+            Klub.setText((String)ev.getParseObject("Klub").get("Ime"));
+            Vrijeme.setText(df.format(d));
+            Text.setText((String)ev.get((String)ev.get("Tekst")));
+            try {
+                byte[] bitmapdata = ((ParseFile) ev.get("Slika")).getData();
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
+                img.setImageBitmap(bitmap);
+            }catch(Exception e){}
+            ///////////////////////////////////////RADIIIIIIIIIIIIIIIIIIIIIIIIIII
+            try
+            {
+                byte[] bitmapdata = ((ParseFile) ev.getParseObject("Klub").get("Slika")).getData();
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
+                ClubButton.setImageBitmap(bitmap);
+            }catch(Exception m)
+            {}
 
-            final Event ev = ListaEventa.get(evNum);
-
-            Naslov.setText(ev.getTitle());
-                    Klub.setText(ev.getClub());
-            Vrijeme.setText(ev.getDate()+"|"+ev.getDay()+"|"/*ADD TIME hrs*/);
-            Text.setText(ev.getText());
-            img.setImageBitmap(SlikeEventa.get(num));
-            ClubButton.setImageResource(getClubResId(ev.getClub()));
         }
-        else
-        {
-            ListView lv = (ListView) findViewById(R.id.listView_club_layout);
-            lv.setAdapter(new ListItemAdapter(this,getClubEvents(null)));
-
-            Naslov.setText("Naslov");
-            Klub.setText("Klub");
-            Vrijeme.setText("Glazba");
-            Text.setText("Tekest\ndogadjaja\n i tak to\n\nda");
-            img.setImageResource(R.drawable.main_background01);
-            ClubButton.setImageResource(getClubResId("Tufna"));
-        }
-    }
-    public int getClubResId(String id)
-    {
-        switch(id)
-        {
-            case"Old Bridge Pub":
-                return R.mipmap.obp;
-            case"Bastion":
-                return R.mipmap.bastion;
-            case"Tufna":
-                return R.mipmap.tufna;
-            case"Matrix":
-                return R.mipmap.matrix;
-            case"Cadillac":
-                return R.mipmap.cadillac;
-        }
-        return R.mipmap.ic_launcher;
     }
     public void setKlubIspis(String id)
     {
@@ -419,15 +339,23 @@ public class MainActivity extends ActionBarActivity
         TextView Naslov = (TextView)findViewById(R.id.club);
         TextView Text = (TextView)findViewById(R.id.text);
         ImageView img = (ImageView)findViewById(R.id.logo);
-        img.setImageResource(getClubResId(id));
+        ParseQuery query = new ParseQuery("Klub");
+        try {
+            query.fromLocalDatastore().whereEqualTo("Ime", id);
+            List<ParseObject> parseObject = query.find();
+            byte[] bitmapdata = ((ParseFile) parseObject.get(0).get("Slika")).getData();
+            Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
+            img.setImageBitmap(bitmap);
+        }catch (Exception e)
+        {}
 
         //Prepare events
                 ListView lv = (ListView) findViewById(R.id.listView_club_layout);
                 lv.setAdapter(new ListItemAdapter(this,getClubEvents(id)));
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                setEventIspis(KlubEv_nums.get((int)id));
+                /*DODAJ*/
             }
         });
 
@@ -501,7 +429,7 @@ public class MainActivity extends ActionBarActivity
             switch(position)
             {
                 case 0:
-                    fragment = ListFragment.newInstance(0,ListaEventa,SlikeEventa);
+                    fragment = ListFragment.newInstance(0,Events);
                     break;
                 case 1:
                     fragment = GridFragment.newInstance(1);

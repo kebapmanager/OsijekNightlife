@@ -60,7 +60,7 @@ public class GridItemAdapter extends BaseAdapter
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.image.setImageResource(clubList.get(position).getImageId());
+        holder.image.setImageBitmap(clubList.get(position).getImageBitmap());
 
         return convertView;
     }

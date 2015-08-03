@@ -73,38 +73,12 @@ public class ListItemAdapter extends BaseAdapter
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-
-        //holder.name.setText(eventList.get(position).getName());
         holder.date.setText(eventList.get(position).getDate());
         holder.eventName.setText(eventList.get(position).getEventName());
         holder.date.setText(eventList.get(position).getDate());
-        holder.day.setText(eventList.get(position).getDate());
+        holder.day.setText(eventList.get(position).getDay());
         if(eventList.get(position).getev_image() != null)holder.ev_image.setImageBitmap(eventList.get(position).getev_image());
-
-        switch (eventList.get(position).getName())
-        {
-            case "Bastion":
-                holder.image.setImageResource(R.drawable.bastion);
-                break;
-            case "Tufna":
-                holder.image.setImageResource(R.drawable.tufna);
-                break;
-            case "Old Bridge Pub":
-                holder.image.setImageResource(R.drawable.obp);
-                break;
-            case "Matrix":
-                holder.image.setImageResource(R.drawable.matrix);
-                break;
-            case "Cadillac":
-                holder.image.setImageResource(R.drawable.cadillac);
-                break;
-        }
-
-        //holder.peopleComing.setText(eventList.get(position).getPeopleComing());
-
-        //holder.image.setImageBitmap(eventList.get(position).getImage());
-        //holder.ev_image.setImageBitmap(eventList.get(position).getImage());
-
+        if(eventList.get(position).getImage() != null)holder.image.setImageBitmap(eventList.get(position).getImage());
 
         return convertView;
     }

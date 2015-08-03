@@ -1,5 +1,7 @@
 package com.androidapp.osijeknightlife.app.TabFragments;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,8 +13,10 @@ import android.widget.ListView;
 import com.androidapp.osijeknightlife.app.Adapters.GridItemAdapter;
 import com.androidapp.osijeknightlife.app.GridItem;
 import com.androidapp.osijeknightlife.app.R;
+import com.parse.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Ivan on 20/06/2015.
@@ -22,6 +26,7 @@ public class GridFragment extends com.androidapp.osijeknightlife.app.GridFragmen
 {
     private GridView lv;
     private String[] KlubList = {"Old Bridge Pub","Tufna","Matrix","Caddilac","Bastion"};
+    ArrayList<GridItem> clubList = new ArrayList<>();
     public static GridFragment newInstance(int sectionNumber)
     {
         GridFragment fragment = new GridFragment();
@@ -37,44 +42,39 @@ public class GridFragment extends com.androidapp.osijeknightlife.app.GridFragmen
     {
         View rootView = inflater.inflate(R.layout.grid_layout, container, false);
 
-        ArrayList<GridItem> clubList = getClubList();
         lv = (GridView)rootView.findViewById(android.R.id.list);
-
-        this.setGridAdapter(new GridItemAdapter(getActivity(), clubList));
-        //lv.setAdapter(new GridItemAdapter(getActivity(), clubList));
+        updateClubList();
 
         return rootView;
     }
-    private ArrayList<GridItem> getClubList(){
-        ArrayList<GridItem> clubList = new ArrayList<GridItem>();
+    public void setAdapter()
+    {
+        this.setGridAdapter(new GridItemAdapter(getActivity(), clubList));
+    }
+    private void updateClubList(){
+        clubList = new ArrayList<>();
 
-        GridItem event = new GridItem();
+        ParseQuery query = new ParseQuery("Klub");
+        try {
+            List<ParseObject> parseObjects = query.fromLocalDatastore().find();
 
-        event.setName("Old Bridge Pub");
-        event.setImageId(R.drawable.obp);
-        clubList.add(event);
+            for (int i = 0;i<parseObjects.size();i++)
+            {
+                GridItem klub = new GridItem();
 
-        event = new GridItem();
-        event.setName("Tufna");
-        event.setImageId(R.drawable.tufna);
-        clubList.add(event);
+                byte[] bitmapdatas = ((ParseFile) parseObjects.get(i).get("Slika")).getData();
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdatas, 0, bitmapdatas.length);
+                klub.setImageBitmap(bitmap);
+                clubList.add(klub);
+            }
 
-        event = new GridItem();
-        event.setName("Matrix");
-        event.setImageId(R.drawable.matrix);
-        clubList.add(event);
+        }catch (Exception e){
+            System.out.println("EEE");
+        }
 
-        event = new GridItem();
-        event.setName("Cadillac");
-        event.setImageId(R.drawable.cadillac);
-        clubList.add(event);
 
-        event = new GridItem();
-        event.setName("Bastion");
-        event.setImageId(R.drawable.bastion);
-        clubList.add(event);
 
-        return clubList;
+        setAdapter();
     }
     @Override
     public void onGridItemClick(GridView g, View v, int position, long id) {

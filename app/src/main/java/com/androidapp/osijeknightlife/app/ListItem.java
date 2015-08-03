@@ -11,6 +11,7 @@ public class ListItem
     String name;
     String eventName;
     String date;
+    String Day;
     String peopleComing;
     String imageName;
     Bitmap image;
@@ -29,6 +30,7 @@ public class ListItem
     {
         this.ev_image = ev_image;
     }
+    public void setDay(String day){this.Day = day;}
 
     public String getName()
     {
@@ -55,6 +57,7 @@ public class ListItem
         return image;
     }
     public Bitmap getev_image(){return ev_image;}
+    public String getDay(){return Day;}
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);

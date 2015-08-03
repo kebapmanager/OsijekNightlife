@@ -1,6 +1,7 @@
 package com.androidapp.osijeknightlife.app.TabFragments;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.SyncStateContract;
 import android.support.v4.app.Fragment;
@@ -14,7 +15,10 @@ import com.androidapp.osijeknightlife.app.ListItem;
 import com.androidapp.osijeknightlife.app.Adapters.ListItemAdapter;
 import com.androidapp.osijeknightlife.app.R;
 import com.androidapp.osijeknightlife.app.jsonDataP.Event;
+import com.parse.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,12 +29,11 @@ import java.util.List;
 public class ListFragment extends android.support.v4.app.ListFragment
 {
     public ListView lv;///da
-    public static List<Event> events;
-    public static List<Bitmap> bitmaps;
+    public static List<ParseObject> events;
+    Bitmap bmp;
 
-    public static ListFragment newInstance(int sectionNumber,List<Event> data,List<Bitmap> slike)
+    public static ListFragment newInstance(int sectionNumber,List<ParseObject> data)
     {
-        bitmaps = slike;
         if(data.size() != 0)
             events = data;
         else events = null;
@@ -108,12 +111,36 @@ public class ListFragment extends android.support.v4.app.ListFragment
             for(int i = 0;i<events.size();i++)
             {
                 event = new ListItem();
-                event.setName(events.get(i).getClub());
-                event.setEventName(events.get(i).getTitle());
-                event.setDate(events.get(i).getDate());
+                Date d = (Date)events.get(i).get("Datum");
+                SimpleDateFormat df = new SimpleDateFormat("dd-MM");
+
+
+
+                event.setEventName((String)events.get(i).get("Naslov"));
+                event.setDate(df.format(d));
+                df = new SimpleDateFormat("E");
+                event.setDay(df.format(d));
                 event.setPeopleComing("Nepoznato");
-                if(bitmaps.get(i) != null)
-                    event.setev_image(bitmaps.get(i));
+                try {
+                    ////
+                    byte[] bitmapdata = ((ParseFile) events.get(i).get("Slika")).getData();
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
+                    event.setev_image(bitmap);
+
+                    ///
+                    ParseQuery<ParseObject> query = ParseQuery.getQuery("Klub");
+                    query.fromLocalDatastore();
+                    query.whereEqualTo("objectId", events.get(i).get("Klub"));
+                    List<ParseObject> list = query.find();
+                    event.setName("POINTER");
+
+
+                    byte[] bitmapdatas = ((ParseFile) events.get(i).getParseObject("Klub").get("Slika")).getData();
+                    bmp = BitmapFactory.decodeByteArray(bitmapdatas, 0, bitmapdatas.length);
+
+                    event.setImage(bmp);
+                }catch(Exception e){}
+
                 eventList.add(event);
             }
         }
