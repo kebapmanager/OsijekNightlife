@@ -150,7 +150,6 @@ public class MainActivity extends ActionBarActivity
                 .setTabListener(this));
         actionBar.addTab(actionBar.newTab()
                 .setText("Klubovi")
-                .setIcon(R.drawable.klubovi_icon)
                 .setTabListener(this));
         //actionBar.addTab(actionBar.newTab()
                 //.setCustomView(R.layout.tab_layout)
@@ -159,7 +158,6 @@ public class MainActivity extends ActionBarActivity
         //actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setTitle(" ");
         actionBar.setDisplayShowHomeEnabled(false);
-        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.main_background01));
         actionBar.setStackedBackgroundDrawable(getResources().getDrawable(R.drawable.blue_background));
         actionBar.setHideOnContentScrollEnabled(true);
         actionBar.hide();
@@ -397,10 +395,6 @@ public class MainActivity extends ActionBarActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            setPager();
-            return true;
-        }
         return super.onOptionsItemSelected(item);
     }
     @Override
