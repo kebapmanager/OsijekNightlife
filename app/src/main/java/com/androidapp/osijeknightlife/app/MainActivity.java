@@ -265,15 +265,14 @@ public class MainActivity extends ActionBarActivity
             {
                 if(Events.get(i).getParseObject("Klub").get("Ime").equals(Club))
                 {
-                    SimpleDateFormat df = new SimpleDateFormat("dd-MM");
+                    SimpleDateFormat df = new SimpleDateFormat("EE - kk:mm");
                     Date d = (Date) Events.get(i).get("Datum");
 
                     KlubEv_nums.add(i);
                     event = new ListItem();
                     event.setName(Club);
                     event.setEventName((String) Events.get(i).get("Naslov"));
-                    event.setDate(df.format(d));
-                    event.setPeopleComing("Nepoznato");
+                    event.setDay(df.format(d));
                     try {
                         byte[] bitmapdata = ((ParseFile) Events.get(i).get("Slika")).getData();
                         Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
@@ -355,7 +354,7 @@ public class MainActivity extends ActionBarActivity
                 lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                /*DODAJ*/
+                setEventIspis(KlubEv_nums.get((int)id));
             }
         });
 

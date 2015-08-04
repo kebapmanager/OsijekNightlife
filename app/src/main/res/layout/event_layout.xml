@@ -10,47 +10,96 @@
             android:id="@+id/img_event_ispis"
             android:src="@drawable/color_image" android:layout_margin="0dp"
             android:scaleType="centerCrop"/>
-    <FrameLayout
+    <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="75dp" android:layout_weight="0.09"
+            android:layout_height="100dp" android:layout_weight="0.09"
             android:background="@drawable/blue_light_background" android:layout_below="@+id/img_event_ispis"
             android:layout_alignParentLeft="true" android:layout_alignParentStart="true" android:id="@+id/frameLayout2">
+        <ImageButton
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/club_img_button" android:layout_gravity="left|bottom"
+                android:cropToPadding="true" android:maxHeight="100dp" android:maxWidth="100dp"
+                android:scaleType="centerCrop"
+                android:background="#008b8b8b"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" android:layout_alignParentBottom="true"
+                android:layout_margin="5dp"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Medium Text"
                 android:id="@+id/event_music" android:layout_gravity="center_horizontal|bottom"
-                android:gravity="center_vertical" android:textColor="#ff000000"/>
+                android:gravity="center_vertical" android:textColor="#ff000000"
+                android:paddingLeft="5dp"
+                android:paddingTop="2dp" android:layout_below="@+id/event_club"
+                android:layout_toRightOf="@+id/club_img_button" android:layout_toEndOf="@+id/club_img_button"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Medium Text"
                 android:id="@+id/event_club" android:layout_gravity="center" android:gravity="center_vertical"
-                android:textColor="@drawable/blue_dark_background"/>
+                android:textColor="@drawable/blue_dark_background"
+                android:paddingLeft="5dp" android:paddingTop="2dp" android:layout_below="@+id/event_title"
+                android:layout_toRightOf="@+id/club_img_button" android:layout_toEndOf="@+id/club_img_button"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Large Text"
                 android:id="@+id/event_title" android:layout_gravity="center_horizontal|top"
-                android:textColor="#ff000000"/>
-    </FrameLayout>
-    <ImageButton
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:id="@+id/club_img_button" android:layout_gravity="right"
-            android:cropToPadding="true" android:maxHeight="100dp" android:maxWidth="100dp"
-            android:scaleType="centerCrop" android:layout_below="@+id/frameLayout2"
-            android:layout_alignParentRight="true" android:layout_alignParentEnd="true"/>
-    <TextView
+                android:textColor="#ff000000"
+                android:layout_alignParentTop="true" android:layout_toRightOf="@+id/club_img_button"
+                android:layout_toEndOf="@+id/club_img_button" android:paddingLeft="5dp" android:paddingTop="2dp"/>
+    </RelativeLayout>
+    <ScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Small Text"
-            android:id="@+id/event_text" android:textColor="#ff000000"
-            android:layout_below="@+id/frameLayout2" android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" android:layout_toLeftOf="@+id/club_img_button"
-            android:layout_toStartOf="@+id/club_img_button" android:layout_alignParentBottom="true"/>
+            android:id="@+id/scrollView" android:layout_below="@+id/frameLayout2" android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Small Text"
+                android:id="@+id/event_text" android:textColor="#ff000000"
+                android:layout_below="@+id/frameLayout2" android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" android:layout_toLeftOf="@+id/club_img_button"
+                android:layout_toStartOf="@+id/club_img_button" android:layout_alignParentBottom="true"
+                android:padding="15dp"/>
+    </ScrollView>
+    <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50dp" android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" android:background="@drawable/blue_light_background"
+            >
+        <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Button"
+                android:id="@+id/event_nazad" android:layout_gravity="left|center_vertical"
+                android:background="#008b8b8b" android:paddingLeft="10dp"/>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_gravity="right|center_vertical"
+                android:gravity="bottom" android:paddingRight="10dp">
+            <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:id="@+id/zvezda1" android:layout_gravity="center_horizontal"
+                    android:background="@drawable/zvezda"/>
+            <ImageView android:layout_width="20dp" android:layout_height="20dp" android:id="@+id/zvezda2"
+                       android:layout_gravity="center_horizontal" android:background="@drawable/zvezda"/>
+            <ImageView android:layout_width="20dp" android:layout_height="20dp" android:id="@+id/zvezda3"
+                       android:layout_gravity="center_horizontal" android:background="@drawable/zvezda"/>
+            <ImageView android:layout_width="20dp" android:layout_height="20dp" android:id="@+id/zvezda4"
+                       android:layout_gravity="center_horizontal" android:background="@drawable/zvezda"/>
+            <ImageView android:layout_width="20dp" android:layout_height="20dp" android:id="@+id/zvezda5"
+                       android:layout_gravity="center_horizontal" android:background="@drawable/zvezda"/>
+        </LinearLayout>
+    </FrameLayout>
 </RelativeLayout>

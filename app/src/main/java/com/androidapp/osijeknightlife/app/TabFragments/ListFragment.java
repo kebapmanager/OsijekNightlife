@@ -112,13 +112,11 @@ public class ListFragment extends android.support.v4.app.ListFragment
             {
                 event = new ListItem();
                 Date d = (Date)events.get(i).get("Datum");
-                SimpleDateFormat df = new SimpleDateFormat("dd-MM");
+                SimpleDateFormat df = new SimpleDateFormat("EE - kk:mm");
 
 
 
                 event.setEventName((String)events.get(i).get("Naslov"));
-                event.setDate(df.format(d));
-                df = new SimpleDateFormat("E");
                 event.setDay(df.format(d));
                 event.setPeopleComing("Nepoznato");
                 try {
