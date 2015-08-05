@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.*;
 import android.widget.*;
+import com.androidapp.osijeknightlife.app.Adapters.GridItemAdapter;
 import com.androidapp.osijeknightlife.app.Adapters.ListItemAdapter;
 import com.androidapp.osijeknightlife.app.PageTransformers.*;
 import com.androidapp.osijeknightlife.app.TabFragments.GridFragment;
@@ -60,6 +61,9 @@ public class MainActivity extends ActionBarActivity
     LayoutInflater li;
     Map<Integer,String> Klubovi = new HashMap<Integer,String>();
     ImageButton ClubButton,Settings;
+
+    List<String> Boje = Arrays.asList("Red","Purple","Deep Purple","Indigo", "Cyan", "Teal","Lime","Orange","Deep Orange","Brown","Grey");
+    int currentColorIndex = 0;
 
     List<ParseObject> Events = new ArrayList<>();
     List<ParseObject> Klubs = new ArrayList<>();
@@ -228,26 +232,15 @@ public class MainActivity extends ActionBarActivity
                 setKlubIspis((String)club.getText());
                 break;
             case R.id.settings_button:
-                setContentView(R.layout.settings_layout);
+                setSettingsIspis();
+                break;
+            case R.id.back_button:
+                onBackPressed();
+                break;
+            case R.id.back_button_club:
+                onBackPressed();
                 break;
         }
-    }
-    public String[] getDates()
-    {
-        int j = 1;
-        String[] list = new String[5];
-        c = Calendar.getInstance();
-        for(int i = 0;i<5;i++) {
-
-            String day = Integer.toString(c.get(Calendar.DAY_OF_MONTH));
-            if(day.equals("1")&&i!=0)
-                j+=1;
-            int month = c.get(Calendar.MONTH)+j;
-
-            c.roll(Calendar.DAY_OF_MONTH,true);
-            list[i] = day+"."+month+".";
-        }
-        return list;
     }
     public ArrayList<ListItem> getClubEvents(String Club)
     {
@@ -301,7 +294,15 @@ public class MainActivity extends ActionBarActivity
         TextView Vrijeme = (TextView)findViewById(R.id.event_music);
         TextView Text = (TextView)findViewById(R.id.event_text);
         ImageView img = (ImageView)findViewById(R.id.img_event_ispis);
+        Button back = (Button)findViewById(R.id.back_button);
+        back.setOnClickListener(this);
 
+        {
+            FrameLayout fl = (FrameLayout)findViewById(R.id.event_frame_light);
+            RelativeLayout rl = (RelativeLayout)findViewById(R.id.event_relative_light);
+            rl.setBackgroundColor(getResources().getColor(getColorByIndex(currentColorIndex).get(1)));
+            fl.setBackgroundColor(getResources().getColor(getColorByIndex(currentColorIndex).get(1)));
+        }
 
 
         if(Events.size() != 0)
@@ -336,6 +337,14 @@ public class MainActivity extends ActionBarActivity
         TextView Naslov = (TextView)findViewById(R.id.club);
         TextView Text = (TextView)findViewById(R.id.text);
         ImageView img = (ImageView)findViewById(R.id.logo);
+        Button back = (Button)findViewById(R.id.back_button_club);
+        {
+            RelativeLayout rl = (RelativeLayout) findViewById(R.id.club_relative_light);
+            FrameLayout fl = (FrameLayout) findViewById(R.id.club_frame_light);
+            rl.setBackgroundColor(getResources().getColor(getColorByIndex(currentColorIndex).get(1)));
+            fl.setBackgroundColor(getResources().getColor(getColorByIndex(currentColorIndex).get(1)));
+        }
+        back.setOnClickListener(this);
         ParseQuery query = new ParseQuery("Klub");
         try {
             query.fromLocalDatastore().whereEqualTo("Ime", id);
@@ -361,6 +370,66 @@ public class MainActivity extends ActionBarActivity
 
         Text.setText("Tekst kluba\nkoko os\ntako je");
     }
+    public List<Integer> getColorByIndex(int index)
+    {
+
+        switch(index)
+        {
+            case 0:
+                return Arrays.asList(R.color.red_background_normal,R.color.red_background_light,R.color.red_background_dark);
+            case 1:
+                return Arrays.asList(R.color.purple_background_normal,R.color.purple_background_light,R.color.purple_background_dark);
+            case 2:
+                return Arrays.asList(R.color.deeppurple_background_normal,R.color.deeppurple_background_light,R.color.deeppurple_background_dark);
+            case 3:
+                return Arrays.asList(R.color.indigo_background_normal,R.color.indigo_background_light,R.color.indigo_background_dark);
+            case 4:
+                return Arrays.asList(R.color.cyan_background_normal,R.color.cyan_background_light,R.color.cyan_background_dark);
+            case 5:
+                return Arrays.asList(R.color.teal_background_normal,R.color.teal_background_light,R.color.teal_background_dark);
+            case 6:
+                return Arrays.asList(R.color.lime_background_normal,R.color.lime_background_light,R.color.lime_background_dark);
+            case 7:
+                return Arrays.asList(R.color.orange_background_normal,R.color.orange_background_light,R.color.orange_background_dark);
+            case 8:
+                return Arrays.asList(R.color.deeporange_background_normal,R.color.deeporange_background_light,R.color.deeporange_background_dark);
+            case 9:
+                return Arrays.asList(R.color.brown_background_normal,R.color.brown_background_light,R.color.brown_background_dark);
+            case 10:
+                return Arrays.asList(R.color.grey_background_normal,R.color.grey_background_light,R.color.grey_background_dark);
+            default:
+                return Arrays.asList(R.color.red_background_normal,R.color.red_background_light,R.color.red_background_dark);
+        }
+    }
+    public ArrayList<GridItem> getGridColors()
+    {
+        ArrayList<GridItem> Colors = new ArrayList<>();
+
+        for(int i = 0;i<Boje.size();i++)
+        {
+            GridItem griditem = new GridItem();
+            Bitmap bmp = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
+            bmp.eraseColor(getResources().getColor(getColorByIndex(i).get(0)));
+            griditem.setImageBitmap(bmp);
+            Colors.add(griditem);
+        }
+
+        return Colors;
+    }
+    public void setSettingsIspis()
+    {
+        setContentView(R.layout.settings_layout);
+
+        GridView gv = (GridView) findViewById(R.id.settings_grid);
+        gv.setAdapter(new GridItemAdapter(this,getGridColors()));
+        gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                currentColorIndex = (int)id;
+                findViewById(R.id.settings_grid).setBackgroundColor(getResources().getColor(getColorByIndex(currentColorIndex).get(0)));
+            }
+        });
+    }
     private ShareActionProvider share;
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -379,11 +448,11 @@ public class MainActivity extends ActionBarActivity
     public void onBackPressed() {
         if(!(getWindow().getDecorView().getRootView() == mViewPager.getRootView())) {
             //getSupportActionBar().show();
-            mSectionsPagerAdapter.notifyDataSetChanged();
-            mViewPager.setAdapter(mSectionsPagerAdapter);
+            setPager();
             mViewPager.setCurrentItem(getSupportActionBar().getSelectedTab().getPosition());
-            ListFragment.registerListener(this);
-            setContentView(mViewPager.getRootView());
+
+            mViewPager.getRootView().findViewById(R.id.pager_title_strip).setBackgroundColor(getResources().getColor(getColorByIndex(currentColorIndex).get(0)));
+
         }
     }
     @Override

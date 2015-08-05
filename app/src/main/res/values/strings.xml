@@ -38,4 +38,56 @@
     <drawable name="grid_layout_background">#ff716f75</drawable>
     <drawable name="grid_item_background">#ff555350</drawable>
 
+    <!-- BACKGROUNDS
+    500
+    200
+    800
+    -->
+
+    <color name="red_background_normal">#fff44336</color>
+    <color name="red_background_light">#ffef9a9a</color>
+    <color name="red_background_dark">#ffc62828</color>
+
+    <color name="purple_background_normal">#ff9C27B0</color>
+    <color name="purple_background_light">#ffCE93D8</color>
+    <color name="purple_background_dark">#ff6A1B9A</color>
+
+    <color name="deeppurple_background_normal">#ff673AB7</color>
+    <color name="deeppurple_background_light">#ffB39DDB</color>
+    <color name="deeppurple_background_dark">#ff4527A0</color>
+
+    <color name="indigo_background_normal">#ff3F51B5</color>
+    <color name="indigo_background_light">#ff9FA8DA</color>
+    <color name="indigo_background_dark">#ff283593</color>
+
+    <color name="cyan_background_normal">#ff00BCD4</color>
+    <color name="cyan_background_light">#ff80DEEA</color>
+    <color name="cyan_background_dark">#ff00838F</color>
+
+    <color name="teal_background_normal">#ff009688</color>
+    <color name="teal_background_light">#ff80CBC4</color>
+    <color name="teal_background_dark">#ff00695C</color>
+
+    <color name="lime_background_normal">#ffCDDC39</color>
+    <color name="lime_background_light">#ffE6EE9C</color>
+    <color name="lime_background_dark">#ff9E9D24</color>
+
+    <color name="orange_background_normal">#ffFF9800</color>
+    <color name="orange_background_light">#ffFFCC80</color>
+    <color name="orange_background_dark">#ffEF6C00</color>
+
+    <color name="deeporange_background_normal">#ffFF5722</color>
+    <color name="deeporange_background_light">#ffFFAB91</color>
+    <color name="deeporange_background_dark">#ffD84315</color>
+
+    <color name="brown_background_normal">#ff795548</color>
+    <color name="brown_background_light">#ffBCAAA4</color>
+    <color name="brown_background_dark">#ff4E342E</color>
+
+    <color name="grey_background_normal">#ff9E9E9E</color>
+    <color name="grey_background_light">#ffEEEEEE</color>
+    <color name="grey_background_dark">#ff424242</color>
+
+
+
 </resources>

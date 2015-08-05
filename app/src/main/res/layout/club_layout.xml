@@ -13,7 +13,7 @@
 
     <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" android:id="@+id/relativeLayout"
+            android:layout_height="wrap_content" android:id="@+id/club_relative_light"
             android:background="@drawable/blue_light_background">
         <TextView
                 android:layout_width="wrap_content"
@@ -54,7 +54,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/listView_club_layout"
-            android:layout_below="@+id/relativeLayout" android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" android:layout_marginTop="5dp"/>
+            android:layout_below="@+id/club_relative_light" android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" android:layout_marginTop="5dp"
+            android:layout_above="@+id/club_frame_light"/>
+    <FrameLayout android:layout_width="fill_parent" android:layout_height="50dp" android:layout_alignParentBottom="true"
+                 android:layout_centerHorizontal="true" android:background="@drawable/blue_light_background"
+                 android:id="@+id/club_frame_light">
+        <Button style="?android:attr/buttonStyleSmall" android:layout_width="75dp" android:layout_height="wrap_content"
+                android:id="@+id/back_button_club" android:layout_gravity="left|center_vertical"
+                android:background="@drawable/back_button" android:paddingLeft="10dp"/>
+        <LinearLayout android:orientation="horizontal" android:layout_width="wrap_content"
+                      android:layout_height="wrap_content" android:layout_gravity="right|center_vertical"
+                      android:gravity="bottom" android:paddingRight="10dp">
+            <ImageView android:layout_width="20dp" android:layout_height="20dp" android:id="@+id/imageView"
+                       android:layout_gravity="center_horizontal" android:background="@drawable/zvezda"/>
+            <ImageView android:layout_width="20dp" android:layout_height="20dp" android:id="@+id/imageView2"
+                       android:layout_gravity="center_horizontal" android:background="@drawable/zvezda"/>
+            <ImageView android:layout_width="20dp" android:layout_height="20dp" android:id="@+id/imageView3"
+                       android:layout_gravity="center_horizontal" android:background="@drawable/zvezda"/>
+            <ImageView android:layout_width="20dp" android:layout_height="20dp" android:id="@+id/imageView4"
+                       android:layout_gravity="center_horizontal" android:background="@drawable/zvezda"/>
+            <ImageView android:layout_width="20dp" android:layout_height="20dp" android:id="@+id/imageView5"
+                       android:layout_gravity="center_horizontal" android:background="@drawable/zvezda"/>
+        </LinearLayout>
+    </FrameLayout>
 
 </RelativeLayout>

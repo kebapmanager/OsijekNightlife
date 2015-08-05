@@ -6,30 +6,40 @@
 
     <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" android:background="#ffb66b6e">
-        <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent" android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true" android:layout_alignParentStart="true"
-                android:id="@+id/linearLayout">
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Tema"
-                    android:id="@+id/textView"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Medium Text"
-                    android:id="@+id/textView2" android:layout_marginTop="180dp"/>
-        </LinearLayout>
+            android:layout_height="fill_parent" android:background="#ffdde5e6" android:id="@+id/settings_relative">
         <GridView
+                android:layout_width="100dp"
+                android:layout_height="fill_parent"
+                android:id="@+id/settings_grid"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" android:layout_alignParentBottom="true"
+                android:layout_below="@+id/textView2"/>
+        <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/scrollView2"
+                android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" android:layout_toLeftOf="@+id/settings_grid"
+                android:layout_toStartOf="@+id/settings_grid">
+            <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Postavke"
+                        android:id="@+id/textView" android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"/>
+            </RelativeLayout>
+        </ScrollView>
+        <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:id="@+id/gridView" android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/linearLayout" android:layout_toEndOf="@+id/linearLayout"/>
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Tema"
+                android:id="@+id/textView2" android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/scrollView2" android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" android:gravity="center"/>
     </RelativeLayout>
 </LinearLayout>
