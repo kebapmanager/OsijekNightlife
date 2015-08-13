@@ -59,7 +59,6 @@ BaseGameUtils/
 *.exe
 *.gwt
 *.gwt.xml
-*.jar
 *.bat
 *.iml
 *.so

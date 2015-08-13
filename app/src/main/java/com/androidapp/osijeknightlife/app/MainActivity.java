@@ -9,6 +9,7 @@ import java.util.Date;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.DataSetObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,7 +24,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
 import android.view.*;
 import android.widget.*;
 import com.androidapp.osijeknightlife.app.Adapters.GridItemAdapter;
@@ -48,13 +51,16 @@ import retrofit.RetrofitError;
 public class MainActivity extends ActionBarActivity
         implements ActionBar.TabListener,ListFragment.Listener,GridFragment.Listener,View.OnClickListener,OnMapReadyCallback {
     ///edit
+    SharedPreferences prefs;
     ArrayList<Integer> KlubEv_nums = new ArrayList<>();
     TextView report;
     //SupportMapFragment mapFragment;
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
+    ProgressBar pg;
     GetData DW = new GetData(this);
     Fragment event,grid;
+    Button dalje_button;
     Calendar c = Calendar.getInstance();
     String Datum;
     View loading,event_ispis,club_ispis;
@@ -63,7 +69,7 @@ public class MainActivity extends ActionBarActivity
     ImageButton ClubButton,Settings;
 
     List<String> Boje = Arrays.asList("Red","Purple","Deep Purple","Indigo", "Cyan", "Teal","Lime","Orange","Deep Orange","Brown","Grey");
-    int currentColorIndex = 0;
+    int currentColorIndex = 0,limit = 20;
 
     List<ParseObject> Events = new ArrayList<>();
     List<ParseObject> Klubs = new ArrayList<>();
@@ -87,7 +93,6 @@ public class MainActivity extends ActionBarActivity
     {
         if(!(getWindow().getDecorView().getRootView() == mViewPager.getRootView())) {
             DW.info = true;
-            event = ListFragment.newInstance(0, Events);
             mSectionsPagerAdapter.notifyDataSetChanged();
             mViewPager.setAdapter(mSectionsPagerAdapter);
             setContentView(mViewPager.getRootView());
@@ -176,6 +181,13 @@ public class MainActivity extends ActionBarActivity
 
         Parse.enableLocalDatastore(this);
         Parse.initialize(this, "yd8rPOEKL418mHf5Avu1cN13oT3Qdjz197r8BtnR", "mMVBhcFIIUJRMTME0ZBOhR6vTz0mRu7lF63dtH8o");
+
+        prefs = this.getSharedPreferences("com.osijeknightlife.app.limit", Context.MODE_PRIVATE);
+        String Key = "com.osijeknightlife.app.limit";
+
+        // use a default value using new Date()
+        long l = prefs.getLong(Key, limit);
+
         getKlubs();
         getEvents();
 
@@ -189,14 +201,27 @@ public class MainActivity extends ActionBarActivity
         date.getTime();
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
-        query.whereGreaterThanOrEqualTo("Datum", date).findInBackground(new FindCallback<ParseObject>() {
+        query.whereGreaterThanOrEqualTo("Datum", date).setLimit(limit).findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
 
                 Events = list;
-                setPager();
+                button_dalje();
+                if(!(getWindow().getDecorView().getRootView() == mViewPager.getRootView())) {
+                    DW.info = true;
+                    mSectionsPagerAdapter.notifyDataSetChanged();
+                    mViewPager.setAdapter(mSectionsPagerAdapter);
+                }
             }
         });
+    }
+    public void button_dalje()
+    {
+        pg = (ProgressBar)findViewById(R.id.loading);
+        pg.setVisibility(View.INVISIBLE);
+        dalje_button = (Button) findViewById(R.id.dalje_button);
+        dalje_button.setVisibility(View.VISIBLE);
+        dalje_button.setOnClickListener(this);
     }
     public void getKlubs()
     {
@@ -239,6 +264,9 @@ public class MainActivity extends ActionBarActivity
                 break;
             case R.id.back_button_club:
                 onBackPressed();
+                break;
+            case R.id.dalje_button:
+                setContentView(mViewPager.getRootView());
                 break;
         }
     }
@@ -299,8 +327,8 @@ public class MainActivity extends ActionBarActivity
 
         {
             FrameLayout fl = (FrameLayout)findViewById(R.id.event_frame_light);
-            RelativeLayout rl = (RelativeLayout)findViewById(R.id.event_relative_light);
-            rl.setBackgroundColor(getResources().getColor(getColorByIndex(currentColorIndex).get(1)));
+            //RelativeLayout rl = (RelativeLayout)findViewById(R.id.event_relative_light);
+            //rl.setBackgroundColor(getResources().getColor(getColorByIndex(currentColorIndex).get(1)));
             fl.setBackgroundColor(getResources().getColor(getColorByIndex(currentColorIndex).get(1)));
         }
 
@@ -314,7 +342,7 @@ public class MainActivity extends ActionBarActivity
             Naslov.setText((String)ev.get("Naslov"));
             Klub.setText((String)ev.getParseObject("Klub").get("Ime"));
             Vrijeme.setText(df.format(d));
-            Text.setText((String)ev.get((String)ev.get("Tekst")));
+            Text.setText((String)ev.get("Tekst"));
             try {
                 byte[] bitmapdata = ((ParseFile) ev.get("Slika")).getData();
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
@@ -336,12 +364,14 @@ public class MainActivity extends ActionBarActivity
         setContentView(club_ispis);
         TextView Naslov = (TextView)findViewById(R.id.club);
         TextView Text = (TextView)findViewById(R.id.text);
+        TextView dod = (TextView)findViewById(R.id.dod);
+        TextView tip = (TextView)findViewById(R.id.tip_k);
         ImageView img = (ImageView)findViewById(R.id.logo);
         Button back = (Button)findViewById(R.id.back_button_club);
         {
-            RelativeLayout rl = (RelativeLayout) findViewById(R.id.club_relative_light);
+            //RelativeLayout rl = (RelativeLayout) findViewById(R.id.club_relative_light);
             FrameLayout fl = (FrameLayout) findViewById(R.id.club_frame_light);
-            rl.setBackgroundColor(getResources().getColor(getColorByIndex(currentColorIndex).get(1)));
+            //rl.setBackgroundColor(getResources().getColor(getColorByIndex(currentColorIndex).get(1)));
             fl.setBackgroundColor(getResources().getColor(getColorByIndex(currentColorIndex).get(1)));
         }
         back.setOnClickListener(this);
@@ -352,6 +382,9 @@ public class MainActivity extends ActionBarActivity
             byte[] bitmapdata = ((ParseFile) parseObject.get(0).get("Slika")).getData();
             Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
             img.setImageBitmap(bitmap);
+            tip.setText("-"+parseObject.get(0).get("Status").toString());
+            Text.setText("Radno vrijeme :\n"+parseObject.get(0).get("RV").toString()+"\nAdresa : \n"+parseObject.get(0).get("Adresa").toString()+"\nDodatno:\n"+parseObject.get(0).get("Dodatno").toString());
+            dod.setText("Pušači : "+ parseObject.get(0).get("Pusaci").toString());
         }catch (Exception e)
         {}
 
@@ -368,7 +401,6 @@ public class MainActivity extends ActionBarActivity
 
         Naslov.setText(id);
 
-        Text.setText("Tekst kluba\nkoko os\ntako je");
     }
     public List<Integer> getColorByIndex(int index)
     {
@@ -429,6 +461,8 @@ public class MainActivity extends ActionBarActivity
                 findViewById(R.id.settings_grid).setBackgroundColor(getResources().getColor(getColorByIndex(currentColorIndex).get(0)));
             }
         });
+
+
     }
     private ShareActionProvider share;
     @Override
@@ -452,7 +486,6 @@ public class MainActivity extends ActionBarActivity
             mViewPager.setCurrentItem(getSupportActionBar().getSelectedTab().getPosition());
 
             mViewPager.getRootView().findViewById(R.id.pager_title_strip).setBackgroundColor(getResources().getColor(getColorByIndex(currentColorIndex).get(0)));
-
         }
     }
     @Override
