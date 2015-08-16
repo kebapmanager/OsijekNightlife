@@ -67,7 +67,7 @@
                 android:layout_height="100dp"
                 android:id="@+id/event_img_listitem" android:clickable="false"
                 android:background="#ff9b84b5"
-                android:scaleType="centerCrop" android:adjustViewBounds="true" android:paddingTop="0dp" android:nestedScrollingEnabled="false"
+                android:scaleType="fitXY" android:adjustViewBounds="true" android:paddingTop="0dp" android:nestedScrollingEnabled="false"
                 android:layout_gravity="center_horizontal"
                 android:paddingLeft="0dp"
                 android:layout_alignTop="@+id/club_img_listitem" android:layout_toRightOf="@+id/club_img_listitem"

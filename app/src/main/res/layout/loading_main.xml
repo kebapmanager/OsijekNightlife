@@ -24,11 +24,4 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:id="@+id/errorReport" android:layout_below="@+id/loading" android:layout_centerHorizontal="true"
             android:layout_marginTop="36dp"/>
-    <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:text="Dalje"
-            android:id="@+id/dalje_button" android:layout_alignBottom="@+id/loading" android:layout_centerHorizontal="true"
-            android:visibility="invisible" android:background="#00ffffff" android:textColor="#ffffffff"/>
 </RelativeLayout>

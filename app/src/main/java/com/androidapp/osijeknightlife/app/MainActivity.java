@@ -1,18 +1,24 @@
 package com.androidapp.osijeknightlife.app;
 
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Date;
 
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.DataSetObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
@@ -27,6 +33,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import com.androidapp.osijeknightlife.app.Adapters.GridItemAdapter;
@@ -92,13 +99,11 @@ public class MainActivity extends ActionBarActivity
     public void setPager()
     {
         if(!(getWindow().getDecorView().getRootView() == mViewPager.getRootView())) {
-            DW.info = true;
+            //event = ListFragment.newInstance(0,Events);
+            //grid = GridFragment.newInstance(1);
             mSectionsPagerAdapter.notifyDataSetChanged();
             mViewPager.setAdapter(mSectionsPagerAdapter);
             setContentView(mViewPager.getRootView());
-            //loading.setVisibility(View.INVISIBLE);
-            mViewPager.setVisibility(View.VISIBLE);
-            DW.CheckDate = 0;
         }
 
     }
@@ -179,21 +184,21 @@ public class MainActivity extends ActionBarActivity
         report = (TextView) findViewById(R.id.errorReport);
         report.setText(" ");
 
+        if(isNetworkAvailable())
+            initializeParse();
+        else report.setText("No Internet connection");
+
+
+
+
+
+    }
+    public void initializeParse()
+    {
         Parse.enableLocalDatastore(this);
         Parse.initialize(this, "yd8rPOEKL418mHf5Avu1cN13oT3Qdjz197r8BtnR", "mMVBhcFIIUJRMTME0ZBOhR6vTz0mRu7lF63dtH8o");
-
-        prefs = this.getSharedPreferences("com.osijeknightlife.app.limit", Context.MODE_PRIVATE);
-        String Key = "com.osijeknightlife.app.limit";
-
-        // use a default value using new Date()
-        long l = prefs.getLong(Key, limit);
-
         getKlubs();
         getEvents();
-
-
-
-
     }
     public void getEvents()
     {
@@ -206,22 +211,11 @@ public class MainActivity extends ActionBarActivity
             public void done(List<ParseObject> list, ParseException e) {
 
                 Events = list;
-                button_dalje();
-                if(!(getWindow().getDecorView().getRootView() == mViewPager.getRootView())) {
-                    DW.info = true;
-                    mSectionsPagerAdapter.notifyDataSetChanged();
-                    mViewPager.setAdapter(mSectionsPagerAdapter);
-                }
+                event = ListFragment.newInstance(0,Events);
+                grid = GridFragment.newInstance(1);
+                setPager();
             }
         });
-    }
-    public void button_dalje()
-    {
-        pg = (ProgressBar)findViewById(R.id.loading);
-        pg.setVisibility(View.INVISIBLE);
-        dalje_button = (Button) findViewById(R.id.dalje_button);
-        dalje_button.setVisibility(View.VISIBLE);
-        dalje_button.setOnClickListener(this);
     }
     public void getKlubs()
     {
@@ -264,9 +258,6 @@ public class MainActivity extends ActionBarActivity
                 break;
             case R.id.back_button_club:
                 onBackPressed();
-                break;
-            case R.id.dalje_button:
-                setContentView(mViewPager.getRootView());
                 break;
         }
     }
@@ -483,6 +474,7 @@ public class MainActivity extends ActionBarActivity
         if(!(getWindow().getDecorView().getRootView() == mViewPager.getRootView())) {
             //getSupportActionBar().show();
             setPager();
+
             mViewPager.setCurrentItem(getSupportActionBar().getSelectedTab().getPosition());
 
             mViewPager.getRootView().findViewById(R.id.pager_title_strip).setBackgroundColor(getResources().getColor(getColorByIndex(currentColorIndex).get(0)));
@@ -524,10 +516,10 @@ public class MainActivity extends ActionBarActivity
             switch(position)
             {
                 case 0:
-                    fragment = ListFragment.newInstance(0,Events);
+                    fragment = event;
                     break;
                 case 1:
-                    fragment = GridFragment.newInstance(1);
+                    fragment = grid;
                     break;
                 case 2:
                     fragment = new Fragment();//mapFragment;
@@ -564,5 +556,11 @@ public class MainActivity extends ActionBarActivity
             }
             return null;
         }
+    }
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
     }
 }
