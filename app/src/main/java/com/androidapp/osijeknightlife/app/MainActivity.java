@@ -195,8 +195,13 @@ public class MainActivity extends ActionBarActivity
     }
     public void initializeParse()
     {
+        //Parse.enableLocalDatastore(this);
+        //Parse.initialize(this, "yd8rPOEKL418mHf5Avu1cN13oT3Qdjz197r8BtnR", "mMVBhcFIIUJRMTME0ZBOhR6vTz0mRu7lF63dtH8o");
+
         Parse.enableLocalDatastore(this);
-        Parse.initialize(this, "yd8rPOEKL418mHf5Avu1cN13oT3Qdjz197r8BtnR", "mMVBhcFIIUJRMTME0ZBOhR6vTz0mRu7lF63dtH8o");
+
+        Parse.initialize(this, "4h2FNshppCgJNcEH6eYDUUNG0tyecE6QTKcJiBhk", "Wh3uPBU7hxRGTSs636iJ4inht1lgGzLu6M6rSRWE");
+
         getKlubs();
         getEvents();
     }
@@ -206,7 +211,7 @@ public class MainActivity extends ActionBarActivity
         date.getTime();
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
-        query.whereGreaterThanOrEqualTo("Datum", date).setLimit(limit).findInBackground(new FindCallback<ParseObject>() {
+        query.whereGreaterThanOrEqualTo("Zavrsava", date).setLimit(limit).findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
 
@@ -217,14 +222,14 @@ public class MainActivity extends ActionBarActivity
             }
         });
     }
-    public void getKlubs()
-    {
+
+    public void getKlubs() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Klub");
 
-            query.findInBackground(new FindCallback<ParseObject>() {
-                @Override
-                public void done(List<ParseObject> Klublist, ParseException e) {
-                    Klubs = Klublist;
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> Klublist, ParseException e) {
+                Klubs = Klublist;
                     for(int i = 0;i<Klublist.size();i++) Klublist.get(i).pinInBackground();
                 }
             });

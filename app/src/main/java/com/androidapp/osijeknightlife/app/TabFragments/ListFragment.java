@@ -70,76 +70,42 @@ public class ListFragment extends android.support.v4.app.ListFragment
 
         ListItem event = new ListItem();
 
-        if(events == null) {
-            event.setName("Old Bridge Pub");
-            event.setEventName("Cigani lete u nebo");
-            event.setDate("12.6");
-            event.setPeopleComing("102");
-            eventList.add(event);
-
-            event = new ListItem();
-            event.setName("Tufna");
-            event.setEventName("DJ Zidov");
-            event.setDate("10.7");
-            event.setPeopleComing("1024");
-            eventList.add(event);
-
-            event = new ListItem();
-            event.setName("Matrix");
-            event.setDate("30.6");
-            event.setEventName("Party - cigan osvetnik");
-            event.setPeopleComing("124");
-            eventList.add(event);
-
-            event = new ListItem();
-            event.setName("Cadillac");
-            event.setDate("13.6");
-            event.setEventName("Zidov uzvraca udarac");
-
-            event.setPeopleComing("234");
-            eventList.add(event);
-
-            event = new ListItem();
-            event.setName("Bastion");
-            event.setDate("12.7");
-            event.setEventName("Njiva bend");
-            event.setPeopleComing("134");
-            eventList.add(event);
+        if(events == null ) {
         }
         else
         {
             for(int i = 0;i<events.size();i++)
             {
-                event = new ListItem();
-                Date d = (Date)events.get(i).get("Datum");
-                SimpleDateFormat df = new SimpleDateFormat("EE - kk:mm");
+
+                    event = new ListItem();
+                    SimpleDateFormat df = new SimpleDateFormat("EE - kk:mm");
+                    Date krece = (Date)events.get(i).get("Datum");
 
 
+                    event.setEventName((String)events.get(i).get("Naslov"));
+                    event.setDay(df.format(krece));
+                    event.setPeopleComing("Nepoznato");
+                    try {
+                        ////
+                        byte[] bitmapdata = ((ParseFile) events.get(i).get("Slika")).getData();
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
+                        event.setev_image(bitmap);
 
-                event.setEventName((String)events.get(i).get("Naslov"));
-                event.setDay(df.format(d));
-                event.setPeopleComing("Nepoznato");
-                try {
-                    ////
-                    byte[] bitmapdata = ((ParseFile) events.get(i).get("Slika")).getData();
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
-                    event.setev_image(bitmap);
-
-                    ///
-                    ParseQuery<ParseObject> query = ParseQuery.getQuery("Klub");
-                    query.fromLocalDatastore();
-                    query.whereEqualTo("objectId", events.get(i).get("Klub"));
-                    List<ParseObject> list = query.find();
-                    event.setName("POINTER");
+                        ///
+                        ParseQuery<ParseObject> query = ParseQuery.getQuery("Klub");
+                        query.fromLocalDatastore();
+                        query.whereEqualTo("objectId", events.get(i).get("Klub"));
+                        List<ParseObject> list = query.find();
+                        event.setName("POINTER");
 
 
-                    byte[] bitmapdatas = ((ParseFile) events.get(i).getParseObject("Klub").get("Slika")).getData();
-                    bmp = BitmapFactory.decodeByteArray(bitmapdatas, 0, bitmapdatas.length);
+                        byte[] bitmapdatas = ((ParseFile) events.get(i).getParseObject("Klub").get("Slika")).getData();
+                        bmp = BitmapFactory.decodeByteArray(bitmapdatas, 0, bitmapdatas.length);
 
-                    event.setImage(bmp);
-                }catch(Exception e){}
+                        event.setImage(bmp);
+                    }catch(Exception e){}
 
-                eventList.add(event);
+                    eventList.add(event);
             }
         }
 

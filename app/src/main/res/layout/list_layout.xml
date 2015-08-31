@@ -9,5 +9,5 @@
 
           android:focusable="false"
                 android:clickable="false"
-                android:focusableInTouchMode="false" android:background="#ffc6c6c6">
+                android:focusableInTouchMode="false" android:background="#008b8b8b">
 </ListView>

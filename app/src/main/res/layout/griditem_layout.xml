@@ -6,20 +6,24 @@
                 android:layout_height="wrap_content"
                 tools:context=".MainActivity$AboutFragment"
                 android:id="@+id/griditem_layout"
-                android:background="#008b8b8b"
+                android:background="#00fef6ff"
                 android:focusable="false"
                 android:clickable="false"
                 android:focusableInTouchMode="false"
         >
-    <ImageView  android:orientation="vertical"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                tools:context=".MainActivity$AboutFragment"
-                android:id="@+id/club_img_listitem"
-                android:background="@drawable/color_image"
-                android:focusable="false"
-                android:clickable="false"
-                android:focusableInTouchMode="false"
-                android:layout_margin="5dp"
-                android:scaleType="centerCrop"/>
+    <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:padding="2dp" android:background="#ffffffff"
+            android:layout_margin="2dp">
+        <ImageView  android:orientation="vertical"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    tools:context=".MainActivity$AboutFragment"
+                    android:id="@+id/club_img_listitem"
+                    android:background="@drawable/color_image"
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:focusableInTouchMode="false"
+                    android:scaleType="centerCrop"/>
+    </RelativeLayout>
 </RelativeLayout>
