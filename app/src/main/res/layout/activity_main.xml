@@ -4,6 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        tools:context=".MainActivity"
         >
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
@@ -11,7 +12,7 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity" android:background="@drawable/list_poz"
         android:focusable="false"
-        android:clickable="false">
+        android:clickable="false" android:layout_above="@+id/banner">
 
         <android.support.v4.view.PagerTitleStrip
                 android:id="@+id/pager_title_strip"
@@ -26,10 +27,19 @@
 
     </android.support.v4.view.ViewPager>
 
+
+
     <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/settings_button" android:layout_alignParentBottom="true" android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" android:layout_marginBottom="20dp" android:layout_marginRight="10dp"
             android:background="@drawable/klubovi_icon" android:visibility="gone"/>
+    <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="80dp"
+            android:id="@+id/banner" android:background="#ffffffff"
+            android:visibility="visible"
+            android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
 </RelativeLayout>

@@ -19,6 +19,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
@@ -58,6 +59,8 @@ import retrofit.RetrofitError;
 public class MainActivity extends ActionBarActivity
         implements ActionBar.TabListener,ListFragment.Listener,GridFragment.Listener,View.OnClickListener,OnMapReadyCallback {
     ///edit
+    ImageView banner;
+    String ADURL;
     SharedPreferences prefs;
     ArrayList<Integer> KlubEv_nums = new ArrayList<>();
     TextView report;
@@ -124,6 +127,8 @@ public class MainActivity extends ActionBarActivity
         club_ispis = li.inflate(R.layout.club_layout,null);
 
 
+        banner = (ImageView)findViewById(R.id.banner);
+
         ClubButton = (ImageButton) findViewById(R.id.club_img_button);
         Settings = (ImageButton) findViewById(R.id.settings_button);
         Settings.setOnClickListener(this);
@@ -177,6 +182,8 @@ public class MainActivity extends ActionBarActivity
         actionBar.hide();
 
 
+
+
         setContentView(loading);
 
         ImageView img = (ImageView) findViewById(R.id.loading_img);
@@ -188,7 +195,8 @@ public class MainActivity extends ActionBarActivity
             initializeParse();
         else report.setText("No Internet connection");
 
-
+        getKlubs();
+        getEvents();
 
 
 
@@ -197,13 +205,25 @@ public class MainActivity extends ActionBarActivity
     {
         //Parse.enableLocalDatastore(this);
         //Parse.initialize(this, "yd8rPOEKL418mHf5Avu1cN13oT3Qdjz197r8BtnR", "mMVBhcFIIUJRMTME0ZBOhR6vTz0mRu7lF63dtH8o");
-
         Parse.enableLocalDatastore(this);
 
         Parse.initialize(this, "4h2FNshppCgJNcEH6eYDUUNG0tyecE6QTKcJiBhk", "Wh3uPBU7hxRGTSs636iJ4inht1lgGzLu6M6rSRWE");
+    }
+    public void getAd()
+    {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Ads");
+        try{
+            ParseObject po = query.getFirst();
+            ADURL = (String)po.get("Link");
 
-        getKlubs();
-        getEvents();
+            byte[] bitmapdata = ((ParseFile) po.get("Slika")).getData();
+            Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
+
+            banner = (ImageView)findViewById(R.id.banner);
+            banner.setImageBitmap(bitmap);
+            banner.setOnClickListener(this);
+
+        }catch (Exception e){}
     }
     public void getEvents()
     {
@@ -215,10 +235,12 @@ public class MainActivity extends ActionBarActivity
             @Override
             public void done(List<ParseObject> list, ParseException e) {
 
+
                 Events = list;
                 event = ListFragment.newInstance(0,Events);
                 grid = GridFragment.newInstance(1);
                 setPager();
+                getAd();
             }
         });
     }
@@ -226,13 +248,35 @@ public class MainActivity extends ActionBarActivity
     public void getKlubs() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Klub");
 
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> Klublist, ParseException e) {
-                Klubs = Klublist;
-                    for(int i = 0;i<Klublist.size();i++) Klublist.get(i).pinInBackground();
+        try {
+            List<ParseObject> list = query.find();
+            Klubs = list;
+            //compareToLocal(Klubs);
+            for(int i = 0;i<list.size();i++) list.get(i).pinInBackground();
+        }catch (Exception e){}
+
+
+
+    }
+    public void compareToLocal(List<ParseObject> po)
+    {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Klub");
+        try{
+            int count = query.fromLocalDatastore().count();
+            if(count != po.size())
+            {
+                List<ParseObject> list = query.fromLocalDatastore().find();
+
+                for(int i = 0;i<count;i++)
+                {
+                    for(int j = 0;j<po.size();j++)
+                    {
+                        if(list.get(i).equals(po.get(j)))break;
+                        else if(j == po.size()-1){list.get(i).unpin();}
+                    }
                 }
-            });
+            }
+        }catch (Exception e){}
     }
     @Override
     public void onResume() {
@@ -263,6 +307,10 @@ public class MainActivity extends ActionBarActivity
                 break;
             case R.id.back_button_club:
                 onBackPressed();
+                break;
+            case R.id.banner:
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(ADURL));
+                startActivity(browserIntent);
                 break;
         }
     }
