@@ -54,7 +54,7 @@ import com.parse.*;
 import retrofit.RetrofitError;
 
 public class MainActivity extends FragmentActivity
-        implements ActionBar.TabListener,ListFragment.Listener,GridFragment.Listener,View.OnClickListener,OnMapReadyCallback {
+        implements ListFragment.Listener,GridFragment.Listener,View.OnClickListener {
     ///edit
     ImageView banner;
     String ADURL;
@@ -171,9 +171,19 @@ public class MainActivity extends FragmentActivity
     }
     public void getAd()
     {
+
+
+
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Ads");
+
+        //RNG
+        Random r = new Random();
+
         try{
-            ParseObject po = query.getFirst();
+            int count = query.count();
+            int rng = r.nextInt(count);
+            ParseObject po = query.whereEqualTo("Num",rng).getFirst();
+
             ADURL = (String)po.get("Link");
 
             byte[] bitmapdata = ((ParseFile) po.get("Slika")).getData();
@@ -197,7 +207,7 @@ public class MainActivity extends FragmentActivity
 
 
                 Events = list;
-                event = ListFragment.newInstance(0,Events);
+                event = ListFragment.newInstance(0, Events);
                 grid = GridFragment.newInstance(1);
                 setPager();
                 getAd();
@@ -243,13 +253,6 @@ public class MainActivity extends FragmentActivity
         //report.setText(" ");
         Datum = c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+(c.get(Calendar.DAY_OF_MONTH));
         //DW.Start(Datum,c.get(Calendar.DAY_OF_MONTH));
-    }
-    @Override
-    public void onMapReady(GoogleMap map) {
-        // Add a marker in Sydney, Australia, and move the camera.
-        LatLng sydney = new LatLng(-34, 151);
-        map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        //map.moveCamera(CameraUpdateFactory.newLatLng(sydney), 10);
     }
     @Override
     public void onClick(View v) {
@@ -493,17 +496,6 @@ public class MainActivity extends FragmentActivity
         //noinspection SimplifiableIfStatement
         return super.onOptionsItemSelected(item);
     }
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction)
-    {
-        // When the given tab is selected, switch to the corresponding page in the ViewPager.
-        mViewPager.setCurrentItem(tab.getPosition());
-    }
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
-
     public class SectionsPagerAdapter extends FragmentPagerAdapter
     {
 
