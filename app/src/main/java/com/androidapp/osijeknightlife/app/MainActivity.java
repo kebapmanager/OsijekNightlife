@@ -196,7 +196,7 @@ public class MainActivity extends ActionBarActivity
         else report.setText("No Internet connection");
 
         getKlubs();
-        getEvents();
+
 
 
 
@@ -247,16 +247,15 @@ public class MainActivity extends ActionBarActivity
 
     public void getKlubs() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Klub");
-
-        try {
-            List<ParseObject> list = query.find();
-            Klubs = list;
-            //compareToLocal(Klubs);
-            for(int i = 0;i<list.size();i++) list.get(i).pinInBackground();
-        }catch (Exception e){}
-
-
-
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                Klubs = list;
+                compareToLocal(Klubs);
+                for(int i = 0;i<list.size();i++) list.get(i).pinInBackground();
+                getEvents();
+            }
+        });
     }
     public void compareToLocal(List<ParseObject> po)
     {
