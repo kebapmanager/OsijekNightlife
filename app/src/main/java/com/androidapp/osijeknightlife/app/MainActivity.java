@@ -22,13 +22,10 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.*;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.ShareActionProvider;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.text.Editable;
@@ -56,7 +53,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.parse.*;
 import retrofit.RetrofitError;
 
-public class MainActivity extends ActionBarActivity
+public class MainActivity extends FragmentActivity
         implements ActionBar.TabListener,ListFragment.Listener,GridFragment.Listener,View.OnClickListener,OnMapReadyCallback {
     ///edit
     ImageView banner;
@@ -85,7 +82,6 @@ public class MainActivity extends ActionBarActivity
     List<ParseObject> Klubs = new ArrayList<>();
     public void GridClicked(int id)
     {
-        getSupportActionBar().hide();
         ParseQuery query = new ParseQuery("Klub");
         try{
             List<ParseObject> parseObjects = query.fromLocalDatastore().find();
@@ -96,7 +92,6 @@ public class MainActivity extends ActionBarActivity
     }
     public void Clicked(int position,long id)
     {
-        getSupportActionBar().hide();
         setEventIspis((int)id);
     }
     public void setPager()
@@ -134,18 +129,8 @@ public class MainActivity extends ActionBarActivity
         Settings.setOnClickListener(this);
         //ClubButton.setOnClickListener(this);
 
-        //mapFragment = GMapsFragment.newInstance(2);
-        //mapFragment.getMapAsync(this);
-
-        //keytool -list -v -keystore ToniP\.android\debug.keystore" -alias androiddebugkey -storepass android -keypass android
-
-        //event = ListFragment.newInstance(0, null);
         ListFragment.registerListener(this);
-        //grid = GridFragment.newInstance(1);
         GridFragment.registerListener(this);
-
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mSectionsPagerAdapter.registerDataSetObserver(new DataSetObserver() {
@@ -157,31 +142,6 @@ public class MainActivity extends ActionBarActivity
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                actionBar.setSelectedNavigationItem(position);
-            }
-        });
-        actionBar.addTab(actionBar.newTab()
-                .setText("Eventi")
-                .setIcon(R.drawable.eventi_icon)
-                .setTabListener(this));
-        actionBar.addTab(actionBar.newTab()
-                .setText("Klubovi")
-                .setTabListener(this));
-        //actionBar.addTab(actionBar.newTab()
-                //.setCustomView(R.layout.tab_layout)
-                //.setText("Mapa")
-                //.setTabListener(this));
-        //actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setTitle(" ");
-        actionBar.setDisplayShowHomeEnabled(false);
-        actionBar.setStackedBackgroundDrawable(getResources().getDrawable(R.drawable.blue_background));
-        actionBar.setHideOnContentScrollEnabled(true);
-        actionBar.hide();
-
-
 
 
         setContentView(loading);
@@ -514,20 +474,10 @@ public class MainActivity extends ActionBarActivity
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-    // Call to update the share intent
-    private void setShareIntent(Intent shareIntent)
-    {
-        if (share != null) {
-            share.setShareIntent(shareIntent);
-        }
-    }
     @Override
     public void onBackPressed() {
         if(!(getWindow().getDecorView().getRootView() == mViewPager.getRootView())) {
-            //getSupportActionBar().show();
             setPager();
-
-            mViewPager.setCurrentItem(getSupportActionBar().getSelectedTab().getPosition());
 
             mViewPager.getRootView().findViewById(R.id.pager_title_strip).setBackgroundColor(getResources().getColor(getColorByIndex(currentColorIndex).get(0)));
         }
