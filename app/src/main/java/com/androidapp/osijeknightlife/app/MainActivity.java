@@ -155,11 +155,30 @@ public class MainActivity extends FragmentActivity
             initializeParse();
         else report.setText("No Internet connection");
 
-        getKlubs();
+        //getKlubs();
+
+        debugPlaceholder();
 
 
 
+    }
+    public void debugPlaceholder()
+    {
+        ParseObject obj = new ParseObject("Events");
+        obj.put("Naslov","Naslov dogadjaja");
+        obj.put("Datum",new Date());
+        //obj.put("Slika",BitmapFactory.decodeResource(getResources(), R.drawable.banner));
+        Events.add(0,obj);
 
+        ParseObject obj2 = new ParseObject("Events");
+        obj.put("Naslov","Naslov dogadjaja");
+        obj.put("Datum",new Date());
+        //obj.put("Slika",BitmapFactory.decodeResource(getResources(), R.drawable.zvezda));
+        Events.add(1,obj);
+
+        event = ListFragment.newInstance(0, Events);
+        grid = GridFragment.newInstance(1);
+        setPager();
     }
     public void initializeParse()
     {
