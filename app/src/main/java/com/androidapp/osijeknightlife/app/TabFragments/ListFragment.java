@@ -85,6 +85,7 @@ public class ListFragment extends android.support.v4.app.ListFragment
                     event.setEventName((String)events.get(i).get("Naslov"));
                     event.setDay(df.format(krece));
                     event.setPeopleComing("Nepoznato");
+                    event.setKlubName((String)events.get(i).getParseObject("Klub").get("Ime"));
                     try {
                         ////
                         byte[] bitmapdata = ((ParseFile) events.get(i).get("Slika")).getData();

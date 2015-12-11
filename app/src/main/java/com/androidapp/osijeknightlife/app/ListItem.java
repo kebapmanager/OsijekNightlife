@@ -14,6 +14,7 @@ public class ListItem
     String Day;
     String peopleComing;
     String imageName;
+    String klubName;
     Bitmap image;
     Bitmap ev_image;
 
@@ -31,6 +32,7 @@ public class ListItem
         this.ev_image = ev_image;
     }
     public void setDay(String day){this.Day = day;}
+    public void setKlubName(String name){this.klubName = name;}
 
     public String getName()
     {
@@ -58,6 +60,7 @@ public class ListItem
     }
     public Bitmap getev_image(){return ev_image;}
     public String getDay(){return Day;}
+    public String getKlubName(){return klubName;}
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);

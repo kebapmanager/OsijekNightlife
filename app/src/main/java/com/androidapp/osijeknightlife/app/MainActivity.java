@@ -1,16 +1,11 @@
 package com.androidapp.osijeknightlife.app;
 
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Date;
 
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,18 +15,10 @@ import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.*;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.Html;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import com.androidapp.osijeknightlife.app.Adapters.GridItemAdapter;
@@ -39,19 +26,9 @@ import com.androidapp.osijeknightlife.app.Adapters.ListItemAdapter;
 import com.androidapp.osijeknightlife.app.PageTransformers.*;
 import com.androidapp.osijeknightlife.app.TabFragments.GridFragment;
 import com.androidapp.osijeknightlife.app.TabFragments.ListFragment;
-import com.androidapp.osijeknightlife.app.Tasks.OnListLoaded_Task;
-import com.androidapp.osijeknightlife.app.jsonDataP.Event;
 import com.androidapp.osijeknightlife.app.jsonDataP.GetData;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
-import com.google.android.gms.maps.MapFragment;
 import com.parse.*;
-import retrofit.RetrofitError;
 
 public class MainActivity extends FragmentActivity
         implements ListFragment.Listener,GridFragment.Listener,View.OnClickListener {
@@ -155,9 +132,9 @@ public class MainActivity extends FragmentActivity
             initializeParse();
         else report.setText("No Internet connection");
 
-        //getKlubs();
+        getKlubs();
 
-        debugPlaceholder();
+        //debugPlaceholder();
 
 
 
@@ -200,17 +177,21 @@ public class MainActivity extends FragmentActivity
 
         try{
             int count = query.count();
-            int rng = r.nextInt(count);
-            ParseObject po = query.whereEqualTo("Num",rng).getFirst();
+            if(count > 0) {
+                int rng = r.nextInt(count);
 
-            ADURL = (String)po.get("Link");
+                ParseObject po = query.whereEqualTo("Num", rng).getFirst();
 
-            byte[] bitmapdata = ((ParseFile) po.get("Slika")).getData();
-            Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
+                ADURL = (String) po.get("Link");
 
-            banner = (ImageView)findViewById(R.id.banner);
-            banner.setImageBitmap(bitmap);
-            banner.setOnClickListener(this);
+                byte[] bitmapdata = ((ParseFile) po.get("Slika")).getData();
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
+
+                banner = (ImageView) findViewById(R.id.banner);
+                banner.setImageBitmap(bitmap);
+                banner.setOnClickListener(this);
+            }
+            else findViewById(R.id.banner).setVisibility(View.GONE);
 
         }catch (Exception e){}
     }
@@ -317,6 +298,7 @@ public class MainActivity extends FragmentActivity
                     event.setName(Club);
                     event.setEventName((String) Events.get(i).get("Naslov"));
                     event.setDay(df.format(d));
+                    event.setKlubName((String)Events.get(i).getParseObject("Klub").get("Ime"));
                     try {
                         byte[] bitmapdata = ((ParseFile) Events.get(i).get("Slika")).getData();
                         Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
