@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                tools:context=".MainActivity$AboutFragment"
-                android:id="@+id/listitem_layout"
-                android:focusableInTouchMode="false"
-                android:background="#008b8b8b"
-                android:descendantFocusability="blocksDescendants"
-                android:focusable="false"
-                android:clickable="false"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              tools:context=".MainActivity$AboutFragment"
+              android:id="@+id/listitem_layout"
+              android:focusableInTouchMode="false"
+              android:background="#008b8b8b"
+              android:descendantFocusability="blocksDescendants"
+              android:focusable="false"
+              android:clickable="false"
 >
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -23,7 +23,7 @@
         <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:id="@+id/club_img_listitem"
+                android:id="@+id/club_img_movieitem"
                 android:longClickable="false"
                 android:maxWidth="100dp"
                 android:minHeight="100dp"
@@ -39,7 +39,7 @@
         <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="125dp"
-                android:id="@+id/event_img_listitem" android:clickable="false"
+                android:id="@+id/event_img_movieitem" android:clickable="false"
                 android:scaleType="fitXY" android:adjustViewBounds="true" android:nestedScrollingEnabled="false"
                 android:layout_gravity="center_horizontal"
                 android:layout_alignTop="@+id/club_img_listitem" android:layout_toRightOf="@+id/club_img_listitem"
@@ -48,24 +48,26 @@
         <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/event_img_listitem" android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" android:background="#b0010101"
-                android:layout_alignParentBottom="false">
+                android:background="#b0010101"
+                android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
                     android:text="Medium Text"
-                    android:id="@+id/naslov_listitem" android:layout_gravity="center"
+                    android:id="@+id/naslov_movieitem" android:layout_gravity="center"
                     android:textColor="#ffe56d56"
-                    android:layout_alignParentTop="true" android:layout_toRightOf="@+id/dan_listitem"
-                    android:layout_toEndOf="@+id/dan_listitem" android:paddingLeft="25dp"/>
+                    android:paddingLeft="25dp"
+                    android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" android:layout_marginLeft="103dp"
+                    android:layout_marginStart="103dp"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Small Text"
-                    android:id="@+id/dan_listitem" android:layout_gravity="left|center_vertical"
+                    android:id="@+id/dan_movieitem" android:layout_gravity="left|center_vertical"
                     android:textColor="#ffe56d56"
                     android:paddingRight="0dp"
                     android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
@@ -74,15 +76,14 @@
         <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/event_img_listitem" android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" android:layout_alignParentEnd="false"
-                android:layout_alignParentRight="true" android:visibility="gone">
+                android:layout_alignTop="@+id/event_img_movieitem" android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" android:visibility="gone">
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Small Text"
-                    android:id="@+id/klub_listitem" android:textColor="#ffe56d56" android:layout_alignParentTop="true"
+                    android:id="@+id/klub_movieitem" android:textColor="#ffe56d56" android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
                     android:background="#b0010101"/>
         </RelativeLayout>

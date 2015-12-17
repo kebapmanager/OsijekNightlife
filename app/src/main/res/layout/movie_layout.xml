@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          android:orientation="vertical"
+          android:layout_width="fill_parent"
+          android:layout_height="fill_parent"
+          tools:context=".MainActivity$AboutFragment"
+          android:id="@+id/movie_layout"
+          android:divider="@android:color/transparent"
+          android:dividerHeight="0.0sp"
+          android:focusable="false"
+          android:clickable="false"
+          android:focusableInTouchMode="false" android:background="#008b8b8b">
+</ListView>

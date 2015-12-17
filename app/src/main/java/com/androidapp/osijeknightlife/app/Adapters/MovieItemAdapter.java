@@ -2,10 +2,6 @@ package com.androidapp.osijeknightlife.app.Adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +11,12 @@ import android.widget.TextView;
 import com.androidapp.osijeknightlife.app.ListItem;
 import com.androidapp.osijeknightlife.app.R;
 
-import java.io.File;
 import java.util.ArrayList;
 
 /**
- * Created by Ivan on 20/06/2015.
+ * Created by Ema on 12.12.2015..
  */
-public class ListItemAdapter extends BaseAdapter
+public class MovieItemAdapter extends BaseAdapter
 {
     private static ArrayList<ListItem> eventList;
 
@@ -29,7 +24,8 @@ public class ListItemAdapter extends BaseAdapter
     Activity mainActivity;
     public int section;
 
-    public ListItemAdapter(Context photosFragment, ArrayList<ListItem> eventList,int section){
+    public MovieItemAdapter(Context photosFragment, ArrayList<ListItem> eventList, int section){
+        this.section = section;
         this.eventList = eventList;
         mInflater = LayoutInflater.from(photosFragment);
     }
@@ -57,14 +53,14 @@ public class ListItemAdapter extends BaseAdapter
         // TODO Auto-generated method stub
         ViewHolder holder;
         if(convertView == null){
-            convertView = mInflater.inflate(R.layout.listitem_layout, null);
+            convertView = mInflater.inflate(R.layout.movieitem_layout, null);
             holder = new ViewHolder();
 
-            holder.eventName = (TextView) convertView.findViewById(R.id.naslov_listitem);
-            holder.day = (TextView) convertView.findViewById(R.id.dan_listitem);
-            holder.ev_image = (ImageView) convertView.findViewById(R.id.event_img_listitem);
-            holder.image = (ImageView) convertView.findViewById(R.id.club_img_listitem);
-            holder.klubName = (TextView) convertView.findViewById(R.id.klub_listitem);
+            holder.eventName = (TextView) convertView.findViewById(R.id.naslov_movieitem);
+            holder.day = (TextView) convertView.findViewById(R.id.dan_movieitem);
+            holder.ev_image = (ImageView) convertView.findViewById(R.id.event_img_movieitem);
+            holder.image = (ImageView) convertView.findViewById(R.id.club_img_movieitem);
+            holder.klubName = (TextView) convertView.findViewById(R.id.klub_movieitem);
 
 
             //holder.name = (TextView) convertView.findViewById(R.id.name);

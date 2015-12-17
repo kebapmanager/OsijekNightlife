@@ -30,6 +30,7 @@ public class ListFragment extends android.support.v4.app.ListFragment
 {
     public ListView lv;///da
     public static List<ParseObject> events;
+    public int sectionnum;
     Bitmap bmp;
 
     public static ListFragment newInstance(int sectionNumber,List<ParseObject> data)
@@ -40,28 +41,20 @@ public class ListFragment extends android.support.v4.app.ListFragment
         ListFragment fragment = new ListFragment();
         Bundle args = new Bundle();
         args.putInt("section_number", sectionNumber);
-
+        sectionNumber = sectionNumber;
         fragment.setArguments(args);
         return fragment;
     }
 
     public ListFragment() {}
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView;
-        //if(events != null) {
-            rootView = inflater.inflate(R.layout.list_layout, container, false);
+        rootView = inflater.inflate(R.layout.list_layout, container, false);
+        ArrayList<ListItem> eventList = getEventList();
+        lv = (ListView) rootView.findViewById(R.id.list_layout);
+        this.setListAdapter(new ListItemAdapter(getActivity(), eventList,0));
 
-            ArrayList<ListItem> eventList = getEventList();
-            lv = (ListView) rootView.findViewById(R.id.list_layout);
-            this.setListAdapter(new ListItemAdapter(getActivity(), eventList));
-
-
-            //lv.setAdapter(new ListItemAdapter(getActivity(), eventList));         }
-
-        //else {
-        //rootView = inflater.inflate(R.layout.loading_main, container, false);}
 
         return rootView;
     }
@@ -104,6 +97,7 @@ public class ListFragment extends android.support.v4.app.ListFragment
                         bmp = BitmapFactory.decodeByteArray(bitmapdatas, 0, bitmapdatas.length);
 
                         event.setImage(bmp);
+                        bmp=null;
                     }catch(Exception e){}
 
                     eventList.add(event);

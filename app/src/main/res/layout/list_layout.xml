@@ -6,8 +6,9 @@
                 android:layout_height="fill_parent"
                 tools:context=".MainActivity$AboutFragment"
                 android:id="@+id/list_layout"
-
-          android:focusable="false"
+                  android:divider="@android:color/transparent"
+                  android:dividerHeight="0.0sp"
+                  android:focusable="false"
                 android:clickable="false"
                 android:focusableInTouchMode="false" android:background="#008b8b8b">
 </ListView>

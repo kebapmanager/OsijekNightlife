@@ -8,7 +8,6 @@ import java.util.Date;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.DataSetObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -26,8 +25,8 @@ import com.androidapp.osijeknightlife.app.Adapters.ListItemAdapter;
 import com.androidapp.osijeknightlife.app.PageTransformers.*;
 import com.androidapp.osijeknightlife.app.TabFragments.GridFragment;
 import com.androidapp.osijeknightlife.app.TabFragments.ListFragment;
-import com.androidapp.osijeknightlife.app.jsonDataP.GetData;
 
+import com.androidapp.osijeknightlife.app.TabFragments.MovieFragment;
 import com.parse.*;
 
 public class MainActivity extends FragmentActivity
@@ -35,45 +34,40 @@ public class MainActivity extends FragmentActivity
     ///edit
     ImageView banner;
     String ADURL;
-    SharedPreferences prefs;
     ArrayList<Integer> KlubEv_nums = new ArrayList<>();
     TextView report;
     //SupportMapFragment mapFragment;
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
-    ProgressBar pg;
-    GetData DW = new GetData(this);
-    Fragment event,grid;
-    Button dalje_button;
+    Fragment event, grid, movies;
     Calendar c = Calendar.getInstance();
     String Datum;
-    View loading,event_ispis,club_ispis;
-    LayoutInflater li;
-    Map<Integer,String> Klubovi = new HashMap<Integer,String>();
-    ImageButton ClubButton,Settings;
+    View loading, event_ispis, club_ispis;
+    ImageButton ClubButton, Settings;
 
-    List<String> Boje = Arrays.asList("Red","Purple","Deep Purple","Indigo", "Cyan", "Teal","Lime","Orange","Deep Orange","Brown","Grey");
-    int currentColorIndex = 0,limit = 20;
+    List<String> Boje = Arrays.asList("Red", "Purple", "Deep Purple", "Indigo", "Cyan", "Teal", "Lime", "Orange", "Deep Orange", "Brown", "Grey");
+    int currentColorIndex = 0, limit = 20;
 
+    List<ParseObject> Movies = new ArrayList<>();
     List<ParseObject> Events = new ArrayList<>();
     List<ParseObject> Klubs = new ArrayList<>();
-    public void GridClicked(int id)
-    {
+
+    public void GridClicked(int id) {
         ParseQuery query = new ParseQuery("Klub");
-        try{
+        try {
             List<ParseObject> parseObjects = query.fromLocalDatastore().find();
-            setKlubIspis((String)parseObjects.get(id).get("Ime"));
+            setKlubIspis((String) parseObjects.get(id).get("Ime"));
         } catch (Exception e) {
         }
 
     }
-    public void Clicked(int position,long id)
-    {
-        setEventIspis((int)id);
+
+    public void Clicked(int position, long id) {
+        setEventIspis((int) id);
     }
-    public void setPager()
-    {
-        if(!(getWindow().getDecorView().getRootView() == mViewPager.getRootView())) {
+
+    public void setPager() {
+        if (!(getWindow().getDecorView().getRootView() == mViewPager.getRootView())) {
             //event = ListFragment.newInstance(0,Events);
             //grid = GridFragment.newInstance(1);
             mSectionsPagerAdapter.notifyDataSetChanged();
@@ -82,24 +76,24 @@ public class MainActivity extends FragmentActivity
         }
 
     }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 
-        Datum = c.get(Calendar.YEAR)+"/"+(c.get(Calendar.MONTH)+1)+"/"+(c.get(Calendar.DAY_OF_MONTH));
+        Datum = c.get(Calendar.YEAR) + "/" + (c.get(Calendar.MONTH) + 1) + "/" + (c.get(Calendar.DAY_OF_MONTH));
 
 
-        LayoutInflater li=(LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        loading = li.inflate(R.layout.loading_main,null);
-        event_ispis = li.inflate(R.layout.event_layout,null);
-        club_ispis = li.inflate(R.layout.club_layout,null);
+        LayoutInflater li = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        loading = li.inflate(R.layout.loading_main, null);
+        event_ispis = li.inflate(R.layout.event_layout, null);
+        club_ispis = li.inflate(R.layout.club_layout, null);
 
 
-        banner = (ImageView)findViewById(R.id.banner);
+        banner = (ImageView) findViewById(R.id.banner);
 
         ClubButton = (ImageButton) findViewById(R.id.club_img_button);
         Settings = (ImageButton) findViewById(R.id.settings_button);
@@ -128,7 +122,7 @@ public class MainActivity extends FragmentActivity
         report = (TextView) findViewById(R.id.errorReport);
         report.setText(" ");
 
-        if(isNetworkAvailable())
+        if (isNetworkAvailable())
             initializeParse();
         else report.setText("No Internet connection");
 
@@ -137,37 +131,37 @@ public class MainActivity extends FragmentActivity
         //debugPlaceholder();
 
 
-
     }
-    public void debugPlaceholder()
-    {
+
+    public void debugPlaceholder() {
         ParseObject obj = new ParseObject("Events");
-        obj.put("Naslov","Naslov dogadjaja");
-        obj.put("Datum",new Date());
+        obj.put("Naslov", "Naslov dogadjaja");
+        obj.put("Datum", new Date());
         //obj.put("Slika",BitmapFactory.decodeResource(getResources(), R.drawable.banner));
-        Events.add(0,obj);
+        Events.add(0, obj);
 
         ParseObject obj2 = new ParseObject("Events");
-        obj.put("Naslov","Naslov dogadjaja");
-        obj.put("Datum",new Date());
+        obj.put("Naslov", "Naslov dogadjaja");
+        obj.put("Datum", new Date());
         //obj.put("Slika",BitmapFactory.decodeResource(getResources(), R.drawable.zvezda));
-        Events.add(1,obj);
+        Events.add(1, obj);
 
         event = ListFragment.newInstance(0, Events);
         grid = GridFragment.newInstance(1);
         setPager();
     }
-    public void initializeParse()
-    {
+
+    public void initializeParse() {
         //Parse.enableLocalDatastore(this);
         //Parse.initialize(this, "yd8rPOEKL418mHf5Avu1cN13oT3Qdjz197r8BtnR", "mMVBhcFIIUJRMTME0ZBOhR6vTz0mRu7lF63dtH8o");
         Parse.enableLocalDatastore(this);
 
         Parse.initialize(this, "4h2FNshppCgJNcEH6eYDUUNG0tyecE6QTKcJiBhk", "Wh3uPBU7hxRGTSs636iJ4inht1lgGzLu6M6rSRWE");
-    }
-    public void getAd()
-    {
 
+        ParseAnalytics.trackAppOpenedInBackground(getIntent());
+    }
+
+    public void getAd() {
 
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Ads");
@@ -175,9 +169,9 @@ public class MainActivity extends FragmentActivity
         //RNG
         Random r = new Random();
 
-        try{
+        try {
             int count = query.count();
-            if(count > 0) {
+            if (count > 0) {
                 int rng = r.nextInt(count);
 
                 ParseObject po = query.whereEqualTo("Num", rng).getFirst();
@@ -190,30 +184,41 @@ public class MainActivity extends FragmentActivity
                 banner = (ImageView) findViewById(R.id.banner);
                 banner.setImageBitmap(bitmap);
                 banner.setOnClickListener(this);
-            }
-            else findViewById(R.id.banner).setVisibility(View.GONE);
+            } else findViewById(R.id.banner).setVisibility(View.GONE);
 
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
     }
-    public void getEvents()
-    {
+
+    public void getEvents() {
         Date date = new Date();
         date.getTime();
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
-        query.whereGreaterThanOrEqualTo("Zavrsava", date).setLimit(limit).findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> list, ParseException e) {
+                query.whereGreaterThanOrEqualTo("Zavrsava", date).setLimit(limit).findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> list, ParseException e) {
+                        Events = list;
+                        Date date = new Date();
+                        date.getTime();
+                        ParseQuery<ParseObject> query = ParseQuery.getQuery("Movie");
+                        query.whereGreaterThanOrEqualTo("Zavrsava", date).setLimit(limit).findInBackground(new FindCallback<ParseObject>() {
+                            @Override
+                            public void done(List<ParseObject> list, ParseException e) {
+                                Movies = list;
+                                event = ListFragment.newInstance(0,Events);
+                                movies =  ListFragment.newInstance(1,Movies);
+                                //movies =  new Fragment();
+                                grid = GridFragment.newInstance(2);
+                                setPager();
+                                getAd();
+                            }
+                        });
 
-
-                Events = list;
-                event = ListFragment.newInstance(0, Events);
-                grid = GridFragment.newInstance(1);
-                setPager();
-                getAd();
             }
         });
     }
+
 
     public void getKlubs() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Klub");
@@ -397,7 +402,7 @@ public class MainActivity extends FragmentActivity
 
         //Prepare events
                 ListView lv = (ListView) findViewById(R.id.listView_club_layout);
-                lv.setAdapter(new ListItemAdapter(this,getClubEvents(id)));
+                lv.setAdapter(new ListItemAdapter(this,getClubEvents(id),0));
                 lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -481,8 +486,8 @@ public class MainActivity extends FragmentActivity
     @Override
     public void onBackPressed() {
         if(!(getWindow().getDecorView().getRootView() == mViewPager.getRootView())) {
-            setPager();
 
+            setPager();
             mViewPager.getRootView().findViewById(R.id.pager_title_strip).setBackgroundColor(getResources().getColor(getColorByIndex(currentColorIndex).get(0)));
         }
     }
@@ -511,13 +516,13 @@ public class MainActivity extends FragmentActivity
             switch(position)
             {
                 case 0:
-                    fragment = event;
+                    fragment = ListFragment.newInstance(0,Events);
                     break;
                 case 1:
-                    fragment = grid;
+                    fragment = MovieFragment.newInstance(1,Movies);
                     break;
                 case 2:
-                    fragment = new Fragment();//mapFragment;
+                    fragment = grid;
                     break;
                 default:
                     fragment = new Fragment();
@@ -533,7 +538,7 @@ public class MainActivity extends FragmentActivity
         public int getCount()
         {
             // Show 3 total pages.
-            return 2;
+            return 3;
         }
 
         @Override
@@ -546,8 +551,8 @@ public class MainActivity extends FragmentActivity
                     return getString(R.string.title_section1).toUpperCase(l);
                 case 1:
                     return getString(R.string.title_section2).toUpperCase(l);
-//                case 2:
-//                    return getString(R.string.title_section3).toUpperCase(l);
+                case 2:
+                    return getString(R.string.title_section3).toUpperCase(l);
             }
             return null;
         }
