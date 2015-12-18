@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.androidapp.osijeknightlife.app.ImageHelper;
 import com.androidapp.osijeknightlife.app.ListItem;
 import com.androidapp.osijeknightlife.app.R;
 
@@ -28,6 +29,7 @@ public class ListItemAdapter extends BaseAdapter
     private LayoutInflater mInflater;
     Activity mainActivity;
     public int section;
+    public ImageHelper imghelper;
 
     public ListItemAdapter(Context photosFragment, ArrayList<ListItem> eventList,int section){
         this.eventList = eventList;
@@ -56,6 +58,7 @@ public class ListItemAdapter extends BaseAdapter
     public View getView(int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
         ViewHolder holder;
+        imghelper = new ImageHelper();
         if(convertView == null){
             convertView = mInflater.inflate(R.layout.listitem_layout, null);
             holder = new ViewHolder();
@@ -77,8 +80,8 @@ public class ListItemAdapter extends BaseAdapter
         holder.eventName.setText(eventList.get(position).getEventName());
         holder.day.setText(eventList.get(position).getDay());
         holder.klubName.setText(eventList.get(position).getKlubName());
-        if(eventList.get(position).getev_image() != null)holder.ev_image.setImageBitmap(eventList.get(position).getev_image());
-        if(eventList.get(position).getImage() != null)holder.image.setImageBitmap(eventList.get(position).getImage());
+        if(eventList.get(position).getev_image() != null)holder.ev_image.setImageBitmap(imghelper.getRoundedCornerBitmap(eventList.get(position).getev_image(),50));
+        if(eventList.get(position).getImage() != null)holder.image.setImageBitmap(imghelper.getRoundedCornerBitmap(eventList.get(position).getImage(),25));
 
         return convertView;
     }

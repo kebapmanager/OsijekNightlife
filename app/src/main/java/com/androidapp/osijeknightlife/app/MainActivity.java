@@ -30,7 +30,7 @@ import com.androidapp.osijeknightlife.app.TabFragments.MovieFragment;
 import com.parse.*;
 
 public class MainActivity extends FragmentActivity
-        implements ListFragment.Listener,GridFragment.Listener,View.OnClickListener {
+        implements ListFragment.Listener,GridFragment.Listener,MovieFragment.Listener,View.OnClickListener {
     ///edit
     ImageView banner;
     String ADURL;
@@ -62,8 +62,10 @@ public class MainActivity extends FragmentActivity
 
     }
 
+    public void ClickedM(int position,long id){setEventIspis((int)id,true);}
+
     public void Clicked(int position, long id) {
-        setEventIspis((int) id);
+        setEventIspis((int) id,false);
     }
 
     public void setPager() {
@@ -101,6 +103,7 @@ public class MainActivity extends FragmentActivity
         //ClubButton.setOnClickListener(this);
 
         ListFragment.registerListener(this);
+        MovieFragment.registerListener(this);
         GridFragment.registerListener(this);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -322,7 +325,7 @@ public class MainActivity extends FragmentActivity
 
         return eventList;
     }
-    public void setEventIspis(int evNum)
+    public void setEventIspis(int evNum,boolean koji)
     {
 
         int num = evNum;
@@ -343,11 +346,13 @@ public class MainActivity extends FragmentActivity
             //rl.setBackgroundColor(getResources().getColor(getColorByIndex(currentColorIndex).get(1)));
             fl.setBackgroundColor(getResources().getColor(getColorByIndex(currentColorIndex).get(1)));
         }
+        List<ParseObject> buffer;
+        if(!koji)buffer = Events;
+        else buffer = Movies;
 
-
-        if(Events.size() != 0)
+        if(buffer.size() != 0)
         {
-            final ParseObject ev = Events.get(evNum);
+            final ParseObject ev = buffer.get(evNum);
             Date d = (Date)ev.get("Datum");
             SimpleDateFormat df = new SimpleDateFormat("dd.M | E | kk:mm");
 
@@ -406,7 +411,7 @@ public class MainActivity extends FragmentActivity
                 lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                setEventIspis(KlubEv_nums.get((int)id));
+                setEventIspis(KlubEv_nums.get((int)id),false);
             }
         });
 

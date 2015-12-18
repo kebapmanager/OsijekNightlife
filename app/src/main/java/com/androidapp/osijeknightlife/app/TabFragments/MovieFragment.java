@@ -104,11 +104,11 @@ public class MovieFragment extends android.support.v4.app.ListFragment
     }
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        mListener.Clicked(position,id);
+        mListener.ClickedM(position,id);
     }
 
     public interface Listener{
-        public void Clicked(int position,long id);
+        public void ClickedM(int position,long id);
     }
     private static Listener mListener = null;
     public static void registerListener (Listener listener) {

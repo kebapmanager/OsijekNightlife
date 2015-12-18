@@ -10,5 +10,5 @@
           android:dividerHeight="0.0sp"
           android:focusable="false"
           android:clickable="false"
-          android:focusableInTouchMode="false" android:background="#008b8b8b">
+          android:focusableInTouchMode="false" android:background="#008b8b8b" android:paddingTop="5dp">
 </ListView>

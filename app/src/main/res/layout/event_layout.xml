@@ -26,35 +26,53 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" android:layout_alignParentBottom="true"
                 android:layout_margin="5dp"/>
-        <TextView
+        <ScrollView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:id="@+id/event_music" android:layout_gravity="center_horizontal|bottom"
-                android:gravity="center_vertical" android:textColor="#ff000000"
-                android:paddingLeft="5dp"
-                android:paddingTop="2dp" android:layout_below="@+id/event_club"
-                android:layout_toRightOf="@+id/club_img_button" android:layout_toEndOf="@+id/club_img_button"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:id="@+id/event_club" android:layout_gravity="center" android:gravity="center_vertical"
-                android:textColor="@drawable/blue_dark_background"
-                android:paddingLeft="5dp" android:paddingTop="2dp" android:layout_below="@+id/event_title"
-                android:layout_toRightOf="@+id/club_img_button" android:layout_toEndOf="@+id/club_img_button"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Large Text"
-                android:id="@+id/event_title" android:layout_gravity="center_horizontal|top"
-                android:textColor="#ff000000"
-                android:layout_alignParentTop="true" android:layout_toRightOf="@+id/club_img_button"
-                android:layout_toEndOf="@+id/club_img_button" android:paddingLeft="5dp" android:paddingTop="2dp"
-                android:outlineProvider="paddedBounds"/>
+                android:layout_height="fill_parent"
+                android:id="@+id/scrollView2"
+                android:layout_below="@+id/event_music" android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="false" android:fillViewport="false"
+                android:layout_toEndOf="@+id/club_img_button" android:layout_toRightOf="@+id/club_img_button">
+            <RelativeLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_alignTop="@+id/club_img_button" android:layout_toRightOf="@+id/club_img_button"
+                    android:layout_toEndOf="@+id/club_img_button">
+                <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Small Text"
+                        android:id="@+id/event_club" android:layout_gravity="center" android:gravity="center_vertical"
+                        android:textColor="@drawable/blue_dark_background"
+                        android:paddingLeft="5dp" android:paddingTop="2dp"
+                        android:layout_below="@+id/event_title" android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"/>
+                <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Large Text"
+                        android:id="@+id/event_title" android:layout_gravity="center_horizontal|top"
+                        android:textColor="#ff000000"
+                        android:paddingLeft="5dp" android:paddingTop="2dp"
+                        android:outlineProvider="paddedBounds"
+                        android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"/>
+                <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Small Text"
+                        android:id="@+id/event_music" android:layout_gravity="center_horizontal|bottom"
+                        android:gravity="center_vertical" android:textColor="#ff000000"
+                        android:paddingLeft="5dp"
+                        android:paddingTop="2dp"
+                        android:layout_below="@+id/event_club" android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"/>
+            </RelativeLayout>
+        </ScrollView>
     </RelativeLayout>
     <ScrollView
             android:layout_width="wrap_content"
