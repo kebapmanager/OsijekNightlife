@@ -44,6 +44,7 @@ public class MainActivity extends FragmentActivity
     String Datum;
     View loading, event_ispis, club_ispis;
     ImageButton ClubButton, Settings;
+    int pamtipavrati = 0;
 
     List<String> Boje = Arrays.asList("Red", "Purple", "Deep Purple", "Indigo", "Cyan", "Teal", "Lime", "Orange", "Deep Orange", "Brown", "Grey");
     int currentColorIndex = 0, limit = 20;
@@ -53,6 +54,7 @@ public class MainActivity extends FragmentActivity
     List<ParseObject> Klubs = new ArrayList<>();
 
     public void GridClicked(int id) {
+        pamtipavrati=2;
         ParseQuery query = new ParseQuery("Klub");
         try {
             List<ParseObject> parseObjects = query.fromLocalDatastore().find();
@@ -62,9 +64,13 @@ public class MainActivity extends FragmentActivity
 
     }
 
-    public void ClickedM(int position,long id){setEventIspis((int)id,true);}
+    public void ClickedM(int position,long id){
+        pamtipavrati = 1;
+        setEventIspis((int)id,true);
+    }
 
     public void Clicked(int position, long id) {
+        pamtipavrati=0;
         setEventIspis((int) id,false);
     }
 
@@ -75,6 +81,7 @@ public class MainActivity extends FragmentActivity
             mSectionsPagerAdapter.notifyDataSetChanged();
             mViewPager.setAdapter(mSectionsPagerAdapter);
             setContentView(mViewPager.getRootView());
+            mViewPager.setCurrentItem(pamtipavrati);
         }
 
     }
